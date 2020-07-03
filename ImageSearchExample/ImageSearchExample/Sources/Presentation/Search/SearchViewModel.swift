@@ -26,7 +26,7 @@ protocol SearchViewModelType {
     var outputs: SearchViewModelTypeOutputs { get }
 }
 
-struct SearchViewModel: SearchViewModelType, SearchViewModelTypeInputs, SearchViewModelTypeOutputs {
+final class SearchViewModel: SearchViewModelType, SearchViewModelTypeInputs, SearchViewModelTypeOutputs {
     
     private var disposeBag: DisposeBag = DisposeBag()
     

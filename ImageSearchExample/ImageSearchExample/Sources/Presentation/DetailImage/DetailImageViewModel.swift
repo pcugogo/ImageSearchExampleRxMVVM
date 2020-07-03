@@ -25,7 +25,7 @@ protocol DetailImageViewModelType {
     var outputs: DetailImageViewModelTypeOutputs { get }
 }
 
-struct DetailImageViewModel: DetailImageViewModelType, DetailImageViewModelTypeInputs, DetailImageViewModelTypeOutputs {
+final class DetailImageViewModel: DetailImageViewModelType, DetailImageViewModelTypeInputs, DetailImageViewModelTypeOutputs {
 
     private var disposeBag = DisposeBag()
     
