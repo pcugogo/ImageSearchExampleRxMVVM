@@ -15,7 +15,7 @@ protocol SearchModelType {
     func searchImage(keyword: String, isNextPage: Bool) -> Single<ImageSearchResult<SearchResponse>>
 }
 
-struct SearchModel: SearchModelType {
+final class SearchModel: SearchModelType {
     
     private let apiService: APIServiceType
     private var currentPage = BehaviorRelay(value: 1) //첫페이지 1
