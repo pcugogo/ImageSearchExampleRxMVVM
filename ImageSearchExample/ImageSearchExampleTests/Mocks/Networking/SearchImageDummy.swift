@@ -11,7 +11,7 @@ import Foundation
 @testable import ImageSearchExample
 
 struct SearchImageDummy {
-    static let imageDataJSONString = """
+    let imageDataJSONString = """
     {
       "meta": {
         "total_count": 422583,
@@ -42,4 +42,5 @@ struct SearchImageDummy {
       ]
     }
 """
+    let imageURLString = "http://t1.daumcdn.net/news/201706/21/kedtv/20170621155930292vyyx.jpg"
 }

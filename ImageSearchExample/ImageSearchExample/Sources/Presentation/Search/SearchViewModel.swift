@@ -32,12 +32,12 @@ final class SearchViewModel: SearchViewModelType, SearchViewModelTypeInputs, Sea
     
     // MARK: - Input Sources
     var inputs: SearchViewModelTypeInputs { return self }
-    let searchButtonAction: PublishSubject<String> = PublishSubject()
-    let willDisplayCell: PublishRelay<IndexPath> = PublishRelay()
+    let searchButtonAction: PublishSubject<String> = .init()
+    let willDisplayCell: PublishRelay<IndexPath> = .init()
     
     // MARK: - Output Sources
     var outputs: SearchViewModelTypeOutputs { return self }
-    let imagesCellItems: BehaviorRelay<[Image]> = BehaviorRelay(value: [])
+    let imagesCellItems: BehaviorRelay<[Image]> = .init(value: [])
     let errorMessage: Signal<String>
     
     private var isLastPage: BehaviorRelay<Bool> = BehaviorRelay(value: false)
@@ -63,7 +63,7 @@ final class SearchViewModel: SearchViewModelType, SearchViewModelTypeInputs, Sea
         
         let isLastCell = willDisplayCell
             .withLatestFrom(imagesCellItems) { (indexPath: $0, data: $1) }
-            .map { $0.data.count - 1 == $0.indexPath.item }
+            .map { $0.data.count - 5 == $0.indexPath.item }
         
         let shouldMoreFetch = Observable
             .combineLatest(isLastCell, isLastPage)

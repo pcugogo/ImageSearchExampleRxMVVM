@@ -8,23 +8,27 @@
 
 import Foundation
 
-struct LocalStorage {
+protocol LocalStorageType {
+    var favorites: [String] { get }
+    func add(favorite: String)
+    func remove(favorite: String)
+}
+
+struct LocalStorage: LocalStorageType {
     enum Key: String {
         case favorites
     }
-    
     var favorites: [String] {
         guard let list = UserDefaults.standard.array(forKey: Key.favorites.rawValue) as? [String] else { return [] }
         return list
     }
-    
     func add(favorite: String) {
         var newList = favorites
         newList.append(favorite)
         UserDefaults.standard.set(newList, forKey: Key.favorites.rawValue)
     }
     func remove(favorite: String) {
-        let newList = favorites.filter {$0 != favorite}
+        let newList = favorites.filter { $0 != favorite }
         UserDefaults.standard.set(newList, forKey: Key.favorites.rawValue)
     }
 }

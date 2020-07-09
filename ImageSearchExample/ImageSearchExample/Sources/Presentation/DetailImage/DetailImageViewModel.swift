@@ -26,36 +26,27 @@ protocol DetailImageViewModelType {
 }
 
 final class DetailImageViewModel: DetailImageViewModelType, DetailImageViewModelTypeInputs, DetailImageViewModelTypeOutputs {
-
+    
     private var disposeBag = DisposeBag()
     
     // MARK: - Inputs
     var inputs: DetailImageViewModelTypeInputs { return self }
-    var favoriteButtonAction: PublishSubject<Void> = PublishSubject()
+    var favoriteButtonAction: PublishSubject<Void> = .init()
     // MARK: - outputs
     var outputs: DetailImageViewModelTypeOutputs { return self }
     var imageURLString: Observable<String>
     var isAddFavorites: Observable<Bool>
     
-    init(imageURLString: Observable<String>, model: DetailImageModel = DetailImageModel()) {
+    init(model: DetailImageModelType) {
+        let isAddFavorites: BehaviorRelay<Bool> = .init(value: model.isAddedFavorites())
+        self.imageURLString = .just(model.imageURLString)
         
-        let isAddFavorites: BehaviorRelay<Bool> = BehaviorRelay(value: false)
-        
-        favoriteButtonAction.withLatestFrom(imageURLString)
-            .map { model.updateFavorites(url: $0) }
+        //즐겨찾기 업데이트
+        favoriteButtonAction
+            .map { model.updateFavorites() }
             .bind(to: isAddFavorites)
             .disposed(by: disposeBag)
         
-        self.imageURLString = imageURLString
-            .asObservable()
-        
-        imageURLString
-            .map { url -> Bool in
-                return model.isAddedFavorites(url: url)
-        }
-        .bind(to: isAddFavorites)
-        .disposed(by: disposeBag)
-        
-        self.isAddFavorites = isAddFavorites.distinctUntilChanged().asObservable()
+        self.isAddFavorites = isAddFavorites.asObservable()
     }
 }

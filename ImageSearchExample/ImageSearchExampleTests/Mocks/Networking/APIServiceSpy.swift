@@ -17,7 +17,8 @@ final class APIServiceSpy: APIServiceType {
     
     func imageSearch(keyword: String, page: Int, numberOfImagesToLoad: Int) -> Single<ImageSearchResult<SearchResponse>> {
         currentPage = page
-        let data = SearchImageDummy.imageDataJSONString.data(using: .utf8)!
+        let dummyData = SearchImageDummy()
+        let data = dummyData.imageDataJSONString.data(using: .utf8)!
         do {
             let imageSearchResponse = try JSONDecoder().decode(SearchResponse.self, from: data)
             return .just(.success(imageSearchResponse))

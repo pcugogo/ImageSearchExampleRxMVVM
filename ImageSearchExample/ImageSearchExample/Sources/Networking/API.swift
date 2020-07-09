@@ -16,7 +16,7 @@ enum API {
 extension API {
     struct Constant {
         static let baseURLString = "https://dapi.kakao.com"
-        static let apiKey = ""
+        static let apiKey = "KakaoAK 25cd80a89c59043f4252746092279d2b"
     }
     private var path: String {
         switch self {
