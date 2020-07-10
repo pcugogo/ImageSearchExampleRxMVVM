@@ -9,6 +9,11 @@
 import Foundation
 
 struct SearchResponse: Codable {
-    let documents: [Image]
+    let images: [Image]
     let meta: Meta
+    
+    private enum CodingKeys: String, CodingKey {
+        case images = "documents"
+        case meta
+    }
 }

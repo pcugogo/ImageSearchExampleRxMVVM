@@ -12,7 +12,7 @@ import RxCocoa
 import RxOptional
 
 protocol DetailImageViewModelTypeInputs {
-    var favoriteButtonAction: PublishSubject<Void> { get }
+    var favoriteButtonAction: PublishRelay<Void> { get }
 }
 
 protocol DetailImageViewModelTypeOutputs {
@@ -31,7 +31,7 @@ final class DetailImageViewModel: DetailImageViewModelType, DetailImageViewModel
     
     // MARK: - Inputs
     var inputs: DetailImageViewModelTypeInputs { return self }
-    var favoriteButtonAction: PublishSubject<Void> = .init()
+    var favoriteButtonAction: PublishRelay<Void> = .init()
     // MARK: - outputs
     var outputs: DetailImageViewModelTypeOutputs { return self }
     var imageURLString: Observable<String>

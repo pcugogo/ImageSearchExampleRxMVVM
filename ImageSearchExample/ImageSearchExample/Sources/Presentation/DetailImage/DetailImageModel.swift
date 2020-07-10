@@ -10,8 +10,7 @@ import Foundation
 
 protocol DetailImageModelType {
     typealias IsDuplicate = Bool
-    
-    var localStorage: LocalStorageType { get }
+
     var imageURLString: String { get }
     
     func isAddedFavorites() -> Bool
@@ -19,8 +18,9 @@ protocol DetailImageModelType {
 }
 
 struct DetailImageModel: DetailImageModelType {
-    let localStorage: LocalStorageType
+    
     let imageURLString: String
+    private let localStorage: LocalStorageType
     
     init(localStorage: LocalStorageType = LocalStorage(), imageURLString: String) {
         self.localStorage = localStorage

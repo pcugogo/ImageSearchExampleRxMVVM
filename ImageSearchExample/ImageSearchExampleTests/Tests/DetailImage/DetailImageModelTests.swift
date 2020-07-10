@@ -49,7 +49,7 @@ final class DetailImageModelTests: XCTestCase {
             .disposed(by: disposeBag)
     }
     func testFavoriteButtonAction() {
-        viewModel.inputs.favoriteButtonAction.onNext(Void())
+        viewModel.inputs.favoriteButtonAction.accept(Void())
         viewModel.outputs.isAddFavorites
             .subscribe(onNext: { isAddFavorites in
                 XCTAssertTrue(isAddFavorites, "favoriteButton Action Error")

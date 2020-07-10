@@ -39,7 +39,7 @@ final class SearchModelTests: XCTestCase {
             .subscribe(onSuccess: { result in
                 switch result {
                 case .success(let response):
-                    print(response.documents.count, "success")
+                    print(response.images.count, "success")
                 case .failure(let error):
                     XCTFail(error.reason)
                 }
@@ -55,7 +55,7 @@ final class SearchModelTests: XCTestCase {
         .subscribe(onSuccess: { result in
             switch result {
             case .success(let response):
-                print(response.documents.count, "success")
+                print(response.images.count, "success")
             case .failure(let error):
                 XCTFail(error.reason)
             }

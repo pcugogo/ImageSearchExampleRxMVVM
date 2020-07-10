@@ -10,16 +10,12 @@ import UIKit
 import Kingfisher
 
 final class ImageCollectionViewCell: UICollectionViewCell {
+    
     @IBOutlet weak var imageView: UIImageView!
     
     func setImage(urlString: String) {
-        DispatchQueue.global().async {
-            if let imageURL = URL(string: urlString) {
-                DispatchQueue.main.async {[weak self] in
-                    guard let self = self else { return }
-                    self.imageView.kf.setImage(with: imageURL)
-                }
-            }
+        if let imageURL = URL(string: urlString) {
+            self.imageView.kf.setImage(with: imageURL)
         }
     }
 }
