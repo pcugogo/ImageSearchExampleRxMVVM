@@ -12,24 +12,23 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
-final class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController, ViewModelBindableType {
+    
+    var viewModel: SearchViewModelType!
     private var disposeBag = DisposeBag()
-    private let viewModel: SearchViewModelType = SearchViewModel()
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var imagesCollectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupBindings(viewModel: viewModel)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    func setupBindings(viewModel: SearchViewModelType) {
-        
+    func bindViewModel() {
         searchBar.rx.searchButtonClicked
             .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
             .withLatestFrom(searchBar.rx.text.orEmpty)
