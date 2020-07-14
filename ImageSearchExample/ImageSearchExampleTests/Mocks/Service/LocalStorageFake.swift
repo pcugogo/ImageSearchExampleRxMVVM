@@ -17,12 +17,24 @@ final class LocalStorageFake: LocalStorageType {
         return userDefaultsFavorites
     }
     
-    func add(favorite: String) {
-        userDefaultsFavorites.append(favorite)
+    func add(favoritesKey: String) {
+        userDefaultsFavorites.append(favoritesKey)
     }
     
-    func remove(favorite: String) {
-        let newFavorites = userDefaultsFavorites.filter { $0 != favorite }
+    func remove(favoritesKey: String) {
+        let newFavorites = userDefaultsFavorites.filter { $0 != favoritesKey }
         userDefaultsFavorites = newFavorites
+    }
+    func isAddedFavorites(favoritesKey: String) -> Bool {
+        return favorites.contains(favoritesKey)
+    }
+    
+    func updateFavorites(favoritesKey: String) -> IsDuplicate {
+        if isAddedFavorites(favoritesKey: favoritesKey) {
+            remove(favoritesKey: favoritesKey)
+        } else {
+            add(favoritesKey: favoritesKey)
+        }
+        return isAddedFavorites(favoritesKey: favoritesKey)
     }
 }

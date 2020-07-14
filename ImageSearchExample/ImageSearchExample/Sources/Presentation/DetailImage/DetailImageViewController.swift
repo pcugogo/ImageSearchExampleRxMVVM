@@ -38,7 +38,7 @@ extension DetailImageViewController {
             .disposed(by: disposeBag)
         
         viewModel.outputs.isAddFavorites
-            .bind(to: favoriteButton.rx.isSelected)
+            .drive(favoriteButton.rx.isSelected)
             .disposed(by: disposeBag)
     }
 }

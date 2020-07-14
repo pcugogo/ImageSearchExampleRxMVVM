@@ -17,7 +17,7 @@ protocol DetailImageViewModelTypeInputs {
 
 protocol DetailImageViewModelTypeOutputs {
     var imageURLString: Observable<String> { get }
-    var isAddFavorites: Observable<Bool> { get }
+    var isAddFavorites: Driver<Bool> { get }
 }
 
 protocol DetailImageViewModelType {
@@ -35,18 +35,19 @@ final class DetailImageViewModel: DetailImageViewModelType, DetailImageViewModel
     // MARK: - outputs
     var outputs: DetailImageViewModelTypeOutputs { return self }
     var imageURLString: Observable<String>
-    var isAddFavorites: Observable<Bool>
+    var isAddFavorites: Driver<Bool>
     
-    init(model: DetailImageModelType) {
-        let isAddFavorites: BehaviorRelay<Bool> = .init(value: model.isAddedFavorites())
-        self.imageURLString = .just(model.imageURLString)
+    init(localStorage: LocalStorageType, imageURLString: String) {
+        let isAddFavorites: BehaviorRelay<Bool> = .init(value: localStorage.isAddedFavorites(favoritesKey: imageURLString))
+        let imageURLString: BehaviorRelay<String> = .init(value: imageURLString)
+        self.imageURLString = imageURLString.asObservable()
         
         //즐겨찾기 업데이트
-        favoriteButtonAction
-            .map { model.updateFavorites() }
+        favoriteButtonAction.withLatestFrom(imageURLString)
+            .map { localStorage.updateFavorites(favoritesKey: $0) }
             .bind(to: isAddFavorites)
             .disposed(by: disposeBag)
         
-        self.isAddFavorites = isAddFavorites.asObservable()
+        self.isAddFavorites = isAddFavorites.asDriver(onErrorDriveWith: .empty())
     }
 }

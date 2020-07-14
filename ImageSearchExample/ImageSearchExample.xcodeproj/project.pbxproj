@@ -22,7 +22,6 @@
 		FC697F3C24A0FD530050C154 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC697F3B24A0FD530050C154 /* ImageCollectionViewCell.swift */; };
 		FC697F3E24A0FD610050C154 /* DetailImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC697F3D24A0FD610050C154 /* DetailImageViewController.swift */; };
 		FC697F4024A0FD6D0050C154 /* DetailImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC697F3F24A0FD6D0050C154 /* DetailImageViewModel.swift */; };
-		FC697F4224A0FD760050C154 /* DetailImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC697F4124A0FD760050C154 /* DetailImageModel.swift */; };
 		FC697F4824A0FE220050C154 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC697F4724A0FE220050C154 /* Extensions.swift */; };
 		FC697F4A24A0FE320050C154 /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC697F4924A0FE320050C154 /* ViewModelBindableType.swift */; };
 		FC697F4C24A0FE420050C154 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC697F4B24A0FE420050C154 /* LocalStorage.swift */; };
@@ -84,7 +83,6 @@
 		FC697F3B24A0FD530050C154 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		FC697F3D24A0FD610050C154 /* DetailImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageViewController.swift; sourceTree = "<group>"; };
 		FC697F3F24A0FD6D0050C154 /* DetailImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageViewModel.swift; sourceTree = "<group>"; };
-		FC697F4124A0FD760050C154 /* DetailImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageModel.swift; sourceTree = "<group>"; };
 		FC697F4724A0FE220050C154 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		FC697F4924A0FE320050C154 /* ViewModelBindableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindableType.swift; sourceTree = "<group>"; };
 		FC697F4B24A0FE420050C154 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
@@ -268,7 +266,6 @@
 			children = (
 				FC697F3D24A0FD610050C154 /* DetailImageViewController.swift */,
 				FC697F3F24A0FD6D0050C154 /* DetailImageViewModel.swift */,
-				FC697F4124A0FD760050C154 /* DetailImageModel.swift */,
 			);
 			path = DetailImage;
 			sourceTree = "<group>";
@@ -504,6 +501,8 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
@@ -517,6 +516,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
@@ -589,11 +590,7 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-			);
-			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
@@ -610,7 +607,6 @@
 			files = (
 				FC697F5224A0FE830050C154 /* SearchResponse.swift in Sources */,
 				FC697F4C24A0FE420050C154 /* LocalStorage.swift in Sources */,
-				FC697F4224A0FD760050C154 /* DetailImageModel.swift in Sources */,
 				FC697F4824A0FE220050C154 /* Extensions.swift in Sources */,
 				FC697F5424A0FE8E0050C154 /* Image.swift in Sources */,
 				FC697F5024A0FE670050C154 /* Networking.swift in Sources */,

@@ -10,34 +10,34 @@ import Foundation
 import XCTest
 import RxSwift
 import RxCocoa
+import Nimble
 
 @testable import ImageSearchExample
 
 final class DetailImageModelTests: XCTestCase {
     var disposeBag = DisposeBag()
     var localStorage: LocalStorageType!
-    var model: DetailImageModelType!
     var viewModel: DetailImageViewModel!
+    let dummyData = SearchImageDummy()
     
     override func setUp() {
         super.setUp()
-        let dummyData = SearchImageDummy()
         self.localStorage = LocalStorageFake()
-        self.model = DetailImageModel(localStorage: localStorage, imageURLString: dummyData.imageURLString)
-        self.viewModel = DetailImageViewModel(model: self.model)
+        self.viewModel = DetailImageViewModel(localStorage: localStorage, imageURLString: dummyData.imageURLString)
     }
     
     override func tearDown() {
         super.tearDown()
         print("tearDown")
+        disposeBag = DisposeBag()
     }
     
     // Model Tests
     func testUpdateFavorites() {
-        _ = model.updateFavorites()
-        XCTAssertTrue(model.isAddedFavorites(), "Duplicate Check Error")
-        _ = model.updateFavorites()
-        XCTAssertFalse(model.isAddedFavorites(), "Added Favorites Check Error")
+        _ = localStorage.updateFavorites(favoritesKey: dummyData.imageURLString)
+        XCTAssertTrue(localStorage.isAddedFavorites(favoritesKey: dummyData.imageURLString), "Duplicate Check Error")
+        _ = localStorage.updateFavorites(favoritesKey: dummyData.imageURLString)
+        XCTAssertFalse(localStorage.isAddedFavorites(favoritesKey: dummyData.imageURLString), "Added Favorites Check Error")
     }
     
     // ViewModel Tests
@@ -51,7 +51,7 @@ final class DetailImageModelTests: XCTestCase {
     func testFavoriteButtonAction() {
         viewModel.inputs.favoriteButtonAction.accept(Void())
         viewModel.outputs.isAddFavorites
-            .subscribe(onNext: { isAddFavorites in
+            .drive(onNext: { isAddFavorites in
                 XCTAssertTrue(isAddFavorites, "favoriteButton Action Error")
             })
             .disposed(by: disposeBag)

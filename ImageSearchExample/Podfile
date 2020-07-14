@@ -21,6 +21,10 @@ target 'ImageSearchExample' do
   # Other
   pod 'SwiftLint'
 
+  # TestingPod
+  pod 'Quick'
+  pod 'Nimble'
+
   target 'ImageSearchExampleTests' do
     inherit! :search_paths
     # Pods for testing

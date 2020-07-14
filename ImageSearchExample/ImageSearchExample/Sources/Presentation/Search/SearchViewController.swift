@@ -46,10 +46,12 @@ final class SearchViewController: UIViewController, ViewModelBindableType {
             .disposed(by: disposeBag)
         
         viewModel.outputs.imagesCellItems
-            .bind(to: imagesCollectionView.rx
-                .items(cellIdentifier: String(describing: ImageCollectionViewCell.self),
-                       cellType: ImageCollectionViewCell.self)) { _, item, cell in
-                        cell.setImage(urlString: item.imageURL)
+            .drive(imagesCollectionView.rx.items) { collctionView, item, data in
+                let indexPath = IndexPath(item: item, section: 0)
+                let cell = collctionView.dequeueReusableCell(withReuseIdentifier: .init(describing: ImageCollectionViewCell.self),
+                                                             for: indexPath) as! ImageCollectionViewCell
+                cell.setImage(urlString: data.imageURL)
+                return cell
         }
         .disposed(by: disposeBag)
         
@@ -70,8 +72,7 @@ final class SearchViewController: UIViewController, ViewModelBindableType {
                     String(describing: DetailImageViewController.self)) as? DetailImageViewController
                     else { return }
                 let imageURLString = $0.1[$0.0.item].imageURL
-                let model = DetailImageModel(imageURLString: imageURLString)
-                detailImageViewController.bind(viewModel: DetailImageViewModel(model: model))
+                detailImageViewController.bind(viewModel: DetailImageViewModel(localStorage: LocalStorage(), imageURLString: imageURLString))
                 self.navigationController?.pushViewController(detailImageViewController, animated: true)
             })
             .disposed(by: disposeBag)

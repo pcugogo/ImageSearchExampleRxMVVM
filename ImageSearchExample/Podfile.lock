@@ -4,6 +4,8 @@ PODS:
   - Kingfisher (5.13.4):
     - Kingfisher/Core (= 5.13.4)
   - Kingfisher/Core (5.13.4)
+  - Nimble (8.0.7)
+  - Quick (2.2.0)
   - RxAlamofire (5.2.0):
     - RxAlamofire/Core (= 5.2.0)
   - RxAlamofire/Core (5.2.0):
@@ -29,6 +31,8 @@ PODS:
 
 DEPENDENCIES:
   - Kingfisher (~> 5.0)
+  - Nimble
+  - Quick
   - RxAlamofire
   - RxCocoa (~> 5)
   - RxDataSources
@@ -42,6 +46,8 @@ SPEC REPOS:
     - Alamofire
     - Differentiator
     - Kingfisher
+    - Nimble
+    - Quick
     - RxAlamofire
     - RxCocoa
     - RxDataSources
@@ -55,6 +61,8 @@ SPEC CHECKSUMS:
   Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   Kingfisher: d2279a7abece3c7f25a80cd2b7f363ca5cf3f44c
+  Nimble: a73af6ecd4c9106f434f3d55fc54570be3739e0b
+  Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
   RxAlamofire: 878eb06baefd76df6062889be11592434e6c4a95
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
@@ -64,6 +72,6 @@ SPEC CHECKSUMS:
   RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: 271bab9ba8b51846b437f5c735fc2df7b364b772
+PODFILE CHECKSUM: 5447ad0ba4f6bd88f8f7ece36e1a587b9d74a2d5
 
 COCOAPODS: 1.5.3

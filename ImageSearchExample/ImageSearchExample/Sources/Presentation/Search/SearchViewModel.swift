@@ -17,7 +17,7 @@ protocol SearchViewModelTypeInputs {
 }
 
 protocol SearchViewModelTypeOutputs {
-    var imagesCellItems: Observable<[Image]> { get }
+    var imagesCellItems: Driver<[Image]> { get }
     var errorMessage: Signal<String> { get }
 }
 
@@ -37,7 +37,7 @@ final class SearchViewModel: SearchViewModelType, SearchViewModelTypeInputs, Sea
     
     // MARK: - Output Sources
     var outputs: SearchViewModelTypeOutputs { return self }
-    let imagesCellItems: Observable<[Image]>
+    let imagesCellItems: Driver<[Image]>
     let errorMessage: Signal<String>
     
     init(model: SearchModelType = SearchModel(apiService: APIService())) {
@@ -119,6 +119,6 @@ final class SearchViewModel: SearchViewModelType, SearchViewModelTypeInputs, Sea
         .asSignal(onErrorSignalWith: .empty())
         
         self.errorMessage = errorMessage
-        self.imagesCellItems = imagesCellItems.asObservable()
+        self.imagesCellItems = imagesCellItems.asDriver(onErrorDriveWith: .empty())
     }
 }

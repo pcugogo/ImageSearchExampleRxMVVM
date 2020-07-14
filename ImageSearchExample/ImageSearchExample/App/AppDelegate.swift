@@ -25,7 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             fatalError()
         }
-        
         return true
     }
 
