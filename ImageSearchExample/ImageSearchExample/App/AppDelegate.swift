@@ -14,10 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let searchViewModel: SearchViewModelType = SearchViewModel()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let searchNavigationController = storyboard.instantiateViewController(withIdentifier: "SearchNavigationController") as! UINavigationController 
         var searchViewController = searchNavigationController.viewControllers.first as! SearchViewController
+        let searchViewModel: SearchViewModelType = SearchViewModel()
         searchViewController.bind(viewModel: searchViewModel)
         window?.rootViewController = searchNavigationController
         window?.makeKeyAndVisible()
