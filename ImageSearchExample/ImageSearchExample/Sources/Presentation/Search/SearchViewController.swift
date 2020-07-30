@@ -22,6 +22,7 @@ final class SearchViewController: UIViewController, ViewModelBindableType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindViewModel()
     }
     
     required init?(coder aDecoder: NSCoder) {

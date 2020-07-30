@@ -4,8 +4,8 @@ PODS:
   - Kingfisher (5.13.4):
     - Kingfisher/Core (= 5.13.4)
   - Kingfisher/Core (5.13.4)
-  - Nimble (8.0.7)
-  - Quick (2.2.0)
+  - Nimble (8.1.1)
+  - Quick (3.0.0)
   - RxAlamofire (5.2.0):
     - RxAlamofire/Core (= 5.2.0)
   - RxAlamofire/Core (5.2.0):
@@ -61,8 +61,8 @@ SPEC CHECKSUMS:
   Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   Kingfisher: d2279a7abece3c7f25a80cd2b7f363ca5cf3f44c
-  Nimble: a73af6ecd4c9106f434f3d55fc54570be3739e0b
-  Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
+  Nimble: 5f8a2fb6fa343a7242dfdd9d42f7267419d464b2
+  Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
   RxAlamofire: 878eb06baefd76df6062889be11592434e6c4a95
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
