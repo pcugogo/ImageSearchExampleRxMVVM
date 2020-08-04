@@ -73,7 +73,10 @@ final class SearchViewController: UIViewController, ViewModelBindableType {
                     String(describing: DetailImageViewController.self)) as? DetailImageViewController
                     else { return }
                 let imageURLString = $0.1[$0.0.item].imageURL
-                detailImageViewController.bind(viewModel: DetailImageViewModel(localStorage: LocalStorage(), imageURLString: imageURLString))
+                detailImageViewController.bind(viewModel: DetailImageViewModel(
+                    imageFavoritesStorage: UserDefaultsImageFavoritesStorage(),
+                    imageURLString: imageURLString)
+                )
                 self.navigationController?.pushViewController(detailImageViewController, animated: true)
             })
             .disposed(by: disposeBag)

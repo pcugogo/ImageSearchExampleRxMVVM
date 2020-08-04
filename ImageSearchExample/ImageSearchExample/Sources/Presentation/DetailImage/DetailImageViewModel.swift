@@ -20,12 +20,12 @@ protocol DetailImageViewModelTypeOutputs {
     var isAddFavorites: Driver<Bool> { get }
 }
 
-protocol DetailImageViewModelType {
+protocol DetailImageViewModelType: DetailImageViewModelTypeInputs, DetailImageViewModelTypeOutputs {
     var inputs: DetailImageViewModelTypeInputs { get }
     var outputs: DetailImageViewModelTypeOutputs { get }
 }
 
-final class DetailImageViewModel: DetailImageViewModelType, DetailImageViewModelTypeInputs, DetailImageViewModelTypeOutputs {
+final class DetailImageViewModel: DetailImageViewModelType {
     
     private var disposeBag = DisposeBag()
     
@@ -37,14 +37,14 @@ final class DetailImageViewModel: DetailImageViewModelType, DetailImageViewModel
     var imageURLString: Observable<String>
     var isAddFavorites: Driver<Bool>
     
-    init(localStorage: LocalStorageType, imageURLString: String) {
-        let isAddFavorites: BehaviorRelay<Bool> = .init(value: localStorage.isAddedFavorites(favoritesKey: imageURLString))
+    init(imageFavoritesStorage: ImageFavoritesStorage, imageURLString: String) {
+        let isAddFavorites: BehaviorRelay<Bool> = .init(value: imageFavoritesStorage.isAddedFavorites(favoritesKey: imageURLString))
         let imageURLString: BehaviorRelay<String> = .init(value: imageURLString)
         self.imageURLString = imageURLString.asObservable()
         
         //즐겨찾기 업데이트
         favoriteButtonAction.withLatestFrom(imageURLString)
-            .map { localStorage.updateFavorites(favoritesKey: $0) }
+            .map { imageFavoritesStorage.updateFavorites(favoritesKey: $0) }
             .bind(to: isAddFavorites)
             .disposed(by: disposeBag)
         

@@ -21,12 +21,12 @@ protocol SearchViewModelTypeOutputs {
     var errorMessage: Signal<String> { get }
 }
 
-protocol SearchViewModelType {
+protocol SearchViewModelType: SearchViewModelTypeInputs, SearchViewModelTypeOutputs {
     var inputs: SearchViewModelTypeInputs { get }
     var outputs: SearchViewModelTypeOutputs { get }
 }
 
-final class SearchViewModel: SearchViewModelType, SearchViewModelTypeInputs, SearchViewModelTypeOutputs {
+final class SearchViewModel: SearchViewModelType {
     
     private var disposeBag: DisposeBag = DisposeBag()
     

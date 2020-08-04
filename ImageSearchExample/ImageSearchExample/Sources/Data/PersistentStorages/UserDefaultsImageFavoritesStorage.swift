@@ -1,5 +1,5 @@
 //
-//  LocalStorage.swift
+//  UserDefaultsImageFavoritesStorage.swift
 //  ImageSearchExample
 //
 //  Created by ChanWook Park on 07/06/2020.
@@ -8,17 +8,7 @@
 
 import Foundation
 
-protocol LocalStorageType {
-    typealias IsDuplicate = Bool
-    
-    var favorites: [String] { get }
-    func add(favoritesKey: String)
-    func remove(favoritesKey: String)
-    func isAddedFavorites(favoritesKey: String) -> Bool
-    func updateFavorites(favoritesKey: String) -> IsDuplicate
-}
-
-struct LocalStorage: LocalStorageType {
+struct UserDefaultsImageFavoritesStorage: ImageFavoritesStorage {
     private enum Key: String {
         case favorites
     }

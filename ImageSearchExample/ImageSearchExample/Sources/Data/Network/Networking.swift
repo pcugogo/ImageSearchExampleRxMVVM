@@ -39,7 +39,7 @@ protocol APIServiceType {
     func imageSearch(keyword: String, page: Int, numberOfImagesToLoad: Int) -> Single<ImageSearchResult<SearchResponse>>
 }
 
-class APIService: APIServiceType {
+struct APIService: APIServiceType {
     func imageSearch(keyword: String, page: Int, numberOfImagesToLoad: Int) -> Single<ImageSearchResult<SearchResponse>> {
         let api = API.getImages(query: keyword, page: page, numberOfImagesToLoad: numberOfImagesToLoad)
         return Single.create { single in

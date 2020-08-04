@@ -18,12 +18,12 @@ target 'ImageSearchExample' do
   # Image
   pod 'Kingfisher', '~> 5.0'
 
-  # Other
-  pod 'SwiftLint'
-
   # TestingPod
   pod 'Quick'
   pod 'Nimble'
+
+  # Other
+  pod 'SwiftLint'
 
   target 'ImageSearchExampleTests' do
     inherit! :search_paths
