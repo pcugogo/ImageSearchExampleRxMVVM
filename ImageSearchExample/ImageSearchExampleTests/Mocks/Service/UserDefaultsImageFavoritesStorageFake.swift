@@ -10,7 +10,7 @@ import Foundation
 
 @testable import ImageSearchExample
 
-final class LocalStorageFake: LocalStorageType {
+final class UserDefaultsImageFavoritesStorageFake: ImageFavoritesStorage {
     var userDefaultsFavorites: [String] = .init()
     
     var favorites: [String] {

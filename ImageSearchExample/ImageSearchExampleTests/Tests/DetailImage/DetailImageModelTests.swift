@@ -16,14 +16,14 @@ import Nimble
 
 final class DetailImageModelTests: XCTestCase {
     var disposeBag = DisposeBag()
-    var localStorage: LocalStorageType!
+    var imageFavoritesStorage: ImageFavoritesStorage!
     var viewModel: DetailImageViewModel!
     let dummyData = SearchImageDummy()
     
     override func setUp() {
         super.setUp()
-        self.localStorage = LocalStorageFake()
-        self.viewModel = DetailImageViewModel(localStorage: localStorage, imageURLString: dummyData.imageURLString)
+        self.imageFavoritesStorage = UserDefaultsImageFavoritesStorageFake()
+        self.viewModel = DetailImageViewModel(imageFavoritesStorage: imageFavoritesStorage, imageURLString: dummyData.imageURLString)
     }
     
     override func tearDown() {
@@ -34,10 +34,10 @@ final class DetailImageModelTests: XCTestCase {
     
     // Model Tests
     func testUpdateFavorites() {
-        _ = localStorage.updateFavorites(favoritesKey: dummyData.imageURLString)
-        XCTAssertTrue(localStorage.isAddedFavorites(favoritesKey: dummyData.imageURLString), "Duplicate Check Error")
-        _ = localStorage.updateFavorites(favoritesKey: dummyData.imageURLString)
-        XCTAssertFalse(localStorage.isAddedFavorites(favoritesKey: dummyData.imageURLString), "Added Favorites Check Error")
+        _ = imageFavoritesStorage.updateFavorites(favoritesKey: dummyData.imageURLString)
+        XCTAssertTrue(imageFavoritesStorage.isAddedFavorites(favoritesKey: dummyData.imageURLString), "Duplicate Check Error")
+        _ = imageFavoritesStorage.updateFavorites(favoritesKey: dummyData.imageURLString)
+        XCTAssertFalse(imageFavoritesStorage.isAddedFavorites(favoritesKey: dummyData.imageURLString), "Added Favorites Check Error")
     }
     
     // ViewModel Tests
