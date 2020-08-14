@@ -298,7 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				FC805F3124E6B9AC00AFC1E2 /* Extensions */,
-				FC805F3224E6B9B000AFC1E2 /* Flow */,
+				FC805F3224E6B9B000AFC1E2 /* Coordinator */,
 				FC805F3024E6B9A300AFC1E2 /* Protocols */,
 			);
 			path = Utils;
@@ -395,7 +395,7 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		FC805F3224E6B9B000AFC1E2 /* Flow */ = {
+		FC805F3224E6B9B000AFC1E2 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
 				FC805F4B24E6E83D00AFC1E2 /* Coordinator.swift */,
@@ -403,7 +403,7 @@
 				FC805F3724E6BA2000AFC1E2 /* StoryboardName.swift */,
 				FC805F4024E6BBBF00AFC1E2 /* PresentStyle.swift */,
 			);
-			path = Flow;
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		FC805F3B24E6BAC100AFC1E2 /* View */ = {
