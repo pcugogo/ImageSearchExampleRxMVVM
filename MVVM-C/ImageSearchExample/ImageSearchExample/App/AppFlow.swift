@@ -1,21 +1,32 @@
 //
-//  SearchMaker.swift
+//  AppFlow.swift
 //  ImageSearchExample
 //
-//  Created by ChanWook Park on 14/08/2020.
+//  Created by ChanWook Park on 15/08/2020.
 //  Copyright © 2020 ChanWookPark. All rights reserved.
 //
 
 import UIKit
 
-struct SearchMaker: ViewControllerMaker {
-    let searchUseCase: SearchUseCaseType
-
-    init(searchUseCase: SearchUseCaseType) {
-        self.searchUseCase = searchUseCase
+final class AppFlow: ViewConrollerFlowType {
+    enum Flow {
+        case search(useCase: SearchUseCaseType)
     }
     
-    func makeViewController() -> UIViewController {
+    private var flow: Flow
+
+    var viewController: UIViewController {
+        switch flow {
+        case .search(let useCase):
+            return makeSearchViewController(useCase: useCase)
+        }
+    }
+
+    init(flow: Flow) {
+        self.flow = flow
+    }
+    
+    private func makeSearchViewController(useCase: SearchUseCaseType) -> UIViewController {
         let storyboard = StoryboardName.main.instantiateStoryboard()
         guard let navigationController = storyboard.instantiateViewController(withIdentifier: "SearchNavigationController") as? UINavigationController else {
             fatalError()
@@ -23,7 +34,7 @@ struct SearchMaker: ViewControllerMaker {
         guard var searchViewController = navigationController.viewControllers.first as? SearchViewController else {
             fatalError()
         }
-        let viewModel: SearchViewModelType = SearchViewModel(searchUseCase: searchUseCase)
+        let viewModel: SearchViewModelType = SearchViewModel(searchUseCase: useCase)
         searchViewController.bind(viewModel: viewModel)
         return navigationController
     }

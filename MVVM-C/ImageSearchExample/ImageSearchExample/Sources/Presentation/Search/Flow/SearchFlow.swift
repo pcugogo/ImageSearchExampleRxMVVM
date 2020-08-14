@@ -1,21 +1,32 @@
 //
-//  DetailImageMaker.swift
+//  SearchFlow.swift
 //  ImageSearchExample
 //
-//  Created by ChanWook Park on 14/08/2020.
+//  Created by ChanWook Park on 15/08/2020.
 //  Copyright © 2020 ChanWookPark. All rights reserved.
 //
 
 import UIKit
 
-struct DetailImageMaker: ViewControllerMaker {
-    let imageURLString: String
-    
-    init(imageURLString: String) {
-        self.imageURLString = imageURLString
+final class SearchFlow: ViewConrollerFlowType {
+    enum Flow {
+        case detailImage(imageURLString: String)
     }
     
-    func makeViewController() -> UIViewController {
+    private var flow: Flow
+    
+    var viewController: UIViewController {
+        switch flow {
+        case .detailImage(let imageURLString):
+            return detailImageViewController(imageURLString: imageURLString)
+        }
+    }
+    
+    init(flow: Flow) {
+        self.flow = flow
+    }
+    
+    private func detailImageViewController(imageURLString: String) -> UIViewController {
         let storyboard = StoryboardName.main.instantiateStoryboard()
         guard var detailImageViewController = storyboard.instantiateViewController(withIdentifier:
             String(describing: DetailImageViewController.self)) as? DetailImageViewController
