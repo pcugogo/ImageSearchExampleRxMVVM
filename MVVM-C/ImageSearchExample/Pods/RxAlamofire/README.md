@@ -3,7 +3,7 @@ RxAlamofire
 
 RxAlamofire is a [RxSwift](https://github.com/ReactiveX/RxSwift) wrapper around the elegant HTTP networking in Swift [Alamofire](https://github.com/Alamofire/Alamofire).
 
-[![CircleCI](https://img.shields.io/circleci/project/github/RxSwiftCommunity/RxAlamofire/master.svg)](https://circleci.com/gh/RxSwiftCommunity/RxAlamofire/tree/master)
+![Create release](https://github.com/RxSwiftCommunity/RxAlamofire/workflows/Create%20release/badge.svg)
 [![Version](https://img.shields.io/cocoapods/v/RxAlamofire.svg?style=flat)](http://cocoapods.org/pods/RxAlamofire)
 [![License](https://img.shields.io/cocoapods/l/RxAlamofire.svg?style=flat)](http://cocoapods.org/pods/RxAlamofire)
 [![Platform](https://img.shields.io/cocoapods/p/RxAlamofire.svg?style=flat)](http://cocoapods.org/pods/RxAlamofire)
@@ -50,6 +50,11 @@ let stringURL = ""
 
 // MARK: URLSession simple and fast
 let session = URLSession.shared()
+
+_ = session.rx
+    .response(.get, stringURL)
+    .observeOn(MainScheduler.instance)
+    .subscribe { print($0) }
 
 _ = session.rx
     .json(.get, stringURL)
@@ -103,28 +108,28 @@ _ = request(.get, stringURL)
     .subscribe { print($0) }
 
 
-// MARK: Alamofire manager
-// same methods with any alamofire manager
+// MARK: Alamofire Session
+// same methods with any Alamofire Session
 
-let manager = SessionManager.default
+let session = Session.default
 
 // simple case
-_ = manager.rx.json(.get, stringURL)
+_ = session.rx.json(.get, stringURL)
     .observeOn(MainScheduler.instance)
     .subscribe { print($0) }
 
 // URLHTTPResponse + JSON
-_ = manager.rx.responseJSON(.get, stringURL)
+_ = session.rx.responseJSON(.get, stringURL)
     .observeOn(MainScheduler.instance)
     .subscribe { print($0) }
 
 // URLHTTPResponse + String
-_ = manager.rx.responseString(.get, stringURL)
+_ = session.rx.responseString(.get, stringURL)
     .observeOn(MainScheduler.instance)
     .subscribe { print($0) }
 
 // URLHTTPResponse + Validation + JSON
-_ = manager.rx.request(.get, stringURL)
+_ = session.rx.request(.get, stringURL)
     .validate(statusCode: 200 ..< 300)
     .validate(contentType: ["text/json"])
     .json()
@@ -132,7 +137,7 @@ _ = manager.rx.request(.get, stringURL)
     .subscribe { print($0) }
 
 // URLHTTPResponse + Validation + URLHTTPResponse + JSON
-_ = manager.rx.request(.get, stringURL)
+_ = session.rx.request(.get, stringURL)
     .validate(statusCode: 200 ..< 300)
     .validate(contentType: ["text/json"])
     .responseJSON()
@@ -140,7 +145,7 @@ _ = manager.rx.request(.get, stringURL)
     .subscribe { print($0) }
 
 // URLHTTPResponse + Validation + URLHTTPResponse + String + Progress
-_ = manager.rx.request(.get, stringURL)
+_ = session.rx.request(.get, stringURL)
     .validate(statusCode: 200 ..< 300)
     .validate(contentType: ["text/something"])
     .flatMap { request -> Observable<(String?, RxProgress)> in
@@ -151,6 +156,17 @@ _ = manager.rx.request(.get, stringURL)
         let progressPart = request.rx.progress()
         return Observable.combineLatest(stringPart, progressPart) { ($0, $1) }
     }
+    .observeOn(MainScheduler.instance)
+    .subscribe { print($0) }
+
+// Interceptor + URLHTTPResponse + Validation + JSON
+let adapter = // Some RequestAdapter
+let retrier = // Some RequestRetrier
+let interceptor = Interceptor(adapter: adapter, retrier: retrier)
+_ = session.rx.request(.get, stringURL)
+    .validate()
+    .validate(contentType: ["text/json"])
+    .responseJSON()
     .observeOn(MainScheduler.instance)
     .subscribe { print($0) }
 ```
@@ -172,7 +188,7 @@ pod 'RxAlamofire'
 Add following to `Cartfile`:
 
 ```
-github "RxSwiftCommunity/RxAlamofire" ~> 5.2
+github "RxSwiftCommunity/RxAlamofire" ~> 5.3
 ```
 
 ### Swift Package manager
@@ -189,7 +205,7 @@ let package = Package(
 
         dependencies: [
             .package(url: "https://github.com/RxSwiftCommunity/RxAlamofire.git",
-                     from: "5.2.0"),
+                     from: "5.3.1"),
         ],
 
         targets: [
