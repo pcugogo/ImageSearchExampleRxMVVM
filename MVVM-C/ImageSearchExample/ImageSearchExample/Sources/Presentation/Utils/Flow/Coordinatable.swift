@@ -12,4 +12,3 @@ protocol Coordinatable {
     associatedtype Target
     func start(target: Target, presentStyle style: PresentStyle, animated: Bool)
 }
-
