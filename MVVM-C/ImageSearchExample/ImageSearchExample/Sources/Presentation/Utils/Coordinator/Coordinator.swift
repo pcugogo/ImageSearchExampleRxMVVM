@@ -9,7 +9,9 @@
 import Foundation
 
 struct Coordinator {
-    func start(flow: ViewControllerFlowType, presentStyle style: PresentStyle, animated: Bool) {
-        style.present(targetViewController: flow.viewController, animated: animated)
+    static func start(flow: ViewControllerFlowType,
+                      presentStyle presenter: PresentStyle,
+                      animated: Bool) {
+        presenter.present(targetViewController: flow.viewController, animated: animated)
     }
 }

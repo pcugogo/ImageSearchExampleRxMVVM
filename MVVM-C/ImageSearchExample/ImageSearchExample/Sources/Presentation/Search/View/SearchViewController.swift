@@ -75,8 +75,7 @@ final class SearchViewController: UIViewController, ViewModelBindable {
                 guard let self = self else { return }
                 let imageURLString = sections[0].items[indexPath.item].imageURL
                 let flow = SearchFlow(target: .detailImage(imageURLString: imageURLString))
-                let coordinator = Coordinator()
-                coordinator.start(flow: flow,
+                Coordinator.start(flow: flow,
                                   presentStyle: .push(navigationController: self.navigationController!),
                                   animated: true)
             })

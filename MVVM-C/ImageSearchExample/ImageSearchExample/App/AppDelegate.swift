@@ -14,8 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let flow = AppFlow(target: .search(useCase: SearchUseCase(apiService: APIService())))
-        let coordinator = Coordinator()
-        coordinator.start(flow: flow, presentStyle: .root(window: window!), animated: true)
+        Coordinator.start(flow: flow, presentStyle: .root(window: window!), animated: true)
         return true
     }
 
