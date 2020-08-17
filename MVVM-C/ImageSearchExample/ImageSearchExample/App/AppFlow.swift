@@ -8,22 +8,22 @@
 
 import UIKit
 
-final class AppFlow: ViewConrollerFlowType {
-    enum Flow {
+final class AppFlow: ViewControllerFlow {
+    enum Target {
         case search(useCase: SearchUseCaseType)
     }
     
-    private var flow: Flow
+    var target: Target
 
     var viewController: UIViewController {
-        switch flow {
+        switch target {
         case .search(let useCase):
             return makeSearchViewController(useCase: useCase)
         }
     }
 
-    init(flow: Flow) {
-        self.flow = flow
+    init(target: Target) {
+        self.target = target
     }
     
     private func makeSearchViewController(useCase: SearchUseCaseType) -> UIViewController {

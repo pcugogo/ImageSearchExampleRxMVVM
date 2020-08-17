@@ -8,22 +8,22 @@
 
 import UIKit
 
-final class SearchFlow: ViewConrollerFlowType {
-    enum Flow {
+final class SearchFlow: ViewControllerFlow {
+    enum Target {
         case detailImage(imageURLString: String)
     }
     
-    private var flow: Flow
+    var target: Target
     
     var viewController: UIViewController {
-        switch flow {
+        switch target {
         case .detailImage(let imageURLString):
             return detailImageViewController(imageURLString: imageURLString)
         }
     }
     
-    init(flow: Flow) {
-        self.flow = flow
+    init(target: Target) {
+        self.target = target
     }
     
     private func detailImageViewController(imageURLString: String) -> UIViewController {
