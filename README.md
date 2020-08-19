@@ -9,7 +9,6 @@
 ## Architecture Pattern
 
 - MVVM
-- MVVM-C
 
 ## Reactive
 
