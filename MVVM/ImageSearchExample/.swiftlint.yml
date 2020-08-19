@@ -1,9 +1,0 @@
-disabled_rules:
-- colon
-- trailing_whitespace
-- line_length
-- function_body_length
-- force_cast
-excluded:
-- Pods
-
