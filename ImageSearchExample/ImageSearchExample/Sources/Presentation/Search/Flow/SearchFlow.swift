@@ -18,7 +18,7 @@ struct SearchFlow: ViewControllerFlow {
     var viewController: UIViewController {
         switch target {
         case .detailImage(let imageURLString):
-            return detailImageViewController(imageURLString: imageURLString)
+            return makeDetailImageViewController(imageURLString: imageURLString)
         }
     }
     
@@ -26,7 +26,7 @@ struct SearchFlow: ViewControllerFlow {
         self.target = target
     }
     
-    private func detailImageViewController(imageURLString: String) -> UIViewController {
+    private func makeDetailImageViewController(imageURLString: String) -> UIViewController {
         let storyboard = StoryboardName.main.instantiateStoryboard()
         guard var detailImageViewController = storyboard.instantiateViewController(withIdentifier:
             String(describing: DetailImageViewController.self)) as? DetailImageViewController
