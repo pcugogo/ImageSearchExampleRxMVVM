@@ -28,7 +28,7 @@ enum DataResponseError: Error {
         case .url:
             return "url is empty"
         case .request:
-            return "request faild - 깃헙 푸쉬를 위해 restAPIKey를 지웠습니다."
+            return "request faild"
         case .decoding:
             return "decoding error"
         }

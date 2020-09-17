@@ -15,7 +15,7 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     
     func setImage(urlString: String) {
         if let imageURL = URL(string: urlString) {
-            self.imageView.kf.setImage(with: imageURL)
+            self.imageView.kf.setImage(with: imageURL, options: [.transition(ImageTransition.fade(0.3))])
         }
     }
 }

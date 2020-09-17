@@ -15,14 +15,17 @@ import RxDataSources
 
 final class SearchViewController: UIViewController, ViewModelBindable {
     
+    typealias ImagesDataSource = RxCollectionViewSectionedReloadDataSource<ImagesSection>
+    
     var viewModel: SearchViewModelType!
     private var disposeBag = DisposeBag()
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var imagesCollectionView: UICollectionView!
     
-    private let imagesDataSource = RxCollectionViewSectionedReloadDataSource<ImagesSection>(configureCell: { _, collectionView, indexPath, data in
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ImageCollectionViewCell.self), for: indexPath) as? ImageCollectionViewCell else {
+    private let imagesDataSource = ImagesDataSource(configureCell: { _, collectionView, indexPath, data in
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ImageCollectionViewCell.self),
+                                                            for: indexPath) as? ImageCollectionViewCell else {
             fatalError()
         }
         cell.setImage(urlString: data.imageURL)
@@ -77,8 +80,9 @@ final class SearchViewController: UIViewController, ViewModelBindable {
             .subscribe(onNext: { [weak self] indexPath, sections in
                 guard let self = self else { return }
                 let imageURLString = sections[0].items[indexPath.item].imageURL
-                let flow = SearchFlow(target: .detailImage(imageURLString: imageURLString))
-                Coordinator.start(flow: flow,
+                let detailImageViewController = SearchBuilder(target: .detailImage(imageURLString: imageURLString))
+                    .viewController()
+                Coordinator.start(target: detailImageViewController,
                                   presentStyle: .push(navigationController: self.navigationController!),
                                   animated: true)
             })
