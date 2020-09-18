@@ -16,8 +16,9 @@ final class SearchBuilder: ViewControllerBuilder {
     init(target: Target, dependency: Container = Container()) {
         super.init(dependency: dependency)
         switch target {
-        case .detailImage:
+        case .detailImage( let imageURLString):
             dependency.regist(type: ImageFavoritesStorageType.self) { _ in ImageFavoritesStorage() }
+            dependency.regist(type: String.self) { _ in imageURLString }
             dependency.regist(type: DetailImageViewModelType.self) {
                 DetailImageViewModel(imageFavoritesStorage: $0.resolve(type: ImageFavoritesStorageType.self)!,
                                      imageURLString: $0.resolve(type: String.self, name: "imageURLString")!)
