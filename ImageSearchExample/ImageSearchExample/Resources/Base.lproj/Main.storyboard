@@ -48,15 +48,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="9NS-zf-eRN">
-                                <rect key="frame" x="0.0" y="88" width="414" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="rgf-vS-JfY"/>
-                                </constraints>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ewg-TE-xTo">
-                                <rect key="frame" x="0.0" y="132" width="414" height="730"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="N8s-2d-T1C">
                                     <size key="itemSize" width="100" height="100"/>
@@ -95,19 +88,15 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="lga-qO-vgN" firstAttribute="bottom" secondItem="Ewg-TE-xTo" secondAttribute="bottom" id="0Gd-0B-Utq"/>
-                            <constraint firstItem="Ewg-TE-xTo" firstAttribute="top" secondItem="9NS-zf-eRN" secondAttribute="bottom" id="84U-P5-NN9"/>
                             <constraint firstItem="Ewg-TE-xTo" firstAttribute="leading" secondItem="lga-qO-vgN" secondAttribute="leading" id="Ns2-O4-Z3E"/>
-                            <constraint firstItem="9NS-zf-eRN" firstAttribute="trailing" secondItem="lga-qO-vgN" secondAttribute="trailing" id="ewZ-Ib-w2w"/>
-                            <constraint firstItem="9NS-zf-eRN" firstAttribute="leading" secondItem="lga-qO-vgN" secondAttribute="leading" id="gaJ-rC-Z2B"/>
-                            <constraint firstItem="9NS-zf-eRN" firstAttribute="top" secondItem="lga-qO-vgN" secondAttribute="top" id="sEC-zA-bb3"/>
                             <constraint firstItem="lga-qO-vgN" firstAttribute="trailing" secondItem="Ewg-TE-xTo" secondAttribute="trailing" id="wUM-I7-VRt"/>
+                            <constraint firstItem="Ewg-TE-xTo" firstAttribute="top" secondItem="3NT-Ej-fU3" secondAttribute="top" id="zbj-5J-GQD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lga-qO-vgN"/>
                     </view>
                     <navigationItem key="navigationItem" title="이미지 검색" id="JAm-YI-RL7"/>
                     <connections>
                         <outlet property="imagesCollectionView" destination="Ewg-TE-xTo" id="bl1-c9-4pA"/>
-                        <outlet property="searchBar" destination="9NS-zf-eRN" id="aiK-bc-xvG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jpW-Bb-2TT" sceneMemberID="firstResponder"/>

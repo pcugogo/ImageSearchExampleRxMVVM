@@ -20,7 +20,12 @@ final class SearchViewController: UIViewController, ViewModelBindable {
     var viewModel: SearchViewModelType!
     private var disposeBag = DisposeBag()
     
-    @IBOutlet weak var searchBar: UISearchBar!
+    lazy var searchController: UISearchController = {
+        let searchController = UISearchController()
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        return searchController
+    }()
     @IBOutlet weak var imagesCollectionView: UICollectionView!
     
     private let imagesDataSource = ImagesDataSource(configureCell: { _, collectionView, indexPath, data in
@@ -35,22 +40,19 @@ final class SearchViewController: UIViewController, ViewModelBindable {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        searchBar.endEditing(true)
-    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     func bindViewModel() {
-        searchBar.rx.searchButtonClicked
+        searchController.searchBar.rx.searchButtonClicked
             .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
-            .withLatestFrom(searchBar.rx.text.orEmpty)
+            .withLatestFrom(searchController.searchBar.rx.text.orEmpty)
             .filterEmpty()
-            .do(onNext: {[weak self] _ in
+            .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                self.imagesCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+                self.searchController.dismiss(animated: true, completion: nil)
             })
             .bind(to: viewModel.inputs.searchButtonAction)
             .disposed(by: disposeBag)
