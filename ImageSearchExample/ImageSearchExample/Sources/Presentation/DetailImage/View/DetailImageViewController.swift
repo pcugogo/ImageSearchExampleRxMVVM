@@ -26,12 +26,12 @@ final class DetailImageViewController: UIViewController, ViewModelBindable {
 extension DetailImageViewController {
     func bindViewModel() {
         favoriteButton.rx.tap
-            .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+            .throttle(.milliseconds(300), latest: false, scheduler: MainScheduler.instance)
             .bind(to: viewModel.inputs.favoriteButtonAction)
             .disposed(by: disposeBag)
         
         viewModel.outputs.imageURLString
-            .subscribe(onNext: {[weak self] in
+            .subscribe(onNext: { [weak self] in
                 guard let self = self, let url = URL(string: $0) else { return }
                 self.detailImageView.kf.setImage(with: url)
             })

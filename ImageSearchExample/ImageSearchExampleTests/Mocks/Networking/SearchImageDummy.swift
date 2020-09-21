@@ -10,8 +10,12 @@ import Foundation
 
 @testable import ImageSearchExample
 
-struct SearchImageDummy {
-    let imageDataJSONString = """
+protocol DummyDataType {
+    var jsonString: String { get }
+}
+
+struct SearchImageDummy: DummyDataType {
+    let jsonString = """
     {
       "meta": {
         "total_count": 422583,
@@ -44,7 +48,7 @@ struct SearchImageDummy {
 """
     let imageURLString = "http://t1.daumcdn.net/news/201706/21/kedtv/20170621155930292vyyx.jpg"
     var count: Int {
-        let data = imageDataJSONString.data(using: .utf8)!
+        let data = jsonString.data(using: .utf8)!
         guard let imageSearchResponse = try? JSONDecoder().decode(SearchResponse.self, from: data) else { return 0 }
         return imageSearchResponse.meta.totalCount
     }

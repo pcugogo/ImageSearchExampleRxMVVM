@@ -8,10 +8,9 @@
 
 import Foundation
 import Alamofire
-import RxAlamofire
 import RxSwift
 
-typealias ImageSearchResult<T> = DataResponse<T, DataResponseError>
+typealias Result<T> = Single<DataResponse<T, DataResponseError>>
 
 enum DataResponse<T, U: Error> {
     case success(T)
@@ -36,35 +35,28 @@ enum DataResponseError: Error {
 }
 
 protocol APIServiceType {
-    func imageSearch(keyword: String, page: Int, numberOfImagesToLoad: Int) -> Single<ImageSearchResult<SearchResponse>>
+    func request<T: Codable>(api: API) -> Result<T>
 }
 
 struct APIService: APIServiceType {
-    func imageSearch(keyword: String, page: Int, numberOfImagesToLoad: Int) -> Single<ImageSearchResult<SearchResponse>> {
-        let api = API.getImages(query: keyword, page: page, numberOfImagesToLoad: numberOfImagesToLoad)
-        return Single.create { single in
-            let request = AF.request(api.url,
-                                     method: .get,
-                                     parameters: api.prameters,
-                                     encoding: URLEncoding.default,
-                                     headers: api.header)
-                .validate()
+    func request<T: Codable>(api: API) -> Result<T> {
+        return Single.create { emitter in
+            api
+                .dataRequest()
                 .responseJSON { response in
                     switch response.result {
                     case .success:
                         guard let data = response.data,
-                            let decodedResponse = try? JSONDecoder().decode(SearchResponse.self, from: data) else {
-                                single(.success(DataResponse.failure(DataResponseError.decoding)))
+                            let decodedResponse = try? JSONDecoder().decode(T.self, from: data) else {
+                                emitter(.error(DataResponseError.decoding))
                                 return
                         }
-                        single(.success(DataResponse.success(decodedResponse)))
+                        emitter(.success(DataResponse.success(decodedResponse)))
                     case .failure:
-                        single(.success(DataResponse.failure(DataResponseError.request)))
+                        emitter(.error(DataResponseError.request))
                     }
-            }
-            return Disposables.create {
-                request.cancel()
-            }
+                }
+            return Disposables.create()
         }
     }
 }

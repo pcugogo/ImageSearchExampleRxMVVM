@@ -6,6 +6,8 @@
 //  Copyright © 2020 ChanWookPark. All rights reserved.
 //
 
+import Foundation
+
 final class Container {
     private var registered: [String:Any] = [:]
     
