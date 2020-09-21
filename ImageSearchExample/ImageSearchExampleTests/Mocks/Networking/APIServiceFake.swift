@@ -1,5 +1,5 @@
 //
-//  APIServiceSpy.swift
+//  APIServiceFake.swift
 //  ImageSearchExampleTests
 //
 //  Created by ChanWook Park on 02/05/2020.
@@ -9,7 +9,7 @@
 import RxSwift
 @testable import ImageSearchExample
 
-final class APIServiceSpy: APIServiceType {
+final class APIServiceFake: APIServiceType {
     let dummyData: DummyDataType
     
     init(dummyData: DummyDataType) {

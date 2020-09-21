@@ -55,7 +55,7 @@ struct APIService: APIServiceType {
                     case .failure:
                         emitter(.error(DataResponseError.request))
                     }
-                }
+            }
             return Disposables.create()
         }
     }

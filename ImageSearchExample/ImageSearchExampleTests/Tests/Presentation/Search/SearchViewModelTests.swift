@@ -16,7 +16,7 @@ import Nimble
 
 final class SearchViewModelTests: XCTestCase {
     var disposeBag = DisposeBag()
-    let apiServiceSpy = APIServiceSpy(dummyData: SearchImageDummy())
+    let apiServiceSpy = APIServiceFake(dummyData: SearchImageDummy())
     var searchUseCase: SearchUseCaseType!
     var viewModel: SearchViewModelType!
     
