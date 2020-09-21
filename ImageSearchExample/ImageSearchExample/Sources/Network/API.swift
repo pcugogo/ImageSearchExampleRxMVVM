@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-enum API: Equatable {
+enum API {
     case getImages(query: String, page: Int, numberOfImagesToLoad: Int)
 }
 
@@ -49,9 +49,5 @@ extension API {
                    encoding: URLEncoding.default,
                    headers: self.header)
             .validate()
-    }
-    
-    func isEqual(with api: API) -> Bool {
-        return self.path == api.path
     }
 }
