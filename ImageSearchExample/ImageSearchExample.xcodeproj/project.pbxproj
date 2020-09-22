@@ -652,35 +652,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-ImageSearchExample/Pods-ImageSearchExample-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
-				"${BUILT_PRODUCTS_DIR}/RxOptional/RxOptional.framework",
-				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/RxViewController/RxViewController.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ImageSearchExample/Pods-ImageSearchExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxOptional.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxViewController.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ImageSearchExample/Pods-ImageSearchExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ImageSearchExample/Pods-ImageSearchExample-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ImageSearchExample/Pods-ImageSearchExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BE806DBBEF47C5758C495EBD /* [CP] Check Pods Manifest.lock */ = {
@@ -724,17 +705,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-ImageSearchExampleTests/Pods-ImageSearchExampleTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ImageSearchExampleTests/Pods-ImageSearchExampleTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ImageSearchExampleTests/Pods-ImageSearchExampleTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ImageSearchExampleTests/Pods-ImageSearchExampleTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ImageSearchExampleTests/Pods-ImageSearchExampleTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F92B4088B2372F1BEBBCFC3F /* [CP] Check Pods Manifest.lock */ = {

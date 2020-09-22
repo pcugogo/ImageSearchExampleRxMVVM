@@ -14,6 +14,9 @@ target 'ImageSearchExample' do
   pod 'RxOptional'
   pod 'RxDataSources'
 
+  # Network
+  pod 'Alamofire', '~> 5.2'
+
   # Image
   pod 'Kingfisher', '~> 5.0'
 

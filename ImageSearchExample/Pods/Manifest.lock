@@ -5,11 +5,6 @@ PODS:
     - Kingfisher/Core (= 5.14.1)
   - Kingfisher/Core (5.14.1)
   - Nimble (8.1.1)
-  - RxAlamofire (5.6.0):
-    - RxAlamofire/Core (= 5.6.0)
-  - RxAlamofire/Core (5.6.0):
-    - Alamofire (~> 5.1)
-    - RxSwift (~> 5.1)
   - RxCocoa (5.1.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -29,9 +24,9 @@ PODS:
   - SwiftLint (0.39.2)
 
 DEPENDENCIES:
+  - Alamofire (~> 5.2)
   - Kingfisher (~> 5.0)
   - Nimble
-  - RxAlamofire
   - RxCocoa (~> 5)
   - RxDataSources
   - RxOptional
@@ -40,12 +35,10 @@ DEPENDENCIES:
   - SwiftLint
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - Alamofire
+  https://github.com/CocoaPods/Specs.git:
     - Differentiator
     - Kingfisher
     - Nimble
-    - RxAlamofire
     - RxCocoa
     - RxDataSources
     - RxOptional
@@ -53,13 +46,14 @@ SPEC REPOS:
     - RxSwift
     - RxViewController
     - SwiftLint
+  trunk:
+    - Alamofire
 
 SPEC CHECKSUMS:
   Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   Kingfisher: 8050bc6f7f68cbf3908bd04df7ccbac188f6d6d6
   Nimble: 5f8a2fb6fa343a7242dfdd9d42f7267419d464b2
-  RxAlamofire: f34ddbab56fa2a36f99737f4d4ecc22288a1384f
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxOptional: b1fcd60856807a564c0215c2184b8d33e7826dc2
@@ -68,6 +62,6 @@ SPEC CHECKSUMS:
   RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: bf6e0206555f53b975c7bf620ec350e4c7222788
+PODFILE CHECKSUM: 4a02cabf1974e6597a6d803382806837fbb2f0a1
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.9.3
