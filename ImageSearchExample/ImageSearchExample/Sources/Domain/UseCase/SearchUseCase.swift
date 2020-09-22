@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 
 protocol SearchUseCaseType {
-    func searchImage(keyword: String, isNextPage: Bool) -> Result<SearchResponse>
+    func searchImage(keyword: String, isNextPage: Bool) -> NetworkResult<SearchResponse>
 }
 
 final class SearchUseCase: SearchUseCaseType {
@@ -23,7 +23,7 @@ final class SearchUseCase: SearchUseCaseType {
         self.apiService = apiService
     }
     
-    func searchImage(keyword: String, isNextPage: Bool) -> Result<SearchResponse> {
+    func searchImage(keyword: String, isNextPage: Bool) -> NetworkResult<SearchResponse> {
         currentPage = isNextPage ? currentPage + 1 : 1
         return apiService.request(api: API.getImages(query: keyword, page: currentPage, numberOfImagesToLoad: 30))
     }

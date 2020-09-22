@@ -31,12 +31,12 @@ final class SearchViewModelTests: XCTestCase {
         print("tearDown")
     }
     
-    func testSearchAction() {
+    func testSearchViewModel_searchAction() {
         var emitCount = 0
         viewModel.outputs.imagesCellItems
             .drive(onNext: { imageDatas in
-                if emitCount == 1 { //imagesCellItems: BehaviorRelay 초기 값 패스
-                    expect(imageDatas.isEmpty).to(beFalse())
+                if emitCount == 1 { //imagesCellItems: BehaviorRelay 빈 초기값 패스
+                    expect(imageDatas[0].items[0].displaySitename).to(equal("DummyTest"))
                 }
                 emitCount += 1
             })
@@ -47,22 +47,20 @@ final class SearchViewModelTests: XCTestCase {
             .disposed(by: disposeBag)
     }
     
-    func testMoreFetch() {
+    func testSearchViewModel_moreFetch() {
         viewModel.outputs.imagesCellItems
             .drive(onNext: { imageDatas in
                 let searchImageDummy = SearchImageDummy()
-                if imageDatas.count > searchImageDummy.count { //초기 검색은 패스
+                if imageDatas.count > searchImageDummy.count {
                     expect(imageDatas.count).to(equal(searchImageDummy.count * 2))
                 }
             })
             .disposed(by: disposeBag)
         
-        //초기 검색
         Observable.just("keyword")
             .bind(to: viewModel.inputs.searchButtonAction)
             .disposed(by: disposeBag)
         
-        //마지막 셀
         viewModel.inputs.willDisplayCell.accept(IndexPath(item: 1, section: 0))
     }
 }

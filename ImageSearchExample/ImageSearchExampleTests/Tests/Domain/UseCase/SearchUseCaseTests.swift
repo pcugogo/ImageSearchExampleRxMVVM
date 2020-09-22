@@ -31,7 +31,7 @@ final class SearchUseCaseTests: XCTestCase {
 
     func testFetchNextPage() {
         searchUseCase.searchImage(keyword: "test", isNextPage: true)
-            .subscribe(onSuccess: { result in
+            .subscribe(onNext: { (result) in
                 switch result {
                 case .success(let response):
                     print(response.images.count, "testFetchNextPage success")

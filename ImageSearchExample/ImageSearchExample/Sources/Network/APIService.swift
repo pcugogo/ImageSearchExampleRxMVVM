@@ -1,21 +1,15 @@
 //
-//  Networking.swift
+//  APIService.swift
 //  ImageSearchExample
 //
 //  Created by ChanWook Park on 02/05/2020.
 //  Copyright © 2020 ChanWookPark. All rights reserved.
 //
 
-import Foundation
 import Alamofire
 import RxSwift
 
-typealias Result<T> = Single<DataResponse<T, DataResponseError>>
-
-enum DataResponse<T, U: Error> {
-    case success(T)
-    case failure(U)
-}
+typealias NetworkResult<T> = Observable<Result<T, DataResponseError>>
 
 enum DataResponseError: Error {
     case url
@@ -35,27 +29,27 @@ enum DataResponseError: Error {
 }
 
 protocol APIServiceType {
-    func request<T: Codable>(api: API) -> Result<T>
+    func request<T: Codable>(api: API) -> NetworkResult<T>
 }
 
 struct APIService: APIServiceType {
-    func request<T: Codable>(api: API) -> Result<T> {
-        return Single.create { emitter in
+    func request<T: Codable>(api: API) -> NetworkResult<T> {
+        return Observable.create { emitter in
             api
                 .dataRequest()
                 .responseJSON { response in
                     switch response.result {
                     case .success:
                         guard let data = response.data,
-                            let decodedResponse = try? JSONDecoder().decode(T.self, from: data) else {
-                                emitter(.error(DataResponseError.decoding))
-                                return
+                              let decodedResponse = try? JSONDecoder().decode(T.self, from: data) else {
+                            emitter.onNext(.failure(DataResponseError.decoding))
+                            return
                         }
-                        emitter(.success(DataResponse.success(decodedResponse)))
+                        emitter.onNext(.success(decodedResponse))
                     case .failure:
-                        emitter(.error(DataResponseError.request))
+                        emitter.onNext(.failure(DataResponseError.request))
                     }
-            }
+                }
             return Disposables.create()
         }
     }

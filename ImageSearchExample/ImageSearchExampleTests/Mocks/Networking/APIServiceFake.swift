@@ -16,14 +16,14 @@ final class APIServiceFake: APIServiceType {
         self.dummyData = dummyData
     }
     
-    func request<T: Codable>(api: API) -> Result<T> {
-        return Single.create { [weak self] emitter in
+    func request<T: Codable>(api: API) -> NetworkResult<T> {
+        return Observable.create { [weak self] emitter in
             guard let data = self?.dummyData.jsonString.data(using: .utf8),
                 let imageSearchResponse = try? JSONDecoder().decode(T.self, from: data) else {
-                    emitter(.error(DataResponseError.decoding))
+                    emitter.onNext(.failure(.decoding))
                     return Disposables.create()
             }
-            emitter(.success(DataResponse.success(imageSearchResponse)))
+            emitter.onNext(.success(imageSearchResponse))
             return Disposables.create()
         }
     }
