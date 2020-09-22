@@ -47,7 +47,6 @@ final class SearchViewController: UIViewController, ViewModelBindable {
     
     func bindViewModel() {
         searchController.searchBar.rx.searchButtonClicked
-            .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
             .withLatestFrom(searchController.searchBar.rx.text.orEmpty)
             .filterEmpty()
             .do(onNext: { [weak self] _ in
@@ -77,7 +76,6 @@ final class SearchViewController: UIViewController, ViewModelBindable {
             viewModel.outputs.imagesCellItems,
             resultSelector: { ($0, $1) }
         )
-            .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
             .asObservable()
             .subscribe(onNext: { [weak self] indexPath, sections in
                 guard let self = self else { return }
