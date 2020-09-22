@@ -25,16 +25,16 @@ final class ImageFavoritesStorageFake: ImageFavoritesStorageType {
         let newFavorites = userDefaultsFavorites.filter { $0 != favoritesKey }
         userDefaultsFavorites = newFavorites
     }
-    func isAddedFavorites(favoritesKey: String) -> Bool {
-        return favorites.contains(favoritesKey)
+    func isAddedFavorite(forKey: String) -> Bool {
+        return favorites.contains(forKey)
     }
     
     func updateFavorites(favoritesKey: String) -> IsDuplicate {
-        if isAddedFavorites(favoritesKey: favoritesKey) {
+        if isAddedFavorite(forKey: favoritesKey) {
             remove(favoritesKey: favoritesKey)
         } else {
             add(favoritesKey: favoritesKey)
         }
-        return isAddedFavorites(favoritesKey: favoritesKey)
+        return isAddedFavorite(forKey: favoritesKey)
     }
 }

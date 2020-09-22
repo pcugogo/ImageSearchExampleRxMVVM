@@ -37,13 +37,13 @@ final class DetailImageViewModel: DetailImageViewModelType {
     var isAddFavorites: Driver<Bool>
     
     init(imageFavoritesStorage: ImageFavoritesStorageType, imageURLString: String) {
-        let isAddFavorites: BehaviorRelay<Bool> = .init(value: imageFavoritesStorage.isAddedFavorites(favoritesKey: imageURLString))
+        let isAddFavorites: BehaviorRelay<Bool> = .init(value: imageFavoritesStorage.isAddedFavorite(forKey: imageURLString))
         let imageURLString: BehaviorRelay<String> = .init(value: imageURLString)
         self.imageURLString = imageURLString.asObservable()
         
         //즐겨찾기 업데이트
         favoriteButtonAction.withLatestFrom(imageURLString)
-            .map { imageFavoritesStorage.updateFavorites(favoritesKey: $0) }
+            .map { imageFavoritesStorage.updateFavorite(forKey: $0) }
             .bind(to: isAddFavorites)
             .disposed(by: disposeBag)
         

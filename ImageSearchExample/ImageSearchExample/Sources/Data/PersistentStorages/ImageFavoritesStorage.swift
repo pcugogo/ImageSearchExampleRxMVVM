@@ -25,15 +25,15 @@ struct ImageFavoritesStorage: ImageFavoritesStorageType {
         let newList = favorites.filter { $0 != favoritesKey }
         UserDefaults.standard.set(newList, forKey: Key.favorites.rawValue)
     }
-    func isAddedFavorites(favoritesKey: String) -> Bool {
-        return favorites.contains(favoritesKey)
+    func isAddedFavorite(forKey: String) -> Bool {
+        return favorites.contains(forKey)
     }
-    func updateFavorites(favoritesKey: String) -> IsDuplicate {
-        if isAddedFavorites(favoritesKey: favoritesKey) {
-            remove(favoritesKey: favoritesKey)
+    func updateFavorite(forKey: String) -> IsDuplicate {
+        if isAddedFavorite(forKey: forKey) {
+            remove(favoritesKey: forKey)
         } else {
-            add(favoritesKey: favoritesKey)
+            add(favoritesKey: forKey)
         }
-        return isAddedFavorites(favoritesKey: favoritesKey)
+        return isAddedFavorite(forKey: forKey)
     }
 }

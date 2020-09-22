@@ -34,10 +34,10 @@ final class DetailImageModelTests: XCTestCase {
     
     // Model Tests
     func testUpdateFavorites() {
-        _ = imageFavoritesStorage.updateFavorites(favoritesKey: dummyData.imageURLString)
-        XCTAssertTrue(imageFavoritesStorage.isAddedFavorites(favoritesKey: dummyData.imageURLString), "Duplicate Check Error")
-        _ = imageFavoritesStorage.updateFavorites(favoritesKey: dummyData.imageURLString)
-        XCTAssertFalse(imageFavoritesStorage.isAddedFavorites(favoritesKey: dummyData.imageURLString), "Added Favorites Check Error")
+        _ = imageFavoritesStorage.updateFavorites(forKey: dummyData.imageURLString)
+        XCTAssertTrue(imageFavoritesStorage.isAddedFavorite(forKey: dummyData.imageURLString), "Duplicate Check Error")
+        _ = imageFavoritesStorage.updateFavorites(forKey: dummyData.imageURLString)
+        XCTAssertFalse(imageFavoritesStorage.isAddedFavorite(forKey: dummyData.imageURLString), "Added Favorites Check Error")
     }
     
     // ViewModel Tests

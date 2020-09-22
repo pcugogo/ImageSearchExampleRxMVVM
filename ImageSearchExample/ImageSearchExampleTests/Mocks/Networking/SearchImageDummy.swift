@@ -29,7 +29,7 @@ struct SearchImageDummy: DummyDataType {
           "image_url": "http://t1.daumcdn.net/news/201706/21/kedtv/20170621155930292vyyx.jpg",
           "width": 540,
           "height": 457,
-          "display_sitename": "한국경제TV",
+          "display_sitename": "DummyTest",
           "doc_url": "http://v.media.daum.net/v/20170621155930002",
           "datetime": "2017-06-21T15:59:30.000+09:00"
         },
@@ -39,7 +39,7 @@ struct SearchImageDummy: DummyDataType {
           "image_url": "http://t1.daumcdn.net/news/201706/21/kedtv/20170621155930292vyyx.jpg",
           "width": 540,
           "height": 457,
-          "display_sitename": "한국경제TV",
+          "display_sitename": "DummyTest",
           "doc_url": "http://v.media.daum.net/v/20170621155930002",
           "datetime": "2017-06-21T15:59:30.000+09:00"
         }
