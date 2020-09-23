@@ -1,5 +1,5 @@
 //
-//  LocalStorageFake.swift
+//  ImageFavoritesStorageFake.swift
 //  ImageSearchExampleTests
 //
 //  Created by ChanWook Park on 09/07/2020.
@@ -29,12 +29,12 @@ final class ImageFavoritesStorageFake: ImageFavoritesStorageType {
         return favorites.contains(forKey)
     }
     
-    func updateFavorites(favoritesKey: String) -> IsDuplicate {
-        if isAddedFavorite(forKey: favoritesKey) {
-            remove(favoritesKey: favoritesKey)
+    func updateFavorite(forKey: String) -> IsDuplicate {
+        if isAddedFavorite(forKey: forKey) {
+            remove(favoritesKey: forKey)
         } else {
-            add(favoritesKey: favoritesKey)
+            add(favoritesKey: forKey)
         }
-        return isAddedFavorite(forKey: favoritesKey)
+        return isAddedFavorite(forKey: forKey)
     }
 }

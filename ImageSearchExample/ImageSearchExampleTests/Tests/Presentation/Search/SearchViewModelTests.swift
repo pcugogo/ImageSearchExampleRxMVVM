@@ -16,7 +16,7 @@ import Nimble
 
 final class SearchViewModelTests: XCTestCase {
     var disposeBag = DisposeBag()
-    let apiServiceSpy = APIServiceFake(dummyData: SearchImageDummy())
+    let apiServiceSpy = SearchAPIServiceSpy()
     var searchUseCase: SearchUseCaseType!
     var viewModel: SearchViewModelType!
     
@@ -32,13 +32,20 @@ final class SearchViewModelTests: XCTestCase {
     }
     
     func testSearchViewModel_searchAction() {
-        var emitCount = 0
         viewModel.outputs.imagesCellItems
-            .drive(onNext: { imageDatas in
-                if emitCount == 1 { //imagesCellItems: BehaviorRelay 빈 초기값 패스
-                    expect(imageDatas[0].items[0].displaySitename).to(equal("DummyTest"))
+            .skip(1)
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                guard let page = self.apiServiceSpy.page else {
+                    XCTFail("SearchUseCase_currentPage counting error")
+                    return
                 }
-                emitCount += 1
+                expect(page).to(equal(1))
+            })
+            .drive(onNext: { imageSections in
+                let searchImageDummy = SearchImageDummy()
+                expect(imageSections[0].items.count).to(equal(searchImageDummy.totalCount))
+                expect(imageSections[0].items[0].displaySitename).to(equal("DummyTest0"))
             })
             .disposed(by: disposeBag)
         
@@ -48,12 +55,20 @@ final class SearchViewModelTests: XCTestCase {
     }
     
     func testSearchViewModel_moreFetch() {
+        let searchImageDummy = SearchImageDummy()
         viewModel.outputs.imagesCellItems
-            .drive(onNext: { imageDatas in
-                let searchImageDummy = SearchImageDummy()
-                if imageDatas.count > searchImageDummy.count {
-                    expect(imageDatas.count).to(equal(searchImageDummy.count * 2))
+            .skip(2)
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                guard let page = self.apiServiceSpy.page else {
+                    XCTFail("SearchUseCase_currentPage counting error")
+                    return
                 }
+                expect(page).to(equal(2))
+            })
+            .drive(onNext: { imageSections in
+                expect(imageSections[0].items.count).to(equal(searchImageDummy.totalCount * 2))
+                expect(imageSections[0].items[0].displaySitename).to(equal("DummyTest0"))
             })
             .disposed(by: disposeBag)
         
@@ -61,6 +76,6 @@ final class SearchViewModelTests: XCTestCase {
             .bind(to: viewModel.inputs.searchButtonAction)
             .disposed(by: disposeBag)
         
-        viewModel.inputs.willDisplayCell.accept(IndexPath(item: 1, section: 0))
+        viewModel.inputs.willDisplayCell.accept(IndexPath(item: searchImageDummy.totalCount - 1, section: 0))
     }
 }

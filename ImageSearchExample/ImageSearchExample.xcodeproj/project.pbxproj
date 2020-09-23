@@ -3,12 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		29B689A57E94BE68F2DE39C7 /* Pods_ImageSearchExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C91187D510A3D68FC63BCAAA /* Pods_ImageSearchExampleTests.framework */; };
-		3373140E4201F9C42F1D0D21 /* Pods_ImageSearchExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF5C1E8420917CF436F35CB /* Pods_ImageSearchExampleUITests.framework */; };
 		A6C130A5C845062D5469476E /* Pods_ImageSearchExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53C05C7D93E285EDCA8C1FE /* Pods_ImageSearchExample.framework */; };
 		FC15A5E82513921A0037C619 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC15A5E72513921A0037C619 /* Container.swift */; };
 		FC15A5ED251392BC0037C619 /* BaseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC15A5EC251392BC0037C619 /* BaseBuilder.swift */; };
@@ -35,7 +34,6 @@
 		FC805F3424E6B9D100AFC1E2 /* ViewBindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC805F3324E6B9D100AFC1E2 /* ViewBindable.swift */; };
 		FC805F3824E6BA2000AFC1E2 /* StoryboardName.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC805F3724E6BA2000AFC1E2 /* StoryboardName.swift */; };
 		FC805F4124E6BBBF00AFC1E2 /* PresentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC805F4024E6BBBF00AFC1E2 /* PresentStyle.swift */; };
-		FC805F4424E6CD7600AFC1E2 /* ImageSearchExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC697F1D24A0FBC30050C154 /* ImageSearchExampleUITests.swift */; };
 		FC805F4624E6E77200AFC1E2 /* AppBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC805F4524E6E77200AFC1E2 /* AppBuilder.swift */; };
 		FC805F4824E6E7A100AFC1E2 /* SearchBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC805F4724E6E7A100AFC1E2 /* SearchBuilder.swift */; };
 		FC805F4A24E6E7D400AFC1E2 /* ViewControllerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC805F4924E6E7D400AFC1E2 /* ViewControllerBuilder.swift */; };
@@ -45,17 +43,11 @@
 		FC99387124B74649005AE119 /* ImageFavoritesStorageFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC99387024B74649005AE119 /* ImageFavoritesStorageFake.swift */; };
 		FC99387424B74675005AE119 /* DetailImageModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC99387324B74675005AE119 /* DetailImageModelTests.swift */; };
 		FC9B6DC724D9DC9B00CC9B5E /* ImageFavoritesStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9B6DC624D9DC9B00CC9B5E /* ImageFavoritesStorageType.swift */; };
+		FCDF2FF4251B7F3D003CA039 /* SearchAPIServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDF2FF3251B7F3D003CA039 /* SearchAPIServiceSpy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		FC697F0F24A0FBC20050C154 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC697EF024A0FBC10050C154 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FC697EF724A0FBC10050C154;
-			remoteInfo = ImageSearchExample;
-		};
-		FC697F1A24A0FBC30050C154 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FC697EF024A0FBC10050C154 /* Project object */;
 			proxyType = 1;
@@ -84,9 +76,6 @@
 		FC697F0924A0FBC20050C154 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC697F0E24A0FBC20050C154 /* ImageSearchExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageSearchExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC697F1424A0FBC20050C154 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FC697F1924A0FBC30050C154 /* ImageSearchExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageSearchExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FC697F1D24A0FBC30050C154 /* ImageSearchExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchExampleUITests.swift; sourceTree = "<group>"; };
-		FC697F1F24A0FBC30050C154 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC697F2C24A0FC650050C154 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		FC697F3524A0FD330050C154 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		FC697F3724A0FD3F0050C154 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
@@ -115,6 +104,7 @@
 		FC99387024B74649005AE119 /* ImageFavoritesStorageFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFavoritesStorageFake.swift; sourceTree = "<group>"; };
 		FC99387324B74675005AE119 /* DetailImageModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageModelTests.swift; sourceTree = "<group>"; };
 		FC9B6DC624D9DC9B00CC9B5E /* ImageFavoritesStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFavoritesStorageType.swift; sourceTree = "<group>"; };
+		FCDF2FF3251B7F3D003CA039 /* SearchAPIServiceSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPIServiceSpy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,14 +121,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				29B689A57E94BE68F2DE39C7 /* Pods_ImageSearchExampleTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FC697F1624A0FBC30050C154 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3373140E4201F9C42F1D0D21 /* Pods_ImageSearchExampleUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,7 +172,6 @@
 				FC697F2C24A0FC650050C154 /* .swiftlint.yml */,
 				FC697EFA24A0FBC10050C154 /* ImageSearchExample */,
 				FC697F1124A0FBC20050C154 /* ImageSearchExampleTests */,
-				FC697F1C24A0FBC30050C154 /* ImageSearchExampleUITests */,
 				FC697EF924A0FBC10050C154 /* Products */,
 				0E2BCE348B3FE18E9A976942 /* Pods */,
 				3016E42C9E1C7BC20EF925C6 /* Frameworks */,
@@ -202,7 +183,6 @@
 			children = (
 				FC697EF824A0FBC10050C154 /* ImageSearchExample.app */,
 				FC697F0E24A0FBC20050C154 /* ImageSearchExampleTests.xctest */,
-				FC697F1924A0FBC30050C154 /* ImageSearchExampleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -225,15 +205,6 @@
 				FC697F1424A0FBC20050C154 /* Info.plist */,
 			);
 			path = ImageSearchExampleTests;
-			sourceTree = "<group>";
-		};
-		FC697F1C24A0FBC30050C154 /* ImageSearchExampleUITests */ = {
-			isa = PBXGroup;
-			children = (
-				FC697F1D24A0FBC30050C154 /* ImageSearchExampleUITests.swift */,
-				FC697F1F24A0FBC30050C154 /* Info.plist */,
-			);
-			path = ImageSearchExampleUITests;
 			sourceTree = "<group>";
 		};
 		FC697F2E24A0FCB60050C154 /* Sources */ = {
@@ -458,6 +429,7 @@
 			children = (
 				FC86201324AE258900C3C04D /* SearchImageDummy.swift */,
 				FC86201524AE264900C3C04D /* APIServiceFake.swift */,
+				FCDF2FF3251B7F3D003CA039 /* SearchAPIServiceSpy.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -556,25 +528,6 @@
 			productReference = FC697F0E24A0FBC20050C154 /* ImageSearchExampleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		FC697F1824A0FBC30050C154 /* ImageSearchExampleUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FC697F2824A0FBC30050C154 /* Build configuration list for PBXNativeTarget "ImageSearchExampleUITests" */;
-			buildPhases = (
-				BE806DBBEF47C5758C495EBD /* [CP] Check Pods Manifest.lock */,
-				FC697F1524A0FBC30050C154 /* Sources */,
-				FC697F1624A0FBC30050C154 /* Frameworks */,
-				FC697F1724A0FBC30050C154 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FC697F1B24A0FBC30050C154 /* PBXTargetDependency */,
-			);
-			name = ImageSearchExampleUITests;
-			productName = ImageSearchExampleUITests;
-			productReference = FC697F1924A0FBC30050C154 /* ImageSearchExampleUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -589,10 +542,6 @@
 						CreatedOnToolsVersion = 11.3;
 					};
 					FC697F0D24A0FBC20050C154 = {
-						CreatedOnToolsVersion = 11.3;
-						TestTargetID = FC697EF724A0FBC10050C154;
-					};
-					FC697F1824A0FBC30050C154 = {
 						CreatedOnToolsVersion = 11.3;
 						TestTargetID = FC697EF724A0FBC10050C154;
 					};
@@ -613,7 +562,6 @@
 			targets = (
 				FC697EF724A0FBC10050C154 /* ImageSearchExample */,
 				FC697F0D24A0FBC20050C154 /* ImageSearchExampleTests */,
-				FC697F1824A0FBC30050C154 /* ImageSearchExampleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -631,13 +579,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FC697F0C24A0FBC20050C154 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FC697F1724A0FBC30050C154 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -662,24 +603,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ImageSearchExample/Pods-ImageSearchExample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BE806DBBEF47C5758C495EBD /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ImageSearchExampleUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D748D4034E48D8836A4D8CE0 /* [CP] Check Pods Manifest.lock */ = {
@@ -788,18 +711,11 @@
 			files = (
 				FC99387124B74649005AE119 /* ImageFavoritesStorageFake.swift in Sources */,
 				FC805F2A24E6B91C00AFC1E2 /* SearchViewModelTests.swift in Sources */,
+				FCDF2FF4251B7F3D003CA039 /* SearchAPIServiceSpy.swift in Sources */,
 				FC805F2724E6B8E400AFC1E2 /* SearchUseCaseTests.swift in Sources */,
 				FC99387424B74675005AE119 /* DetailImageModelTests.swift in Sources */,
 				FC86201424AE258900C3C04D /* SearchImageDummy.swift in Sources */,
 				FC86201624AE264900C3C04D /* APIServiceFake.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FC697F1524A0FBC30050C154 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FC805F4424E6CD7600AFC1E2 /* ImageSearchExampleUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -810,11 +726,6 @@
 			isa = PBXTargetDependency;
 			target = FC697EF724A0FBC10050C154 /* ImageSearchExample */;
 			targetProxy = FC697F0F24A0FBC20050C154 /* PBXContainerItemProxy */;
-		};
-		FC697F1B24A0FBC30050C154 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FC697EF724A0FBC10050C154 /* ImageSearchExample */;
-			targetProxy = FC697F1A24A0FBC30050C154 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1040,48 +951,6 @@
 			};
 			name = Release;
 		};
-		FC697F2924A0FBC30050C154 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D33936CA272A8826855B8B49 /* Pods-ImageSearchExampleUITests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3BPKLMWSQR;
-				INFOPLIST_FILE = ImageSearchExampleUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ImageSearchExampleUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = ImageSearchExample;
-			};
-			name = Debug;
-		};
-		FC697F2A24A0FBC30050C154 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4E28A01074FC215BFCB30570 /* Pods-ImageSearchExampleUITests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3BPKLMWSQR;
-				INFOPLIST_FILE = ImageSearchExampleUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ImageSearchExampleUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = ImageSearchExample;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1108,15 +977,6 @@
 			buildConfigurations = (
 				FC697F2624A0FBC30050C154 /* Debug */,
 				FC697F2724A0FBC30050C154 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FC697F2824A0FBC30050C154 /* Build configuration list for PBXNativeTarget "ImageSearchExampleUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FC697F2924A0FBC30050C154 /* Debug */,
-				FC697F2A24A0FBC30050C154 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

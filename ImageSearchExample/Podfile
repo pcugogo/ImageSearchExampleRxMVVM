@@ -29,9 +29,4 @@ target 'ImageSearchExample' do
     pod 'Nimble'
   end
 
-  target 'ImageSearchExampleUITests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
 end

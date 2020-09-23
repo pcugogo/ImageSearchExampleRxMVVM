@@ -6,7 +6,6 @@
 //  Copyright © 2020 ChanWookPark. All rights reserved.
 //
 
-import Foundation
 import Alamofire
 
 enum API {
@@ -42,12 +41,19 @@ extension API {
         return HTTPHeaders(["Authorization":Constant.apiKey])
     }
     
+    private var httpMethod: HTTPMethod {
+        switch self {
+        case .getImages:
+            return .get
+        }
+    }
+    
     func dataRequest() -> DataRequest {
-        AF.request(self.url,
-                   method: .get,
-                   parameters: self.prameters,
+        AF.request(url,
+                   method: httpMethod,
+                   parameters: prameters,
                    encoding: URLEncoding.default,
-                   headers: self.header)
+                   headers: header)
             .validate()
     }
 }

@@ -6,7 +6,6 @@
 //  Copyright © 2020 ChanWookPark. All rights reserved.
 //
 
-import Foundation
 import XCTest
 import RxSwift
 import RxCocoa
@@ -34,9 +33,9 @@ final class DetailImageModelTests: XCTestCase {
     
     // Model Tests
     func testUpdateFavorites() {
-        _ = imageFavoritesStorage.updateFavorites(forKey: dummyData.imageURLString)
+        _ = imageFavoritesStorage.updateFavorite(forKey: dummyData.imageURLString)
         XCTAssertTrue(imageFavoritesStorage.isAddedFavorite(forKey: dummyData.imageURLString), "Duplicate Check Error")
-        _ = imageFavoritesStorage.updateFavorites(forKey: dummyData.imageURLString)
+        _ = imageFavoritesStorage.updateFavorite(forKey: dummyData.imageURLString)
         XCTAssertFalse(imageFavoritesStorage.isAddedFavorite(forKey: dummyData.imageURLString), "Added Favorites Check Error")
     }
     
