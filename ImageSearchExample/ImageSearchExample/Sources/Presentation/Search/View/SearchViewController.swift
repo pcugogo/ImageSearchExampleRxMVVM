@@ -80,7 +80,7 @@ final class SearchViewController: UIViewController, ViewModelBindable {
             .subscribe(onNext: { [weak self] indexPath, sections in
                 guard let self = self else { return }
                 let imageURLString = sections[0].items[indexPath.item].imageURL
-                let detailImageViewController = SearchBuilder(target: .detailImage(imageURLString: imageURLString))
+                let detailImageViewController = SearchFlow(target: .detailImage(imageURLString: imageURLString))
                     .viewController()
                 Coordinator.start(target: detailImageViewController,
                                   presentStyle: .push(navigationController: self.navigationController!),

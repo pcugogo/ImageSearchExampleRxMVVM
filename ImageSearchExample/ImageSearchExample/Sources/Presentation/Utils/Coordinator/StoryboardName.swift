@@ -11,7 +11,7 @@ import UIKit
 enum StoryboardName: String {
     case main = "Main"
     
-    func instantiateStoryboard() -> UIStoryboard {
+    func instantiateStoryboard(bundle: Bundle? = nil) -> UIStoryboard {
         return UIStoryboard(name: self.rawValue, bundle: nil)
     }
 }

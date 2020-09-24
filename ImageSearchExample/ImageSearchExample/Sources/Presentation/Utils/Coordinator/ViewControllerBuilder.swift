@@ -2,15 +2,10 @@
 //  ViewControllerBuilder.swift
 //  ImageSearchExample
 //
-//  Created by ChanWook Park on 15/08/2020.
+//  Created by ChanWook Park on 2020/09/24.
 //  Copyright © 2020 ChanWookPark. All rights reserved.
 //
 
-import UIKit
-
-protocol ViewControllerTargetable {
-    associatedtype Target
-    init(target: Target, dependency: Container)
+protocol ViewControllerBuilder {
+    func build(_ dependency: Container) -> Container
 }
-
-typealias ViewControllerBuilder = BaseBuilder & ViewControllerTargetable

@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let searchViewController = AppBuilder(target: .search).viewController()
+        let searchViewController = AppFlow(target: .search).viewController()
         Coordinator.start(target: searchViewController,
                           presentStyle: .root(window: window!),
                           animated: true)
