@@ -79,10 +79,9 @@ final class SearchViewModel: SearchViewModelType {
             .map { $0.0 && !$0.1 }
         
         //추가 데이터 요청
-        let loadMore = shouldMoreFetch.withLatestFrom(searchButtonAction,
-                                                      resultSelector: { ($0, $1) })
-            .filter { $0.0 }
-            .map { $1 }
+        let loadMore = shouldMoreFetch
+            .filter { $0 == true }
+            .withLatestFrom(searchButtonAction)
             .flatMapLatest { searchUseCase.searchImage(keyword: $0, isNextPage: true) }
             .share()
         
