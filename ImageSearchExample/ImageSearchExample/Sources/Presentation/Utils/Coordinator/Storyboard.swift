@@ -18,7 +18,6 @@ enum Storyboard: String {
 
 extension UIStoryboard {
     func instantiateViewController<T>(type: T.Type) -> T? {
-        self.instantiateViewController(withIdentifier:
-            String(describing: type.self)) as? T
+        self.instantiateViewController(withIdentifier: String(describing: type.self)) as? T
     }
 }

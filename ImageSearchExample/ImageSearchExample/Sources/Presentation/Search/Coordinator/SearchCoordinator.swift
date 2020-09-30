@@ -22,7 +22,6 @@ final class SearchCoordinator: Coordinator {
         case detailImage(imageURLString: String)
     }
     
-    //View Transition
     func present(for route: Route) {
         switch route {
         case .detailImage(let imageURLString):
