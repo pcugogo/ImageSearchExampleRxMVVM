@@ -9,7 +9,7 @@
 import UIKit
 
 final class DetailImageCoordinator: Coordinator {
-
+    
     struct Dependency {
         let imageURLString: String
         let imageFavoritesStorage: ImageFavoritesStorageType
@@ -20,13 +20,7 @@ final class DetailImageCoordinator: Coordinator {
         }
     }
     
-    //Coordinate
-    func start(with dependency: Dependency) {
-        let viewModel = DetailImageViewModel(coordinator: self, dependency: dependency)
-        let storyboard = StoryboardName.main.instantiateStoryboard()
-        var detailImageViewController = storyboard.instantiateViewController(withIdentifier:
-            String(describing: DetailImageViewController.self)) as! DetailImageViewController
-        detailImageViewController.bind(viewModel: viewModel)
-        navigationController?.pushViewController(detailImageViewController, animated: true)
-    }
+    enum Route {}
+    
+    func present(for route: Route) {}
 }

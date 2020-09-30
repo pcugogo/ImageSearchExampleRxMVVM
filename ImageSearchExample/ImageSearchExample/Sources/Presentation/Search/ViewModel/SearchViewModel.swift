@@ -130,7 +130,7 @@ final class SearchViewModel: SearchViewModelType {
         //Coordinate to DetailImage
         itemSeletedAction.withLatestFrom(coordinator) { ($0, $1) }
             .subscribe(onNext: { (imageURLString, coordinator) in
-                coordinator.present(to: .detailImage(imageURLString: imageURLString))
+                coordinator.present(for: .detailImage(imageURLString: imageURLString))
             })
             .disposed(by: disposeBag)
     }

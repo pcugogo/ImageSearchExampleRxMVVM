@@ -16,13 +16,14 @@ final class AppCoordinator {
     }
     
     func start() {
-        let storyboard = StoryboardName.main.instantiateStoryboard()
-        let navigationController = storyboard
-            .instantiateViewController(withIdentifier: "SearchNavigationController") as! UINavigationController
-        window.rootViewController = navigationController
-        window.makeKeyAndVisible()
+        let storyboard = Storyboard.main.instantiate()
+        let navigationController = storyboard.instantiateViewController(withIdentifier: "SearchNavigationController") as! UINavigationController
+        var searchViewController = navigationController.viewControllers.first as! SearchViewController
         let searchCoordinator = SearchCoordinator(navigationController: navigationController)
         let dependency = SearchCoordinator.Dependency(searchUseCase: SearchUseCase(apiService: APIService()))
-        searchCoordinator.start(with: dependency)
+        let viewModel: SearchViewModelType = SearchViewModel(coordinator: searchCoordinator, dependency: dependency)
+        searchViewController.bind(viewModel: viewModel)
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
     }
 }

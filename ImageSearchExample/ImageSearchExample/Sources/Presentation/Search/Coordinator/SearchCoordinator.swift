@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class SearchCoordinator: Coordinator & CoordinatorPresentable {
+final class SearchCoordinator: Coordinator {
     
     struct Dependency {
         let searchUseCase: SearchUseCaseType
@@ -18,25 +18,22 @@ final class SearchCoordinator: Coordinator & CoordinatorPresentable {
         }
     }
     
-    enum Target {
+    enum Route {
         case detailImage(imageURLString: String)
     }
     
-    //Coordinate
-    func start(with dependency: Dependency) {
-        var searchViewController = navigationController?.viewControllers.first as! SearchViewController
-        let viewModel: SearchViewModelType = SearchViewModel(coordinator: self, dependency: dependency)
-        searchViewController.bind(viewModel: viewModel)
-    }
-
     //View Transition
-    func present(to target: Target) {
-        switch target {
+    func present(for route: Route) {
+        switch route {
         case .detailImage(let imageURLString):
             let coordinator = DetailImageCoordinator(navigationController: navigationController!)
             let dependency = DetailImageCoordinator.Dependency(imageURLString: imageURLString,
                                                                imageFavoritesStorage: ImageFavoritesStorage())
-            coordinator.start(with: dependency)
+            let viewModel = DetailImageViewModel(coordinator: coordinator, dependency: dependency)
+            let storyboard = Storyboard.main.instantiate()
+            var detailImageViewController = storyboard.instantiateViewController(type: DetailImageViewController.self)!
+            detailImageViewController.bind(viewModel: viewModel)
+            navigationController?.pushViewController(detailImageViewController, animated: true)
         }
     }
 }
