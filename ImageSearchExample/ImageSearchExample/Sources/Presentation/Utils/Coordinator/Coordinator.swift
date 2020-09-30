@@ -8,8 +8,22 @@
 
 import UIKit
 
-struct Coordinator {
-    static func start(target viewController: UIViewController, presentStyle presenter: PresentStyle, animated: Bool) {
-        presenter.present(targetViewController: viewController, animated: animated)
+typealias Coordinator = BaseCoordinator & Coordinatorable
+
+protocol Coordinatorable {
+    associatedtype Dependency
+    func start(with dependency: Dependency)
+}
+
+protocol CoordinatorPresentable {
+    associatedtype Target
+    func present(to target: Target)
+}
+
+class BaseCoordinator {
+    weak var navigationController: UINavigationController?
+    
+    init(navigationController: UINavigationController) {
+        self.navigationController = navigationController
     }
 }

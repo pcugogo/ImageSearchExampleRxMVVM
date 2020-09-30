@@ -26,6 +26,7 @@ final class SearchViewController: UIViewController, ViewModelBindable {
         navigationItem.searchController = searchController
         return searchController
     }()
+    
     @IBOutlet weak var imagesCollectionView: UICollectionView!
     
     private let imagesDataSource = ImagesDataSource(configureCell: { _, collectionView, indexPath, data in
@@ -76,16 +77,8 @@ final class SearchViewController: UIViewController, ViewModelBindable {
             viewModel.outputs.imagesCellItems,
             resultSelector: { ($0, $1) }
         )
-            .asObservable()
-            .subscribe(onNext: { [weak self] indexPath, sections in
-                guard let self = self else { return }
-                let imageURLString = sections[0].items[indexPath.item].imageURL
-                let detailImageViewController = SearchFlow(target: .detailImage(imageURLString: imageURLString))
-                    .viewController()
-                Coordinator.start(target: detailImageViewController,
-                                  presentStyle: .push(navigationController: self.navigationController!),
-                                  animated: true)
-            })
-            .disposed(by: disposeBag)
+        .map { $1[0].items[$0.item].imageURL }
+        .bind(to: viewModel.inputs.itemSeletedAction)
+        .disposed(by: disposeBag)
     }
 }

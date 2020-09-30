@@ -17,6 +17,7 @@ typealias ImagesSection = SectionModel<Void, ImageData>
 protocol SearchViewModelTypeInputs {
     var searchButtonAction: PublishRelay<String> { get }
     var willDisplayCell: PublishRelay<IndexPath> { get }
+    var itemSeletedAction: PublishRelay<String> { get }
 }
 
 protocol SearchViewModelTypeOutputs {
@@ -30,26 +31,27 @@ protocol SearchViewModelType: SearchViewModelTypeInputs, SearchViewModelTypeOutp
 }
 
 final class SearchViewModel: SearchViewModelType {
-    
-    private var disposeBag: DisposeBag = DisposeBag()
+    var disposeBag: DisposeBag = DisposeBag()
     
     // MARK: - Input Sources
     var inputs: SearchViewModelTypeInputs { return self }
     let searchButtonAction: PublishRelay<String> = .init()
     let willDisplayCell: PublishRelay<IndexPath> = .init()
+    var itemSeletedAction: PublishRelay<String> = .init()
     
     // MARK: - Output Sources
     var outputs: SearchViewModelTypeOutputs { return self }
     let imagesCellItems: Driver<[ImagesSection]>
     let errorMessage: Signal<String>
-    
-    init(searchUseCase: SearchUseCaseType = SearchUseCase(apiService: APIService())) {
+
+    init(coordinator: SearchCoordinator, dependency: SearchCoordinator.Dependency) {
+        let coordinator: Observable<SearchCoordinator> = .just(coordinator)
         let isLastPage: BehaviorRelay<Bool> = BehaviorRelay(value: false)
         let imagesCellItems: BehaviorRelay<[ImageData]> = .init(value: [])
         
         //새로운 검색
         let newSearch = searchButtonAction
-            .flatMapLatest { searchUseCase.searchImage(keyword: $0, isNextPage: false) }
+            .flatMapLatest { dependency.searchUseCase.searchImage(keyword: $0, isNextPage: false) }
             .asObservable()
             .share()
 
@@ -79,10 +81,11 @@ final class SearchViewModel: SearchViewModelType {
             .map { $0.0 && !$0.1 }
         
         //추가 데이터 요청
-        let loadMore = shouldMoreFetch
-            .filter { $0 == true }
-            .withLatestFrom(searchButtonAction)
-            .flatMapLatest { searchUseCase.searchImage(keyword: $0, isNextPage: true) }
+        let loadMore = shouldMoreFetch.withLatestFrom(searchButtonAction,
+                                                      resultSelector: { ($0, $1) })
+            .filter { $0.0 }
+            .map { $1 }
+            .flatMapLatest { dependency.searchUseCase.searchImage(keyword: $0, isNextPage: true) }
             .share()
         
         //추가로 요청한 응답 데이터
@@ -105,7 +108,7 @@ final class SearchViewModel: SearchViewModelType {
         
         //응답데이터가 마지막 페이지인지 여부
         Observable.merge(searchResponse, loadMoreResponse)
-            .map { $0.meta.isEnd }
+            .map { $0.meta.isEnd || dependency.searchUseCase.isLastPage }
             .bind(to: isLastPage)
             .disposed(by: disposeBag)
         
@@ -123,5 +126,12 @@ final class SearchViewModel: SearchViewModelType {
         self.errorMessage = errorMessage
         self.imagesCellItems = imagesCellItems.map { [ImagesSection(model: Void(), items: $0)] }
             .asDriver(onErrorDriveWith: .empty())
+        
+        //Coordinate to DetailImage
+        itemSeletedAction.withLatestFrom(coordinator) { ($0, $1) }
+            .subscribe(onNext: { (imageURLString, coordinator) in
+                coordinator.present(to: .detailImage(imageURLString: imageURLString))
+            })
+            .disposed(by: disposeBag)
     }
 }
