@@ -23,8 +23,8 @@ final class SearchViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         self.searchUseCase = SearchUseCase(apiService: apiServiceSpy)
-        let dependency = SearchCoordinator.Dependency(searchUseCase: searchUseCase)
-        self.viewModel = SearchViewModel(coordinator: SearchCoordinator(navigationController: UINavigationController()),
+        let dependency = SearchDependency(searchUseCase: searchUseCase)
+        self.viewModel = SearchViewModel(router: SearchRouter(navigationController: UINavigationController()),
                                          dependency: dependency)
     }
     

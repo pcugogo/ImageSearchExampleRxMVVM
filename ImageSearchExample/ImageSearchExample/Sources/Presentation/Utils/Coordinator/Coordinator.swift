@@ -8,13 +8,19 @@
 
 import UIKit
 
-typealias Coordinator = BaseCoordinator & CoordinatorPresentable
+typealias Coordinator = BaseCoordinator & Coordinatable
+typealias Router = BaseCoordinator & Routable
 
-protocol CoordinatorPresentable {
-    associatedtype Dependency
+protocol Dependency {}
+
+protocol Coordinatable {
+    associatedtype DependencyType: Dependency
+    func start(with dependency: DependencyType)
+}
+
+protocol Routable {
     associatedtype Route
-    
-    func present(for route: Route)
+    func navigate(to route: Route)
 }
 
 class BaseCoordinator {

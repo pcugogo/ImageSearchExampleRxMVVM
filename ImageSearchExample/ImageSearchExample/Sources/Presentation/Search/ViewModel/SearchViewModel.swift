@@ -44,8 +44,8 @@ final class SearchViewModel: SearchViewModelType {
     let imagesCellItems: Driver<[ImagesSection]>
     let errorMessage: Signal<String>
 
-    init(coordinator: SearchCoordinator, dependency: SearchCoordinator.Dependency) {
-        let coordinator: Observable<SearchCoordinator> = .just(coordinator)
+    init(router: SearchRouter, dependency: SearchDependency) {
+        let router: Observable<SearchRouter> = .just(router)
         let isLastPage: BehaviorRelay<Bool> = BehaviorRelay(value: false)
         let imagesCellItems: BehaviorRelay<[ImageData]> = .init(value: [])
         
@@ -128,9 +128,9 @@ final class SearchViewModel: SearchViewModelType {
             .asDriver(onErrorDriveWith: .empty())
         
         //Coordinate to DetailImage
-        itemSeletedAction.withLatestFrom(coordinator) { ($0, $1) }
-            .subscribe(onNext: { (imageURLString, coordinator) in
-                coordinator.present(for: .detailImage(imageURLString: imageURLString))
+        itemSeletedAction.withLatestFrom(router) { ($0, $1) }
+            .subscribe(onNext: { (imageURLString, router) in
+                router.navigate(to: .detailImage(imageURLString: imageURLString))
             })
             .disposed(by: disposeBag)
     }

@@ -22,9 +22,9 @@ final class DetailImageModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         self.imageFavoritesStorage = ImageFavoritesStorageFake()
-        let dependency = DetailImageCoordinator.Dependency(imageURLString: dummyData.imageURLString, imageFavoritesStorage: imageFavoritesStorage)
-        self.viewModel = DetailImageViewModel(coordinator: DetailImageCoordinator(navigationController: UINavigationController()),
-                                              dependency: dependency)
+        let dependency = DetailImageDependency(imageURLString: dummyData.imageURLString,
+                                                           imageFavoritesStorage: imageFavoritesStorage)
+        self.viewModel = DetailImageViewModel(dependency: dependency)
     }
     
     override func tearDown() {

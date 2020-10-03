@@ -35,7 +35,7 @@ final class DetailImageViewModel: DetailImageViewModelType {
     var imageURLString: Observable<String>
     var isAddFavorites: Driver<Bool>
     
-    init(coordinator: DetailImageCoordinator, dependency: DetailImageCoordinator.Dependency) {
+    init(dependency: DetailImageDependency) {
         let isAddFavorites: BehaviorRelay<Bool> = .init(value: dependency.imageFavoritesStorage.isAddedFavorite(forKey: dependency.imageURLString))
         let imageURLString: BehaviorRelay<String> = .init(value: dependency.imageURLString)
         self.imageURLString = imageURLString.asObservable()
