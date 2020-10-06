@@ -10,42 +10,35 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
-protocol DetailImageViewModelTypeInputs {
-    var favoriteButtonAction: PublishRelay<Void> { get }
-}
+final class DetailImageViewModel: ViewModel {
 
-protocol DetailImageViewModelTypeOutputs {
-    var imageURLString: Observable<String> { get }
-    var isAddFavorites: Driver<Bool> { get }
-}
-
-protocol DetailImageViewModelType: DetailImageViewModelTypeInputs, DetailImageViewModelTypeOutputs {
-    var inputs: DetailImageViewModelTypeInputs { get }
-    var outputs: DetailImageViewModelTypeOutputs { get }
-}
-
-final class DetailImageViewModel: DetailImageViewModelType {
+    struct Input {
+        var favoriteButtonAction: Observable<Void>
+    }
+    
+    struct Output {
+        var imageURLString: Observable<String>
+        var isAddFavorites: Driver<Bool>
+    }
+    
     private var disposeBag = DisposeBag()
+    private var detailImageDependency: DetailImageDependency {
+        return dependency as! DetailImageDependency
+    }
     
-    // MARK: - Inputs
-    var inputs: DetailImageViewModelTypeInputs { return self }
-    var favoriteButtonAction: PublishRelay<Void> = .init()
-    // MARK: - outputs
-    var outputs: DetailImageViewModelTypeOutputs { return self }
-    var imageURLString: Observable<String>
-    var isAddFavorites: Driver<Bool>
-    
-    init(dependency: DetailImageDependency) {
-        let isAddFavorites: BehaviorRelay<Bool> = .init(value: dependency.imageFavoritesStorage.isAddedFavorite(forKey: dependency.imageURLString))
-        let imageURLString: BehaviorRelay<String> = .init(value: dependency.imageURLString)
-        self.imageURLString = imageURLString.asObservable()
+    func transform(input: Input) -> Output {
         
-        //즐겨찾기 업데이트
-        favoriteButtonAction.withLatestFrom(imageURLString)
-            .map { dependency.imageFavoritesStorage.updateFavorite(forKey: $0) }
+        let dependency = self.detailImageDependency
+        
+        let isAddFavorites: BehaviorRelay<Bool> = .init(value: dependency.imageFavoritesStorage.isContains(dependency.imageURLString))
+        let imageURLString: BehaviorRelay<String> = .init(value: dependency.imageURLString)
+        
+        input.favoriteButtonAction.withLatestFrom(imageURLString)
+            .map { dependency.imageFavoritesStorage.update($0) }
             .bind(to: isAddFavorites)
             .disposed(by: disposeBag)
-        
-        self.isAddFavorites = isAddFavorites.asDriver(onErrorDriveWith: .empty())
+
+        return Output(imageURLString: imageURLString.asObservable(),
+                      isAddFavorites: isAddFavorites.asDriver(onErrorDriveWith: .empty()))
     }
 }

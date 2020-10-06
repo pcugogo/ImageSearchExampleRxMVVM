@@ -11,20 +11,17 @@ import UIKit
 struct DetailImageDependency: Dependency {
     let imageURLString: String
     let imageFavoritesStorage: ImageFavoritesStorageType
-    
-    init(imageURLString: String, imageFavoritesStorage: ImageFavoritesStorageType) {
-        self.imageURLString = imageURLString
-        self.imageFavoritesStorage = imageFavoritesStorage
-    }
 }
 
 final class DetailImageCoordinator: Coordinator {
     func start(with dependency: DetailImageDependency) {
-        let viewModel = DetailImageViewModel(dependency: dependency)
+        let viewModel = DetailImageViewModel(coordinator: self, dependency: dependency)
         let storyboard = StoryboardName.main.instantiateStoryboard()
         var detailImageViewController = storyboard.instantiateViewController(withIdentifier:
             String(describing: DetailImageViewController.self)) as! DetailImageViewController
         detailImageViewController.bind(viewModel: viewModel)
         navigationController?.pushViewController(detailImageViewController, animated: true)
     }
+    
+    func navigate(to route: CoordinatorRoute) {}
 }

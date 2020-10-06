@@ -17,7 +17,7 @@ final class SearchViewController: UIViewController, ViewModelBindable {
     
     typealias ImagesDataSource = RxCollectionViewSectionedReloadDataSource<ImagesSection>
     
-    var viewModel: SearchViewModelType!
+    var viewModel: SearchViewModel!
     private var disposeBag = DisposeBag()
     
     lazy var searchController: UISearchController = {
@@ -47,38 +47,34 @@ final class SearchViewController: UIViewController, ViewModelBindable {
     }
     
     func bindViewModel() {
-        searchController.searchBar.rx.searchButtonClicked
+        //Inputs
+        let searchButtonClicked = searchController.searchBar.rx.searchButtonClicked
             .withLatestFrom(searchController.searchBar.rx.text.orEmpty)
             .filterEmpty()
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.searchController.dismiss(animated: true, completion: nil)
             })
-            .bind(to: viewModel.inputs.searchButtonAction)
-            .disposed(by: disposeBag)
         
-        imagesCollectionView.rx.willDisplayCell
+        let willDisplayCell = imagesCollectionView.rx.willDisplayCell
             .map { $0.at }
-            .bind(to: viewModel.inputs.willDisplayCell)
-            .disposed(by: disposeBag)
+        let itemSeleted = imagesCollectionView.rx.itemSelected.asObservable()
         
-        viewModel.outputs.imagesCellItems
+        let input = SearchViewModel.Input(searchButtonAction: searchButtonClicked,
+                                          willDisplayCell: willDisplayCell,
+                                          itemSeletedAction: itemSeleted)
+        //Outputs
+        let output = viewModel.transform(input: input)
+        
+        output.imagesSections
             .drive(imagesCollectionView.rx.items(dataSource: imagesDataSource))
             .disposed(by: disposeBag)
         
-        viewModel.outputs.errorMessage
+        output.errorMessage
             .emit(onNext: { [weak self] errorReason in
                 guard let self = self else { return }
                 self.showAlert("네트워크 오류", errorReason)
             })
             .disposed(by: disposeBag)
-        
-        imagesCollectionView.rx.itemSelected.withLatestFrom(
-            viewModel.outputs.imagesCellItems,
-            resultSelector: { ($0, $1) }
-        )
-        .map { $1[0].items[$0.item].imageURL }
-        .bind(to: viewModel.inputs.itemSeletedAction)
-        .disposed(by: disposeBag)
     }
 }

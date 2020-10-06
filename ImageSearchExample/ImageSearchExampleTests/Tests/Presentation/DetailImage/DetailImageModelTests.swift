@@ -16,15 +16,13 @@ import Nimble
 final class DetailImageModelTests: XCTestCase {
     var disposeBag = DisposeBag()
     var imageFavoritesStorage: ImageFavoritesStorageType!
-    var viewModel: DetailImageViewModel!
+    var viewModel: (DetailImageViewModel.Input, DetailImageViewModel.Output)!
     let dummyData = SearchImageDummy()
     
     override func setUp() {
         super.setUp()
         self.imageFavoritesStorage = ImageFavoritesStorageFake()
-        let dependency = DetailImageDependency(imageURLString: dummyData.imageURLString,
-                                                           imageFavoritesStorage: imageFavoritesStorage)
-        self.viewModel = DetailImageViewModel(dependency: dependency)
+        self.viewModel = configureViewModel()
     }
     
     override func tearDown() {
@@ -33,28 +31,31 @@ final class DetailImageModelTests: XCTestCase {
         disposeBag = DisposeBag()
     }
     
-    // Model Tests
-    func testUpdateFavorites() {
-        _ = imageFavoritesStorage.updateFavorite(forKey: dummyData.imageURLString)
-        XCTAssertTrue(imageFavoritesStorage.isAddedFavorite(forKey: dummyData.imageURLString), "Duplicate Check Error")
-        _ = imageFavoritesStorage.updateFavorite(forKey: dummyData.imageURLString)
-        XCTAssertFalse(imageFavoritesStorage.isAddedFavorite(forKey: dummyData.imageURLString), "Added Favorites Check Error")
-    }
-    
-    // ViewModel Tests
-    func testImageURLString() {
-        viewModel.outputs.imageURLString
+    func test_ImageURLString() {
+        viewModel.1.imageURLString
             .subscribe(onNext: { imageURLString in
                 XCTAssertFalse(imageURLString.isEmpty, "imageURLString is empty")
             })
             .disposed(by: disposeBag)
     }
-    func testFavoriteButtonAction() {
-        viewModel.inputs.favoriteButtonAction.accept(Void())
-        viewModel.outputs.isAddFavorites
+    func test_FavoriteButtonAction() {
+        viewModel.1.isAddFavorites
             .drive(onNext: { isAddFavorites in
                 XCTAssertTrue(isAddFavorites, "favoriteButton Action Error")
             })
             .disposed(by: disposeBag)
+    }
+}
+
+extension DetailImageModelTests {
+    func configureViewModel() -> (DetailImageViewModel.Input, DetailImageViewModel.Output) {
+        let dependency = DetailImageDependency(imageURLString: dummyData.imageURLString,
+                                               imageFavoritesStorage: imageFavoritesStorage)
+        let coordinator = DetailImageCoordinator(navigationController: UINavigationController())
+        let viewModel = DetailImageViewModel(coordinator: coordinator, dependency: dependency)
+        let favoriteButtonAction = BehaviorRelay(value: Void()).asObservable()
+        
+        let input = DetailImageViewModel.Input(favoriteButtonAction: favoriteButtonAction)
+        return (input, viewModel.transform(input: input))
     }
 }

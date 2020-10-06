@@ -12,9 +12,9 @@ import RxSwift
 
 final class DetailImageViewController: UIViewController, ViewModelBindable {
     
-    var disposeBag = DisposeBag()
-    var viewModel: DetailImageViewModelType!
-
+    var viewModel: DetailImageViewModel!
+    private var disposeBag = DisposeBag()
+    
     @IBOutlet weak var detailImageView: UIImageView!
     @IBOutlet weak var favoriteButton: UIButton!
     
@@ -25,19 +25,23 @@ final class DetailImageViewController: UIViewController, ViewModelBindable {
 
 extension DetailImageViewController {
     func bindViewModel() {
-        favoriteButton.rx.tap
+        //Inputs
+        let favoriteButtonAction = favoriteButton.rx.tap
             .throttle(.milliseconds(300), latest: false, scheduler: MainScheduler.instance)
-            .bind(to: viewModel.inputs.favoriteButtonAction)
-            .disposed(by: disposeBag)
         
-        viewModel.outputs.imageURLString
+        let input = DetailImageViewModel.Input(favoriteButtonAction: favoriteButtonAction)
+        
+        //Outputs
+        let output = viewModel.transform(input: input)
+        
+        output.imageURLString
             .subscribe(onNext: { [weak self] in
                 guard let self = self, let url = URL(string: $0) else { return }
                 self.detailImageView.kf.setImage(with: url)
             })
             .disposed(by: disposeBag)
         
-        viewModel.outputs.isAddFavorites
+        output.isAddFavorites
             .drive(favoriteButton.rx.isSelected)
             .disposed(by: disposeBag)
     }

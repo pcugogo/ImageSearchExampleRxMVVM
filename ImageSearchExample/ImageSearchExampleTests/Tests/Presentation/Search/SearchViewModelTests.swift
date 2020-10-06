@@ -18,14 +18,12 @@ final class SearchViewModelTests: XCTestCase {
     var disposeBag = DisposeBag()
     let apiServiceSpy = SearchAPIServiceSpy()
     var searchUseCase: SearchUseCaseType!
-    var viewModel: SearchViewModelType!
+    var viewModel: (SearchViewModel.Input, SearchViewModel.Output)!
     
     override func setUp() {
         super.setUp()
         self.searchUseCase = SearchUseCase(apiService: apiServiceSpy)
-        let dependency = SearchDependency(searchUseCase: searchUseCase)
-        self.viewModel = SearchViewModel(router: SearchRouter(navigationController: UINavigationController()),
-                                         dependency: dependency)
+        self.viewModel = configureViewModel()
     }
     
     override func tearDown() {
@@ -33,8 +31,8 @@ final class SearchViewModelTests: XCTestCase {
         print("tearDown")
     }
     
-    func testSearchViewModel_searchAction() {
-        viewModel.outputs.imagesCellItems
+    func test_SearchViewModel_searchAction() {
+        viewModel.1.imagesSections
             .skip(1)
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
@@ -50,15 +48,11 @@ final class SearchViewModelTests: XCTestCase {
                 expect(imageSections[0].items[0].displaySitename).to(equal("DummyTest0"))
             })
             .disposed(by: disposeBag)
-        
-        Observable.just("keyword")
-            .bind(to: viewModel.inputs.searchButtonAction)
-            .disposed(by: disposeBag)
     }
     
-    func testSearchViewModel_moreFetch() {
+    func test_SearchViewModel_moreFetch() {
         let searchImageDummy = SearchImageDummy()
-        viewModel.outputs.imagesCellItems
+        viewModel.1.imagesSections
             .skip(2)
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
@@ -73,11 +67,22 @@ final class SearchViewModelTests: XCTestCase {
                 expect(imageSections[0].items[0].displaySitename).to(equal("DummyTest0"))
             })
             .disposed(by: disposeBag)
+    }
+}
+
+extension SearchViewModelTests {
+    func configureViewModel() -> (SearchViewModel.Input, SearchViewModel.Output) {
+        let dependency = SearchDependency(searchUseCase: searchUseCase)
+        let viewModel = SearchViewModel(coordinator: SearchCoordinator(navigationController: UINavigationController()),
+                                        dependency: dependency)
+        let searchImageDummy = SearchImageDummy()
+        let searchButtonAction = BehaviorRelay(value: "Test").asObservable()
+        let willDisplayCell = BehaviorRelay(value: IndexPath(item: searchImageDummy.totalCount - 1, section: 0)).asObservable()
+        let itemSeletedAction: PublishSubject<IndexPath> = .init()
         
-        Observable.just("keyword")
-            .bind(to: viewModel.inputs.searchButtonAction)
-            .disposed(by: disposeBag)
-        
-        viewModel.inputs.willDisplayCell.accept(IndexPath(item: searchImageDummy.totalCount - 1, section: 0))
+        let input = SearchViewModel.Input(searchButtonAction: searchButtonAction,
+                                          willDisplayCell: willDisplayCell,
+                                          itemSeletedAction: itemSeletedAction)
+        return (input, viewModel.transform(input: input))
     }
 }

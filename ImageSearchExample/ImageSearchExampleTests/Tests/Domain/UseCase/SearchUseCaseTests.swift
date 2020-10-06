@@ -16,7 +16,7 @@ import Nimble
 
 final class SearchUseCaseTests: XCTestCase {
     var disposeBag = DisposeBag()
-    let apiServiceSpy = APIServiceFake(dummyData: SearchImageDummy())
+    let apiServiceSpy: SearchAPIServiceSpyType = SearchAPIServiceSpy()
     var searchUseCase: SearchUseCaseType!
     
     override func setUp() {
@@ -29,12 +29,25 @@ final class SearchUseCaseTests: XCTestCase {
         print("tearDown")
     }
 
-    func testFetchNextPage() {
-        searchUseCase.searchImage(keyword: "test", isNextPage: true)
-            .subscribe(onNext: { (result) in
+    func test_SearchImage() {
+        searchUseCase.searchImage(keyword: "test")
+            .subscribe(onNext: { [weak self] (result) in
                 switch result {
-                case .success(let response):
-                    print(response.images.count, "testFetchNextPage success")
+                case .success:
+                    XCTAssertTrue(self?.apiServiceSpy.page == 1)
+                case .failure(let error):
+                    XCTFail(error.reason)
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func test_LoadMore() {
+        searchUseCase.loadMoreImage()
+            .subscribe(onNext: { [weak self] (result) in
+                switch result {
+                case .success:
+                    XCTAssertTrue(self?.apiServiceSpy.page == 2)
                 case .failure(let error):
                     XCTFail(error.reason)
                 }

@@ -12,8 +12,9 @@ protocol ImageFavoritesStorageType {
     typealias IsDuplicate = Bool
     
     var favorites: [String] { get }
-    func add(favoritesKey: String)
-    func remove(favoritesKey: String)
-    func isAddedFavorite(forKey: String) -> Bool
-    func updateFavorite(forKey: String) -> IsDuplicate
+    func add(_ favorite: String)
+    func remove(_ favorite: String)
+    func isContains(_ favorite: String) -> Bool
+    @discardableResult
+    func update(_ favorite: String) -> IsDuplicate
 }
