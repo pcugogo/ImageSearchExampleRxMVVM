@@ -29,7 +29,7 @@ final class SearchUseCaseTests: XCTestCase {
         print("tearDown")
     }
 
-    func test_SearchImage() {
+    func testSearchImage() {
         searchUseCase.searchImage(keyword: "test")
             .subscribe(onNext: { [weak self] (result) in
                 switch result {
@@ -42,7 +42,7 @@ final class SearchUseCaseTests: XCTestCase {
             .disposed(by: disposeBag)
     }
     
-    func test_LoadMore() {
+    func testLoadMore() {
         searchUseCase.loadMoreImage()
             .subscribe(onNext: { [weak self] (result) in
                 switch result {

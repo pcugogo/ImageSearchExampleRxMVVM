@@ -27,7 +27,7 @@ final class ImageFavoritesStorageFakeTests: XCTestCase {
         disposeBag = DisposeBag()
     }
     
-    func test_UpdateFavorites() {
+    func testUpdateFavorites() {
         let testFavorite = "TestFavorite"
         imageFavoritesStorage.update(testFavorite)
         XCTAssertTrue(imageFavoritesStorage.isContains(testFavorite), "Duplicate Check Error")

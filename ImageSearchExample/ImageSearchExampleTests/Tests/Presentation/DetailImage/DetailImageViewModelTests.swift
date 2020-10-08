@@ -1,5 +1,5 @@
 //
-//  DetailImageModelTests.swift
+//  DetailImageViewModelTests.swift
 //  ImageSearchExampleTests
 //
 //  Created by ChanWook Park on 09/07/2020.
@@ -13,7 +13,7 @@ import Nimble
 
 @testable import ImageSearchExample
 
-final class DetailImageModelTests: XCTestCase {
+final class DetailImageViewModelTests: XCTestCase {
     var disposeBag = DisposeBag()
     var imageFavoritesStorage: ImageFavoritesStorageType!
     var viewModel: (DetailImageViewModel.Input, DetailImageViewModel.Output)!
@@ -31,14 +31,14 @@ final class DetailImageModelTests: XCTestCase {
         disposeBag = DisposeBag()
     }
     
-    func test_ImageURLString() {
+    func testImageURLString() {
         viewModel.1.imageURLString
             .subscribe(onNext: { imageURLString in
                 XCTAssertFalse(imageURLString.isEmpty, "imageURLString is empty")
             })
             .disposed(by: disposeBag)
     }
-    func test_FavoriteButtonAction() {
+    func testUpdateFavorites() {
         viewModel.1.isAddFavorites
             .drive(onNext: { isAddFavorites in
                 XCTAssertTrue(isAddFavorites, "favoriteButton Action Error")

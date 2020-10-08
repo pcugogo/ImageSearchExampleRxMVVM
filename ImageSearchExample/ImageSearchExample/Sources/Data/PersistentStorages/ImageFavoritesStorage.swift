@@ -28,7 +28,7 @@ struct ImageFavoritesStorage: ImageFavoritesStorageType {
     func isContains(_ favorite: String) -> Bool {
         return favorites.contains(favorite)
     }
-    func update(_ favorite: String) -> IsDuplicate {
+    func update(_ favorite: String) -> IsContains {
         if isContains(favorite) {
             remove(favorite)
         } else {

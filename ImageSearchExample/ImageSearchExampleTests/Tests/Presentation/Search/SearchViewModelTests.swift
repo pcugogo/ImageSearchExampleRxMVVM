@@ -31,7 +31,7 @@ final class SearchViewModelTests: XCTestCase {
         print("tearDown")
     }
     
-    func test_SearchViewModel_searchAction() {
+    func testSearch() {
         viewModel.1.imagesSections
             .skip(1)
             .do(onNext: { [weak self] _ in
@@ -50,7 +50,7 @@ final class SearchViewModelTests: XCTestCase {
             .disposed(by: disposeBag)
     }
     
-    func test_SearchViewModel_moreFetch() {
+    func testMoreFetch() {
         let searchImageDummy = SearchImageDummy()
         viewModel.1.imagesSections
             .skip(2)
