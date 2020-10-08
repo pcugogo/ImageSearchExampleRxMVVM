@@ -9,12 +9,12 @@
 import Foundation
 
 protocol ImageFavoritesStorageType {
-    typealias IsDuplicate = Bool
+    typealias IsContains = Bool
     
     var favorites: [String] { get }
     func add(_ favorite: String)
     func remove(_ favorite: String)
     func isContains(_ favorite: String) -> Bool
     @discardableResult
-    func update(_ favorite: String) -> IsDuplicate
+    func update(_ favorite: String) -> IsContains
 }
