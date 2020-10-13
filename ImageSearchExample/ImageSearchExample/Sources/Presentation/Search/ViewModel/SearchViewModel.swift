@@ -14,12 +14,12 @@ import RxDataSources
 
 typealias ImagesSection = SectionModel<Void, ImageData>
 
-final class SearchViewModel: ViewModel {
+final class SearchViewModel: ViewModel<SearchCoordinator.Dependency> {
     
     struct Input {
-        let searchButtonAction: Observable<String>
-        let willDisplayCell: Observable<IndexPath>
-        var itemSeletedAction: Observable<IndexPath>
+        let searchButtonAction: Driver<String>
+        let willDisplayCell: Driver<IndexPath>
+        var itemSeletedAction: Driver<IndexPath>
     }
     struct Output {
         let imagesSections: Driver<[ImagesSection]>
@@ -27,18 +27,16 @@ final class SearchViewModel: ViewModel {
     }
     
     private var disposeBag: DisposeBag = DisposeBag()
-    private var searchDependency: SearchDependency {
-        return dependency as! SearchDependency
-    }
-    
+
     func transform(input: Input) -> Output {
-        let dependency = self.searchDependency
-        
         let isLastPage: BehaviorRelay<Bool> = BehaviorRelay(value: false)
         let imagesCellItems: BehaviorRelay<[ImageData]> = .init(value: [])
+        let dependency: BehaviorRelay<SearchCoordinator.Dependency> = .init(value: self.dependency)
         
         let newSearch = input.searchButtonAction
-            .flatMapLatest { dependency.searchUseCase.searchImage(keyword: $0) }
+            .asObservable()
+            .withLatestFrom(dependency, resultSelector: { ($0, $1) })
+            .flatMapLatest { $1.searchUseCase.searchImage(keyword: $0) }
             .asObservable()
             .share()
 
@@ -55,6 +53,7 @@ final class SearchViewModel: ViewModel {
             .disposed(by: disposeBag)
         
         let isLastCell = input.willDisplayCell
+            .asObservable()
             .withLatestFrom(imagesCellItems) { (indexPath: $0, data: $1) }
             .map { $0.data.count - 1 == $0.indexPath.item }
             .filter { $0 }
@@ -63,8 +62,9 @@ final class SearchViewModel: ViewModel {
             .map { $0.0 && !$0.1 }
         
         let loadMore = shouldMoreFetch
-            .filter { $0 }
-            .flatMapLatest { _ in dependency.searchUseCase.loadMoreImage() }
+            .withLatestFrom(dependency, resultSelector: { ($0, $1) })
+            .filter { $0.0 }
+            .flatMapLatest { $0.1.searchUseCase.loadMoreImage() }
             .share()
         
         let loadMoreResponse = loadMore
@@ -82,7 +82,8 @@ final class SearchViewModel: ViewModel {
             .disposed(by: disposeBag)
         
         Observable.merge(searchResponse, loadMoreResponse)
-            .map { $0.meta.isEnd || dependency.searchUseCase.isLastPage }
+            .withLatestFrom(dependency, resultSelector: { ($0, $1) })
+            .map { $0.meta.isEnd || $1.searchUseCase.isLastPage }
             .bind(to: isLastPage)
             .disposed(by: disposeBag)
         
@@ -104,6 +105,7 @@ final class SearchViewModel: ViewModel {
             resultSelector: { ($0, $1) }
         )
         .map { $1[0].items[$0.item].imageURL }
+        .asObservable()
         
         seletedItemImageURL.withLatestFrom(coordinator) { ($0, $1) }
             .subscribe(onNext: { (imageURLString, coordinator) in

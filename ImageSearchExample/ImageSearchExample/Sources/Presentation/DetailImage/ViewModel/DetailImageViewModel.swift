@@ -10,35 +10,31 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
-final class DetailImageViewModel: ViewModel {
+final class DetailImageViewModel: ViewModel<DetailImageCoordinator.Dependency> {
 
     struct Input {
-        var favoriteButtonAction: Observable<Void>
+        var favoriteButtonAction: Driver<Void>
     }
     
     struct Output {
-        var imageURLString: Observable<String>
+        var imageURLString: Driver<String>
         var isAddFavorites: Driver<Bool>
     }
     
     private var disposeBag = DisposeBag()
-    private var detailImageDependency: DetailImageDependency {
-        return dependency as! DetailImageDependency
-    }
     
     func transform(input: Input) -> Output {
-        
-        let dependency = self.detailImageDependency
-        
         let isAddFavorites: BehaviorRelay<Bool> = .init(value: dependency.imageFavoritesStorage.isContains(dependency.imageURLString))
-        let imageURLString: BehaviorRelay<String> = .init(value: dependency.imageURLString)
+        let imageURLString: Driver<String> = Observable.just(dependency.imageURLString)
+            .asDriver(onErrorDriveWith: .empty())
+        let depndency: BehaviorRelay<DetailImageCoordinator.Dependency> = .init(value: dependency)
         
-        input.favoriteButtonAction.withLatestFrom(imageURLString)
-            .map { dependency.imageFavoritesStorage.update($0) }
+        input.favoriteButtonAction.asObservable().withLatestFrom(depndency)
+            .map { $0.imageFavoritesStorage.update($0.imageURLString) }
             .bind(to: isAddFavorites)
             .disposed(by: disposeBag)
 
-        return Output(imageURLString: imageURLString.asObservable(),
+        return Output(imageURLString: imageURLString,
                       isAddFavorites: isAddFavorites.asDriver(onErrorDriveWith: .empty()))
     }
 }

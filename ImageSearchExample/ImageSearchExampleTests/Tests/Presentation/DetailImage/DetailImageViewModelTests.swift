@@ -13,7 +13,7 @@ import Nimble
 
 @testable import ImageSearchExample
 
-final class DetailImageViewModelTests: XCTestCase {
+final class DetailImageModelTests: XCTestCase {
     var disposeBag = DisposeBag()
     var imageFavoritesStorage: ImageFavoritesStorageType!
     var viewModel: (DetailImageViewModel.Input, DetailImageViewModel.Output)!
@@ -31,14 +31,15 @@ final class DetailImageViewModelTests: XCTestCase {
         disposeBag = DisposeBag()
     }
     
-    func testImageURLString() {
+    func test_ImageURLString() {
         viewModel.1.imageURLString
+            .asObservable()
             .subscribe(onNext: { imageURLString in
                 XCTAssertFalse(imageURLString.isEmpty, "imageURLString is empty")
             })
             .disposed(by: disposeBag)
     }
-    func testUpdateFavorites() {
+    func test_FavoriteButtonAction() {
         viewModel.1.isAddFavorites
             .drive(onNext: { isAddFavorites in
                 XCTAssertTrue(isAddFavorites, "favoriteButton Action Error")
@@ -49,11 +50,11 @@ final class DetailImageViewModelTests: XCTestCase {
 
 extension DetailImageModelTests {
     func configureViewModel() -> (DetailImageViewModel.Input, DetailImageViewModel.Output) {
-        let dependency = DetailImageDependency(imageURLString: dummyData.imageURLString,
+        let dependency = DetailImageCoordinator.Dependency(imageURLString: dummyData.imageURLString,
                                                imageFavoritesStorage: imageFavoritesStorage)
         let coordinator = DetailImageCoordinator(navigationController: UINavigationController())
         let viewModel = DetailImageViewModel(coordinator: coordinator, dependency: dependency)
-        let favoriteButtonAction = BehaviorRelay(value: Void()).asObservable()
+        let favoriteButtonAction = BehaviorRelay(value: Void()).asDriver()
         
         let input = DetailImageViewModel.Input(favoriteButtonAction: favoriteButtonAction)
         return (input, viewModel.transform(input: input))

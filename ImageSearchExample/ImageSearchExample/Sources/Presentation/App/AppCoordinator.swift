@@ -22,7 +22,7 @@ final class AppCoordinator {
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         let searchCoordinator = SearchCoordinator(navigationController: navigationController)
-        let dependency = SearchDependency(searchUseCase: SearchUseCase(apiService: APIService()))
+        let dependency = SearchCoordinator.Dependency(searchUseCase: SearchUseCase(apiService: APIService()))
         searchCoordinator.start(with: dependency)
     }
 }

@@ -31,7 +31,7 @@ final class SearchViewModelTests: XCTestCase {
         print("tearDown")
     }
     
-    func testSearch() {
+    func test_SearchViewModel_searchAction() {
         viewModel.1.imagesSections
             .skip(1)
             .do(onNext: { [weak self] _ in
@@ -50,7 +50,7 @@ final class SearchViewModelTests: XCTestCase {
             .disposed(by: disposeBag)
     }
     
-    func testMoreFetch() {
+    func test_SearchViewModel_moreFetch() {
         let searchImageDummy = SearchImageDummy()
         viewModel.1.imagesSections
             .skip(2)
@@ -72,14 +72,16 @@ final class SearchViewModelTests: XCTestCase {
 
 extension SearchViewModelTests {
     func configureViewModel() -> (SearchViewModel.Input, SearchViewModel.Output) {
-        let dependency = SearchDependency(searchUseCase: searchUseCase)
+        let dependency = SearchCoordinator.Dependency(searchUseCase: searchUseCase)
         let viewModel = SearchViewModel(coordinator: SearchCoordinator(navigationController: UINavigationController()),
                                         dependency: dependency)
         let searchImageDummy = SearchImageDummy()
-        let searchButtonAction = BehaviorRelay(value: "Test").asObservable()
-        let willDisplayCell = BehaviorRelay(value: IndexPath(item: searchImageDummy.totalCount - 1, section: 0)).asObservable()
-        let itemSeletedAction: PublishSubject<IndexPath> = .init()
-        
+        let searchButtonAction = BehaviorRelay(value: "Test").asDriver()
+        let willDisplayCell = BehaviorRelay(value: IndexPath(item: searchImageDummy.totalCount - 1, section: 0))
+            .asDriver()
+        let itemSeletedAction: Driver<IndexPath> = PublishSubject<IndexPath>.init()
+            .asDriver(onErrorDriveWith: .empty())
+            
         let input = SearchViewModel.Input(searchButtonAction: searchButtonAction,
                                           willDisplayCell: willDisplayCell,
                                           itemSeletedAction: itemSeletedAction)

@@ -8,24 +8,23 @@
 
 import UIKit
 
-struct SearchDependency: Dependency {
-    let searchUseCase: SearchUseCaseType
-}
-
 final class SearchCoordinator: Coordinator {
     
-    func start(with dependency: SearchDependency) {
+    struct Dependency {
+        let searchUseCase: SearchUseCaseType
+    }
+    
+    func start(with dependency: Dependency) {
         var searchViewController = navigationController?.viewControllers.first as! SearchViewController
-        let viewModel = SearchViewModel(coordinator: self,
-                                        dependency: dependency)
+        let viewModel = SearchViewModel(coordinator: self, dependency: dependency)
         searchViewController.bind(viewModel: viewModel)
     }
     
-    func navigate(to route: CoordinatorRoute) {
+    func navigate(to route: Route) {
         switch route {
         case .detailImage(let imageURLString):
             let coordinator = DetailImageCoordinator(navigationController: navigationController!)
-            let dependency = DetailImageDependency(imageURLString: imageURLString,
+            let dependency = DetailImageCoordinator.Dependency(imageURLString: imageURLString,
                                                    imageFavoritesStorage: ImageFavoritesStorage())
             coordinator.start(with: dependency)
         }

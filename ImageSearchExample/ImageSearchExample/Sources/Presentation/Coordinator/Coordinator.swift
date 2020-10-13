@@ -10,19 +10,13 @@ import UIKit
 
 typealias Coordinator = BaseCoordinator & Coordinatable & CoordinatorType
 
-enum CoordinatorRoute {
-    case detailImage(imageURLString: String)
-}
-
 protocol CoordinatorType: class {
-    func navigate(to route: CoordinatorRoute)
+    func navigate(to route: Route)
 }
-
-protocol Dependency {}
 
 protocol Coordinatable: class {
-    associatedtype DependencyType: Dependency
-    func start(with dependency: DependencyType)
+    associatedtype Dependency
+    func start(with dependency: Dependency)
 }
 
 class BaseCoordinator {

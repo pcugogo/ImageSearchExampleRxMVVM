@@ -45,11 +45,15 @@ final class SearchViewController: UIViewController, ViewModelBindable {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+}
+
+// MARK: - BindViewModel
+extension SearchViewController {
     func bindViewModel() {
         //Inputs
         let searchButtonClicked = searchController.searchBar.rx.searchButtonClicked
-            .withLatestFrom(searchController.searchBar.rx.text.orEmpty)
+            .asDriver()
+            .withLatestFrom(searchController.searchBar.rx.text.orEmpty.asDriver())
             .filterEmpty()
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
@@ -57,8 +61,11 @@ final class SearchViewController: UIViewController, ViewModelBindable {
             })
         
         let willDisplayCell = imagesCollectionView.rx.willDisplayCell
+            .asDriver()
             .map { $0.at }
-        let itemSeleted = imagesCollectionView.rx.itemSelected.asObservable()
+        
+        let itemSeleted = imagesCollectionView.rx.itemSelected
+            .asDriver()
         
         let input = SearchViewModel.Input(searchButtonAction: searchButtonClicked,
                                           willDisplayCell: willDisplayCell,

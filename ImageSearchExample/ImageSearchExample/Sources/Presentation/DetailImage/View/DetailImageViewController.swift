@@ -23,18 +23,20 @@ final class DetailImageViewController: UIViewController, ViewModelBindable {
     }
 }
 
+// MARK: - BindViewModel
 extension DetailImageViewController {
     func bindViewModel() {
-        //Inputs
+        // Inputs
         let favoriteButtonAction = favoriteButton.rx.tap
             .throttle(.milliseconds(300), latest: false, scheduler: MainScheduler.instance)
+            .asDriver(onErrorDriveWith: .empty())
         
         let input = DetailImageViewModel.Input(favoriteButtonAction: favoriteButtonAction)
         
-        //Outputs
+        // OutPuts
         let output = viewModel.transform(input: input)
         
-        output.imageURLString
+        output.imageURLString.asObservable()
             .subscribe(onNext: { [weak self] in
                 guard let self = self, let url = URL(string: $0) else { return }
                 self.detailImageView.kf.setImage(with: url)
