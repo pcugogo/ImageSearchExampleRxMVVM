@@ -44,4 +44,3 @@ final class SearchUseCase: SearchUseCaseType {
         return apiService.request(api: API.getImages(query: keyword, page: currentPage, numberOfImagesToLoad: 80))
     }
 }
-

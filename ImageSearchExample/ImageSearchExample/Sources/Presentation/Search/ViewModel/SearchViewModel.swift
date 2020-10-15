@@ -95,7 +95,7 @@ final class SearchViewModel: ViewModel<SearchCoordinator.Dependency> {
                 return error.reason
         }
         .filterNil()
-            .asSignal(onErrorSignalWith: .empty())
+        .asSignal(onErrorSignalWith: .empty())
         
         let imagesSections = imagesCellItems.map { [ImagesSection(model: Void(), items: $0)] }
             .asDriver(onErrorDriveWith: .empty())

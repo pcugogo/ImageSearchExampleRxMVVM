@@ -19,17 +19,17 @@ struct APIServiceFake: APIServiceType {
     }
     
     func request<T: Codable>(api: API) -> NetworkResult<T> {
-        return Observable.create { emitter in
+        return Observable.create { observer in
             guard let data = self.dummyData.jsonString.data(using: .utf8) else {
                 XCTFail("DummyData jsonString Type casting Failed")
                 return Disposables.create()
             }
-            guard let imageSearchResponse = try? JSONDecoder().decode(T.self, from: data) else {
-                XCTFail(DataResponseError.decoding.reason)
-                return Disposables.create()
+            do {
+                let decodedResponse = try JSONDecoder().decode(T.self, from: data)
+                observer.onNext(.success(decodedResponse))
+            } catch {
+                XCTFail("\(T.self), \(error)")
             }
-            emitter.onNext(.success(imageSearchResponse))
-            print(imageSearchResponse)
             return Disposables.create()
         }
     }

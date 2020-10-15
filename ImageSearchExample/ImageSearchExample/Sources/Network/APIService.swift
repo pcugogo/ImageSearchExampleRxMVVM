@@ -9,21 +9,18 @@
 import Alamofire
 import RxSwift
 
-typealias NetworkResult<T> = Observable<Result<T, DataResponseError>>
+typealias NetworkResult<T> = Observable<Result<T, NetworkError>>
 
-enum DataResponseError: Error {
-    case url
+enum NetworkError: Error {
+    case unknown
     case request
-    case decoding
     
     var reason: String {
         switch self {
-        case .url:
-            return "url is empty"
+        case .unknown:
+            return "알 수 없는 오류가 발생했습니다"
         case .request:
-            return "request faild"
-        case .decoding:
-            return "decoding error"
+            return "서버 요청이 실패하였습니다.\n잠시 후에 다시 이용해주세요."
         }
     }
 }
@@ -34,20 +31,24 @@ protocol APIServiceType {
 
 struct APIService: APIServiceType {
     func request<T: Codable>(api: API) -> NetworkResult<T> {
-        return Observable.create { emitter in
+        return Observable.create { observer in
             api
                 .dataRequest()
                 .responseJSON { response in
                     switch response.result {
                     case .success:
-                        guard let data = response.data,
-                              let decodedResponse = try? JSONDecoder().decode(T.self, from: data) else {
-                            emitter.onNext(.failure(DataResponseError.decoding))
+                        guard let data = response.data else {
+                            observer.onNext(.failure(NetworkError.unknown))
                             return
                         }
-                        emitter.onNext(.success(decodedResponse))
+                        do {
+                            let decodedResponse = try JSONDecoder().decode(T.self, from: data)
+                            observer.onNext(.success(decodedResponse))
+                        } catch {
+                            print("\(T.self), \(error)")
+                        }
                     case .failure:
-                        emitter.onNext(.failure(DataResponseError.request))
+                        observer.onNext(.failure(NetworkError.request))
                     }
                 }
             return Disposables.create()
