@@ -9,13 +9,11 @@
 import Alamofire
 import RxSwift
 
-typealias NetworkResult<T> = Observable<Result<T, NetworkError>>
-
 enum NetworkError: Error {
     case unknown
     case request
     
-    var reason: String {
+    var message: String {
         switch self {
         case .unknown:
             return "알 수 없는 오류가 발생했습니다"
@@ -26,31 +24,30 @@ enum NetworkError: Error {
 }
 
 protocol APIServiceType {
-    func request<T: Codable>(api: API) -> NetworkResult<T>
+    func request<T: Codable>(api: API) -> Single<T>
 }
 
 struct APIService: APIServiceType {
-    func request<T: Codable>(api: API) -> NetworkResult<T> {
-        return Observable.create { observer in
+    func request<T: Codable>(api: API) -> Single<T> {
+        return Single.create { single in
             api
                 .dataRequest()
                 .responseJSON { response in
                     switch response.result {
                     case .success:
                         guard let data = response.data else {
-                            observer.onNext(.failure(NetworkError.unknown))
+                            single(.error(NetworkError.unknown))
                             return
                         }
                         do {
                             let decodedResponse = try JSONDecoder().decode(T.self, from: data)
-                            observer.onNext(.success(decodedResponse))
+                            single(.success(decodedResponse))
                         } catch {
                             print("\(T.self), \(error)")
                         }
                     case .failure:
-                        observer.onNext(.failure(NetworkError.request))
+                        single(.error(NetworkError.request))
                     }
-                    observer.onCompleted()
             }
             return Disposables.create()
         }

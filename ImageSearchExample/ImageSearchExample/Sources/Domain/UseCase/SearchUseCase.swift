@@ -13,8 +13,8 @@ import RxCocoa
 
 protocol SearchUseCaseType {
     var isLastPage: Bool { get }
-    func searchImage(keyword: String)  -> NetworkResult<SearchResponse>
-    func loadMoreImage() -> NetworkResult<SearchResponse>
+    func searchImage(keyword: String)  -> Observable<SearchResponse>
+    func loadMoreImage() -> Observable<SearchResponse>
 }
 
 final class SearchUseCase: SearchUseCaseType {
@@ -27,20 +27,22 @@ final class SearchUseCase: SearchUseCaseType {
         return currentPage >= 50
     }
     
-    init(apiService: APIServiceType) {
+    init(apiService: APIServiceType = APIService()) {
         self.apiService = apiService
     }
     
-    func searchImage(keyword: String) -> NetworkResult<SearchResponse> {
+    func searchImage(keyword: String) -> Observable<SearchResponse> {
         self.keyword = keyword
         currentPage = 1
-        return apiService.request(api: API.getImages(query: keyword, page: currentPage, numberOfImagesToLoad: 80))
+        let api = API.getImages(query: keyword, page: currentPage, numberOfImagesToLoad: 80)
+        return apiService.request(api: api).asObservable()
     }
     
-    func loadMoreImage() -> NetworkResult<SearchResponse> {
+    func loadMoreImage() -> Observable<SearchResponse> {
         if !isLastPage {
             currentPage += 1
         }
-        return apiService.request(api: API.getImages(query: keyword, page: currentPage, numberOfImagesToLoad: 80))
+        let api = API.getImages(query: keyword, page: currentPage, numberOfImagesToLoad: 80)
+        return apiService.request(api: api).asObservable()
     }
 }

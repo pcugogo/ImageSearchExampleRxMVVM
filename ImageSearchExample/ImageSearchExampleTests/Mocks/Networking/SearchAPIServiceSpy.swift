@@ -16,7 +16,7 @@ protocol SearchAPIServiceSpyType: APIServiceType {
 final class SearchAPIServiceSpy: SearchAPIServiceSpyType {
     private(set) var page: Int?
     
-    func request<T: Codable>(api: API) -> NetworkResult<T> {
+    func request<T: Codable>(api: API) -> Single<T> {
         switch api {
         case .getImages(_, let page, _):
             self.page = page

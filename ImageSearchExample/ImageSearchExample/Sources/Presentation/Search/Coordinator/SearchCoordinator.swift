@@ -24,8 +24,10 @@ final class SearchCoordinator: Coordinator {
         switch route {
         case .detailImage(let imageURLString):
             let coordinator = DetailImageCoordinator(navigationController: navigationController!)
-            let dependency = DetailImageCoordinator.Dependency(imageURLString: imageURLString,
-                                                   imageFavoritesStorage: ImageFavoritesStorage())
+            let dependency = DetailImageCoordinator.Dependency(
+                imageURLString: imageURLString,
+                imageFavoritesStorage: ImageFavoritesStorage()
+            )
             coordinator.start(with: dependency)
         }
     }

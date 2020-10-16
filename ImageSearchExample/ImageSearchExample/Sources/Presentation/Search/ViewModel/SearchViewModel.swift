@@ -19,33 +19,32 @@ final class SearchViewModel: ViewModel<SearchCoordinator.Dependency> {
     struct Input {
         let searchButtonAction: Driver<String>
         let willDisplayCell: Driver<IndexPath>
-        var itemSeletedAction: Driver<IndexPath>
+        let itemSeletedAction: Driver<IndexPath>
     }
     struct Output {
         let imagesSections: Driver<[ImagesSection]>
-        let errorMessage: Signal<String>
+        let networkError: Signal<NetworkError>
     }
     
     private var disposeBag: DisposeBag = DisposeBag()
-
+    
     func transform(input: Input) -> Output {
         let isLastPage: BehaviorRelay<Bool> = BehaviorRelay(value: false)
         let imagesCellItems: BehaviorRelay<[ImageData]> = .init(value: [])
         let dependency: BehaviorRelay<SearchCoordinator.Dependency> = .init(value: self.dependency)
+        let networkError: PublishRelay<NetworkError> = .init()
         
-        let newSearch = input.searchButtonAction
+        let searchResponse = input.searchButtonAction
             .asObservable()
-            .withLatestFrom(dependency, resultSelector: { ($0, $1) })
-            .flatMapLatest { $1.searchUseCase.searchImage(keyword: $0) }
-            .asObservable()
-            .share()
-
-        let searchResponse = newSearch
-            .map { result -> SearchResponse? in
-                guard case .success(let response) = result else { return nil }
-                return response
-            }
-            .filterNil()
+            .withLatestFrom(dependency, resultSelector: { ($0, $1.searchUseCase) })
+            .flatMapFirst { (keyword, searchUseCase) -> Observable<SearchResponse> in
+                return searchUseCase.searchImage(keyword: keyword)
+                    .catchError {
+                        networkError.accept($0 as? NetworkError ?? NetworkError.unknown)
+                        return .empty()
+                }
+        }
+        .share()
         
         searchResponse
             .map { $0.images }
@@ -61,18 +60,18 @@ final class SearchViewModel: ViewModel<SearchCoordinator.Dependency> {
         let shouldMoreFetch = isLastCell.withLatestFrom(isLastPage, resultSelector: { ($0, $1) })
             .map { $0.0 && !$0.1 }
         
-        let loadMore = shouldMoreFetch
-            .withLatestFrom(dependency, resultSelector: { ($0, $1) })
+        let loadMoreResponse = shouldMoreFetch
+            .withLatestFrom(dependency, resultSelector: { ($0, $1.searchUseCase) })
             .filter { $0.0 }
-            .flatMapLatest { $0.1.searchUseCase.loadMoreImage() }
-            .share()
-        
-        let loadMoreResponse = loadMore
-            .map { result -> SearchResponse? in
-                guard case .success(let response) = result else { return nil }
-                return response
-            }
-            .filterNil()
+            .map { $0.1 }
+            .flatMapFirst { searchUseCase -> Observable<SearchResponse> in
+                return searchUseCase.loadMoreImage()
+                    .catchError {
+                        networkError.accept($0 as? NetworkError ?? NetworkError.unknown)
+                        return .empty()
+                }
+        }
+        .share()
         
         loadMoreResponse
             .map { $0.images }
@@ -87,16 +86,6 @@ final class SearchViewModel: ViewModel<SearchCoordinator.Dependency> {
             .bind(to: isLastPage)
             .disposed(by: disposeBag)
         
-        let errorMessage = Observable.merge(newSearch, loadMore)
-            .map { result -> String? in
-                guard case .failure(let error) = result else {
-                    return nil
-                }
-                return error.reason
-        }
-        .filterNil()
-        .asSignal(onErrorSignalWith: .empty())
-        
         let imagesSections = imagesCellItems.map { [ImagesSection(model: Void(), items: $0)] }
             .asDriver(onErrorDriveWith: .empty())
         
@@ -104,8 +93,8 @@ final class SearchViewModel: ViewModel<SearchCoordinator.Dependency> {
             imagesSections,
             resultSelector: { ($0, $1) }
         )
-        .map { $1[0].items[$0.item].imageURL }
-        .asObservable()
+            .map { $1[0].items[$0.item].imageURL }
+            .asObservable()
         
         seletedItemImageURL.withLatestFrom(coordinator) { ($0, $1) }
             .subscribe(onNext: { (imageURLString, coordinator) in
@@ -113,6 +102,6 @@ final class SearchViewModel: ViewModel<SearchCoordinator.Dependency> {
             })
             .disposed(by: disposeBag)
         
-        return Output(imagesSections: imagesSections, errorMessage: errorMessage)
+        return Output(imagesSections: imagesSections, networkError: networkError.asSignal())
     }
 }

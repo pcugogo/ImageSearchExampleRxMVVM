@@ -32,7 +32,7 @@ final class SearchViewController: UIViewController, ViewModelBindable {
     private let imagesDataSource = ImagesDataSource(configureCell: { _, collectionView, indexPath, data in
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ImageCollectionViewCell.self),
                                                             for: indexPath) as? ImageCollectionViewCell else {
-            fatalError()
+                                                                fatalError()
         }
         cell.setImage(urlString: data.imageURL)
         return cell
@@ -67,9 +67,11 @@ extension SearchViewController {
         let itemSeleted = imagesCollectionView.rx.itemSelected
             .asDriver()
         
-        let input = SearchViewModel.Input(searchButtonAction: searchButtonClicked,
-                                          willDisplayCell: willDisplayCell,
-                                          itemSeletedAction: itemSeleted)
+        let input = SearchViewModel.Input(
+            searchButtonAction: searchButtonClicked,
+            willDisplayCell: willDisplayCell,
+            itemSeletedAction: itemSeleted
+        )
         //Outputs
         let output = viewModel.transform(input: input)
         
@@ -77,10 +79,10 @@ extension SearchViewController {
             .drive(imagesCollectionView.rx.items(dataSource: imagesDataSource))
             .disposed(by: disposeBag)
         
-        output.errorMessage
-            .emit(onNext: { [weak self] errorReason in
+        output.networkError
+            .emit(onNext: { [weak self] error in
                 guard let self = self else { return }
-                self.showAlert("네트워크 오류", errorReason)
+                self.showAlert("네트워크 오류", error.message)
             })
             .disposed(by: disposeBag)
     }

@@ -13,12 +13,12 @@ import RxOptional
 final class DetailImageViewModel: ViewModel<DetailImageCoordinator.Dependency> {
 
     struct Input {
-        var favoriteButtonAction: Driver<Void>
+        let favoriteButtonAction: Driver<Void>
     }
     
     struct Output {
-        var imageURLString: Driver<String>
-        var isAddFavorites: Driver<Bool>
+        let imageURLString: Driver<String>
+        let isAddFavorites: Driver<Bool>
     }
     
     private var disposeBag = DisposeBag()
@@ -33,8 +33,10 @@ final class DetailImageViewModel: ViewModel<DetailImageCoordinator.Dependency> {
             .map { $0.imageFavoritesStorage.update($0.imageURLString) }
             .bind(to: isAddFavorites)
             .disposed(by: disposeBag)
-
-        return Output(imageURLString: imageURLString,
-                      isAddFavorites: isAddFavorites.asDriver(onErrorDriveWith: .empty()))
+        
+        return Output(
+            imageURLString: imageURLString,
+            isAddFavorites: isAddFavorites.asDriver(onErrorDriveWith: .empty())
+        )
     }
 }
