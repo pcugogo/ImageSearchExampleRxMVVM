@@ -49,8 +49,8 @@ final class SearchViewController: UIViewController, ViewModelBindable {
 
 // MARK: - BindViewModel
 extension SearchViewController {
-    func bindViewModel() {
-        //Inputs
+    // MARK: - Inputs
+    func bindViewModelInput() -> SearchViewModel.Input {
         let searchButtonClicked = searchController.searchBar.rx.searchButtonClicked
             .asDriver()
             .withLatestFrom(searchController.searchBar.rx.text.orEmpty.asDriver())
@@ -72,7 +72,12 @@ extension SearchViewController {
             willDisplayCell: willDisplayCell,
             itemSeletedAction: itemSeleted
         )
-        //Outputs
+        
+        return input
+    }
+    
+    // MARK: - Outputs
+    func bindViewModelOutput(_ input: SearchViewModel.Input) {
         let output = viewModel.transform(input: input)
         
         output.imagesSections

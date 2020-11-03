@@ -6,7 +6,6 @@
 //  Copyright © 2020 ChanWookPark. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 import RxOptional
@@ -14,8 +13,11 @@ import RxDataSources
 
 typealias ImagesSection = SectionModel<Void, ImageData>
 
-final class SearchViewModel: ViewModel<SearchCoordinator.Dependency> {
+final class SearchViewModel: ViewModel<SearchViewModel.Dependency> {
     
+    struct Dependency: DependencyType {
+        let searchUseCase: SearchUseCaseType
+    }
     struct Input {
         let searchButtonAction: Driver<String>
         let willDisplayCell: Driver<IndexPath>
@@ -31,7 +33,7 @@ final class SearchViewModel: ViewModel<SearchCoordinator.Dependency> {
     func transform(input: Input) -> Output {
         let isLastPage: BehaviorRelay<Bool> = BehaviorRelay(value: false)
         let imagesCellItems: BehaviorRelay<[ImageData]> = .init(value: [])
-        let dependency: BehaviorRelay<SearchCoordinator.Dependency> = .init(value: self.dependency)
+        let dependency: BehaviorRelay<Dependency> = .init(value: self.dependency)
         let networkError: PublishRelay<NetworkError> = .init()
         
         let searchResponse = input.searchButtonAction

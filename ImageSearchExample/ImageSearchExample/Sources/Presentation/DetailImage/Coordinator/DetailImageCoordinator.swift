@@ -10,12 +10,7 @@ import UIKit
 
 final class DetailImageCoordinator: Coordinator {
     
-    struct Dependency {
-        let imageURLString: String
-        let imageFavoritesStorage: ImageFavoritesStorageType
-    }
-    
-    func start(with dependency: Dependency) {
+    func start(with dependency: DetailImageViewModel.Dependency) {
         let viewModel = DetailImageViewModel(coordinator: self, dependency: dependency)
         let storyboard = StoryboardName.main.instantiateStoryboard()
         var detailImageViewController = storyboard.instantiateViewController(withIdentifier:

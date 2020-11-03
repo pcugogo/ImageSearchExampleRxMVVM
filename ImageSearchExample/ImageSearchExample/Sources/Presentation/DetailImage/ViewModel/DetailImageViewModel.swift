@@ -10,16 +10,19 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
-final class DetailImageViewModel: ViewModel<DetailImageCoordinator.Dependency> {
+final class DetailImageViewModel: ViewModel<DetailImageViewModel.Dependency> {
 
+    struct Dependency: DependencyType {
+        let imageURLString: String
+        let imageFavoritesStorage: ImageFavoritesStorageType
+    }
     struct Input {
         let favoriteButtonAction: Driver<Void>
     }
-    
     struct Output {
         let imageURLString: Driver<String>
         let isAddFavorites: Driver<Bool>
-    }
+    }    
     
     private var disposeBag = DisposeBag()
     
@@ -27,7 +30,7 @@ final class DetailImageViewModel: ViewModel<DetailImageCoordinator.Dependency> {
         let isAddFavorites: BehaviorRelay<Bool> = .init(value: dependency.imageFavoritesStorage.isContains(dependency.imageURLString))
         let imageURLString: Driver<String> = Observable.just(dependency.imageURLString)
             .asDriver(onErrorDriveWith: .empty())
-        let depndency: BehaviorRelay<DetailImageCoordinator.Dependency> = .init(value: dependency)
+        let depndency: BehaviorRelay<Dependency> = .init(value: dependency)
         
         input.favoriteButtonAction.asObservable().withLatestFrom(depndency)
             .map { $0.imageFavoritesStorage.update($0.imageURLString) }

@@ -15,7 +15,7 @@ protocol CoordinatorType: class {
 }
 
 protocol Coordinatable: class {
-    associatedtype Dependency
+    associatedtype Dependency: DependencyType
     func start(with dependency: Dependency)
 }
 
