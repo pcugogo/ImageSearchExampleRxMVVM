@@ -122,10 +122,10 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="heart" catalog="system">
+                                <state key="normal" image="Heart">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="35" scale="large"/>
                                 </state>
-                                <state key="selected" image="heart.fill" catalog="system">
+                                <state key="selected" image="HeartFill">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="35" scale="large"/>
                                 </state>
                             </button>
@@ -154,7 +154,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="heart" catalog="system" width="64" height="54"/>
-        <image name="heart.fill" catalog="system" width="64" height="54"/>
+        <image name="Heart" width="240" height="240"/>
+        <image name="HeartFill" width="240" height="240"/>
     </resources>
 </document>
