@@ -39,7 +39,7 @@ final class SearchViewModel: ViewModel<SearchViewModel.Dependency> {
         let searchResponse = input.searchButtonAction
             .asObservable()
             .withLatestFrom(dependency, resultSelector: { ($0, $1.searchUseCase) })
-            .flatMapFirst { (keyword, searchUseCase) -> Observable<SearchResponse> in
+            .flatMapLatest { (keyword, searchUseCase) -> Observable<SearchResponse> in
                 return searchUseCase.searchImage(keyword: keyword)
                     .catchError {
                         networkError.accept($0 as? NetworkError ?? NetworkError.unknown)
@@ -66,7 +66,7 @@ final class SearchViewModel: ViewModel<SearchViewModel.Dependency> {
             .withLatestFrom(dependency, resultSelector: { ($0, $1.searchUseCase) })
             .filter { $0.0 }
             .map { $0.1 }
-            .flatMapFirst { searchUseCase -> Observable<SearchResponse> in
+            .flatMapLatest { searchUseCase -> Observable<SearchResponse> in
                 return searchUseCase.loadMoreImage()
                     .catchError {
                         networkError.accept($0 as? NetworkError ?? NetworkError.unknown)
