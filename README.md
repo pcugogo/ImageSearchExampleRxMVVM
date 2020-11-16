@@ -19,3 +19,6 @@
 - XCTest
 - Nimble
 - TestDoubles
+
+## Other
+- SwiftLint
