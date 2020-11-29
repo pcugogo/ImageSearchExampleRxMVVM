@@ -9,20 +9,6 @@
 import Alamofire
 import RxSwift
 
-enum NetworkError: Error {
-    case unknown
-    case request
-    
-    var message: String {
-        switch self {
-        case .unknown:
-            return "알 수 없는 오류가 발생했습니다"
-        case .request:
-            return "서버 요청이 실패하였습니다.\n잠시 후에 다시 이용해주세요."
-        }
-    }
-}
-
 struct APIService: APIServiceType {
     func request<T: Codable>(api: API) -> Single<T> {
         return Single.create { single in
@@ -41,11 +27,46 @@ struct APIService: APIServiceType {
                         } catch {
                             print("\(T.self), \(error)")
                         }
-                    case .failure:
-                        single(.error(NetworkError.request))
+                    case .failure(let error):
+                        if let underlyingError = error.underlyingError,
+                           let urlError = underlyingError as? URLError {
+                            single(.error(handling(for: urlError)))
+                        }
+                        guard let httpResponse = response.response else {
+                            single(.error(NetworkError.unknown))
+                            return
+                        }
+                        single(.error(handling(for: httpResponse.statusCode)))
                     }
-            }
+                }
             return Disposables.create()
+        }
+    }
+}
+
+extension APIService {
+    
+    func handling(for urlError: URLError) -> NetworkError {
+        print(urlError.code, "cellHeights[indexPath] ?? ")
+        switch urlError.code {
+        case .timedOut:
+            return .timeOut
+        case .notConnectedToInternet, .dataNotAllowed:
+            return .notConnected
+        default:
+            return .unknown
+        }
+    }
+    
+    func handling(for httpStatusCode: Int) -> NetworkError {
+        
+        switch httpStatusCode {
+        case 400...499:
+            return .badRequest
+        case 500...599:
+            return .serverError
+        default:
+            return .unknown
         }
     }
 }
