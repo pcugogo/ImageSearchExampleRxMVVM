@@ -43,6 +43,7 @@
 		FCC0C4052524D195000C72EE /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC0C4042524D195000C72EE /* AppCoordinator.swift */; };
 		FCC0C4082524D206000C72EE /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC0C4072524D206000C72EE /* SearchCoordinator.swift */; };
 		FCC0C40B2524D233000C72EE /* DetailImageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC0C40A2524D233000C72EE /* DetailImageCoordinator.swift */; };
+		FCD30DEF25741C59004734D8 /* APIServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD30DEE25741C59004734D8 /* APIServiceType.swift */; };
 		FCDF2FF4251B7F3D003CA039 /* SearchAPIServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDF2FF3251B7F3D003CA039 /* SearchAPIServiceSpy.swift */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +105,7 @@
 		FCC0C4042524D195000C72EE /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		FCC0C4072524D206000C72EE /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		FCC0C40A2524D233000C72EE /* DetailImageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageCoordinator.swift; sourceTree = "<group>"; };
+		FCD30DEE25741C59004734D8 /* APIServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceType.swift; sourceTree = "<group>"; };
 		FCDF2FF3251B7F3D003CA039 /* SearchAPIServiceSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPIServiceSpy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -212,8 +214,8 @@
 			children = (
 				FC95A9F124D868E90069282D /* Domain */,
 				FC697F3224A0FD090050C154 /* Presentation */,
+				FCD30DE925741C0A004734D8 /* Infrastructure */,
 				FC697F4524A0FDFF0050C154 /* Data */,
-				FC697F4624A0FE070050C154 /* Network */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -455,6 +457,7 @@
 			isa = PBXGroup;
 			children = (
 				FC697F4324A0FDEB0050C154 /* Entity */,
+				FCD30DEC25741C2F004734D8 /* Interfaces */,
 				FC805F1F24E6B86200AFC1E2 /* UseCase */,
 			);
 			path = Domain;
@@ -499,6 +502,30 @@
 				FCC0C40A2524D233000C72EE /* DetailImageCoordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		FCD30DE925741C0A004734D8 /* Infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				FC697F4624A0FE070050C154 /* Network */,
+			);
+			path = Infrastructure;
+			sourceTree = "<group>";
+		};
+		FCD30DEC25741C2F004734D8 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				FCD30DED25741C46004734D8 /* Repositories */,
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		FCD30DED25741C46004734D8 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				FCD30DEE25741C59004734D8 /* APIServiceType.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -714,6 +741,7 @@
 				FC697F3E24A0FD610050C154 /* DetailImageViewController.swift in Sources */,
 				FC697F5624A0FE990050C154 /* Meta.swift in Sources */,
 				FC697EFC24A0FBC10050C154 /* AppDelegate.swift in Sources */,
+				FCD30DEF25741C59004734D8 /* APIServiceType.swift in Sources */,
 				FC697F4E24A0FE530050C154 /* API.swift in Sources */,
 				FCC0C4082524D206000C72EE /* SearchCoordinator.swift in Sources */,
 				FC805F2124E6B87600AFC1E2 /* SearchUseCase.swift in Sources */,

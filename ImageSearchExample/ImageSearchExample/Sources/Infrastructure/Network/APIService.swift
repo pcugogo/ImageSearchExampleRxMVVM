@@ -23,10 +23,6 @@ enum NetworkError: Error {
     }
 }
 
-protocol APIServiceType {
-    func request<T: Codable>(api: API) -> Single<T>
-}
-
 struct APIService: APIServiceType {
     func request<T: Codable>(api: API) -> Single<T> {
         return Single.create { single in
