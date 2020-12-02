@@ -29,7 +29,8 @@ extension ObservableType {
                 resultSelector: { error, retryCount in
                     guard retryCount < maxRetry else { return Void() }
                     throw error
-            })
+                }
+            )
         }
     }
 }
