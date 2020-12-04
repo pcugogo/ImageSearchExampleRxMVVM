@@ -47,26 +47,11 @@ struct APIService: APIServiceType {
 extension APIService {
     
     func handling(for urlError: URLError) -> NetworkError {
-        print(urlError.code, "cellHeights[indexPath] ?? ")
-        switch urlError.code {
-        case .timedOut:
-            return .timeOut
-        case .notConnectedToInternet, .dataNotAllowed:
-            return .notConnected
-        default:
-            return .unknown
-        }
+        return NetworkError(rawValue: urlError.code.rawValue) ?? .unknown
     }
     
     func handling(for httpStatusCode: Int) -> NetworkError {
-        
-        switch httpStatusCode {
-        case 400...499:
-            return .badRequest
-        case 500...599:
-            return .serverError
-        default:
-            return .unknown
-        }
+        print(httpStatusCode)
+        return NetworkError(rawValue: httpStatusCode) ?? .unknown
     }
 }

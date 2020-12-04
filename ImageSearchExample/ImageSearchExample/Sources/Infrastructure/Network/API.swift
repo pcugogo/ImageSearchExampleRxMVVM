@@ -15,7 +15,7 @@ enum API {
 extension API {
     private enum Constant {
         static let baseURLString = "https://dapi.kakao.com"
-        static let apiKey = "KakaoAK 25cd80a89c59043f4252746092279d2b"
+        static let apiKey = ""
     }
     
     private var path: String {
