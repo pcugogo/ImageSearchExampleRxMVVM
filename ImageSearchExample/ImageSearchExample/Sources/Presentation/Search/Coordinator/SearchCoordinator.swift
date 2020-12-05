@@ -9,6 +9,7 @@
 import UIKit
 
 final class SearchCoordinator: Coordinator {
+    
     func start(with dependency: SearchViewModel.Dependency) {
         var searchViewController = navigationController?.viewControllers.first as! SearchViewController
         let viewModel = SearchViewModel(coordinator: self, dependency: dependency)
