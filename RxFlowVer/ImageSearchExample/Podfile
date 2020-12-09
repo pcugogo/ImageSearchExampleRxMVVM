@@ -1,0 +1,33 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'ImageSearchExample' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for ImageSearchExample
+
+  # RxSwift
+  pod 'RxSwift', '~> 5'
+  pod 'RxCocoa', '~> 5'
+  pod 'RxViewController'
+  pod 'RxOptional'
+  pod 'RxDataSources'
+  pod 'RxFlow'
+
+  # Network
+  pod 'Alamofire', '~> 5.2'
+
+  # Image
+  pod 'Kingfisher', '~> 5.0'
+
+  # Other
+  pod 'SwiftLint'
+
+  target 'ImageSearchExampleTests' do
+    inherit! :search_paths
+    # Pods for testing
+    pod 'Nimble'
+  end
+
+end
