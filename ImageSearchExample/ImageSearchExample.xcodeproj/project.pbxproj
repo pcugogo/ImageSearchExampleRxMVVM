@@ -34,6 +34,7 @@
 		FC805F3424E6B9D100AFC1E2 /* ViewBindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC805F3324E6B9D100AFC1E2 /* ViewBindable.swift */; };
 		FC805F3824E6BA2000AFC1E2 /* StoryboardName.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC805F3724E6BA2000AFC1E2 /* StoryboardName.swift */; };
 		FC805F4C24E6E83D00AFC1E2 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC805F4B24E6E83D00AFC1E2 /* Coordinator.swift */; };
+		FC846E51258105170076BBA7 /* UIViewController+instantiateFromStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC846E50258105170076BBA7 /* UIViewController+instantiateFromStoryboard.swift */; };
 		FC86201424AE258900C3C04D /* SearchImageDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC86201324AE258900C3C04D /* SearchImageDummy.swift */; };
 		FC86201624AE264900C3C04D /* APIServiceFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC86201524AE264900C3C04D /* APIServiceFake.swift */; };
 		FC90BFDE2535CC5800F14CC5 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC90BFDD2535CC5800F14CC5 /* Route.swift */; };
@@ -97,6 +98,7 @@
 		FC805F3324E6B9D100AFC1E2 /* ViewBindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewBindable.swift; sourceTree = "<group>"; };
 		FC805F3724E6BA2000AFC1E2 /* StoryboardName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardName.swift; sourceTree = "<group>"; };
 		FC805F4B24E6E83D00AFC1E2 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		FC846E50258105170076BBA7 /* UIViewController+instantiateFromStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+instantiateFromStoryboard.swift"; sourceTree = "<group>"; };
 		FC86201324AE258900C3C04D /* SearchImageDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchImageDummy.swift; sourceTree = "<group>"; };
 		FC86201524AE264900C3C04D /* APIServiceFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceFake.swift; sourceTree = "<group>"; };
 		FC90BFDD2535CC5800F14CC5 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 			children = (
 				FC805F4B24E6E83D00AFC1E2 /* Coordinator.swift */,
 				FC805F3724E6BA2000AFC1E2 /* StoryboardName.swift */,
+				FC846E50258105170076BBA7 /* UIViewController+instantiateFromStoryboard.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -724,6 +727,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC846E51258105170076BBA7 /* UIViewController+instantiateFromStoryboard.swift in Sources */,
 				FC697F5224A0FE830050C154 /* SearchResponse.swift in Sources */,
 				FC697F4C24A0FE420050C154 /* ImageFavoritesStorage.swift in Sources */,
 				FC697F4824A0FE220050C154 /* UIViewController+showAlert.swift in Sources */,

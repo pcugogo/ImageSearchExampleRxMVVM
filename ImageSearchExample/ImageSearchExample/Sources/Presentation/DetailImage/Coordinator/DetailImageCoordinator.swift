@@ -12,9 +12,7 @@ final class DetailImageCoordinator: Coordinator {
     
     func start(with dependency: DetailImageViewModel.Dependency) {
         let viewModel = DetailImageViewModel(coordinator: self, dependency: dependency)
-        let storyboard = StoryboardName.main.instantiateStoryboard()
-        var detailImageViewController = storyboard.instantiateViewController(withIdentifier:
-            String(describing: DetailImageViewController.self)) as! DetailImageViewController
+        var detailImageViewController = DetailImageViewController.instantiateFromStoryboard()
         detailImageViewController.bind(viewModel: viewModel)
         navigationController?.pushViewController(detailImageViewController, animated: true)
     }
