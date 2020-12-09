@@ -297,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				FC805F3224E6B9B000AFC1E2 /* Coordinator */,
+				FC846E54258107F20076BBA7 /* Enums */,
 				FC805F3124E6B9AC00AFC1E2 /* Extensions */,
 				FC805F3024E6B9A300AFC1E2 /* Protocols */,
 				FC90BFDC2535CC4A00F14CC5 /* Route */,
@@ -383,6 +384,7 @@
 		FC805F3124E6B9AC00AFC1E2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				FC846E50258105170076BBA7 /* UIViewController+instantiateFromStoryboard.swift */,
 				FC697F4724A0FE220050C154 /* UIViewController+showAlert.swift */,
 			);
 			path = Extensions;
@@ -392,8 +394,6 @@
 			isa = PBXGroup;
 			children = (
 				FC805F4B24E6E83D00AFC1E2 /* Coordinator.swift */,
-				FC805F3724E6BA2000AFC1E2 /* StoryboardName.swift */,
-				FC846E50258105170076BBA7 /* UIViewController+instantiateFromStoryboard.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -412,6 +412,14 @@
 				FC697F3F24A0FD6D0050C154 /* DetailImageViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		FC846E54258107F20076BBA7 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				FC805F3724E6BA2000AFC1E2 /* StoryboardName.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 		FC86201024AE254200C3C04D /* Mocks */ = {
