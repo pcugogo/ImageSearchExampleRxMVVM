@@ -41,10 +41,6 @@ final class SearchViewController: UIViewController, ViewModelBindable {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
 }
 
 // MARK: - BindViewModel
