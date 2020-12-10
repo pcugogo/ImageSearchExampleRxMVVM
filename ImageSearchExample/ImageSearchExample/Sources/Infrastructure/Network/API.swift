@@ -56,6 +56,6 @@ extension API {
             encoding: URLEncoding.default,
             headers: header
         )
-            .validate()
+        .validate()
     }
 }
