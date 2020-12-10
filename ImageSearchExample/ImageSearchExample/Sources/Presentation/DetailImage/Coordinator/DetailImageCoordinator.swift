@@ -19,4 +19,3 @@ final class DetailImageCoordinator: Coordinator {
     
     func navigate(to route: Route) {}
 }
-
