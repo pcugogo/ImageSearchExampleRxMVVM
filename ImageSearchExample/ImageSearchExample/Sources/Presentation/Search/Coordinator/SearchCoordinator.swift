@@ -11,7 +11,7 @@ import UIKit
 final class SearchCoordinator: Coordinator {
     
     func start(with dependency: SearchViewModel.Dependency) {
-        var searchViewController = navigationController?.viewControllers.first as! SearchViewController
+        var searchViewController = presenter.currentViewController as! SearchViewController
         let viewModel = SearchViewModel(coordinator: self, dependency: dependency)
         searchViewController.bind(viewModel: viewModel)
     }
@@ -19,7 +19,7 @@ final class SearchCoordinator: Coordinator {
     func navigate(to route: Route) {
         switch route {
         case .detailImage(let imageURLString):
-            let coordinator = DetailImageCoordinator(navigationController: navigationController!)
+            let coordinator = DetailImageCoordinator(presentStyle: presenter)
             let dependency = DetailImageViewModel.Dependency(
                 imageURLString: imageURLString,
                 imageFavoritesStorage: ImageFavoritesStorage()

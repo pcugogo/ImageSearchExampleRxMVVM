@@ -20,9 +20,9 @@ protocol Coordinatable: class {
 }
 
 class BaseCoordinator {
-    weak var navigationController: UINavigationController?
+    let presenter: PresentStyle
     
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    init(presentStyle: PresentStyle) {
+        self.presenter = presentStyle
     }
 }

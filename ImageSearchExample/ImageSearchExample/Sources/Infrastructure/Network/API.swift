@@ -49,11 +49,13 @@ extension API {
     }
     
     func dataRequest() -> DataRequest {
-        AF.request(url,
-                   method: httpMethod,
-                   parameters: prameters,
-                   encoding: URLEncoding.default,
-                   headers: header)
+        AF.request(
+            url,
+            method: httpMethod,
+            parameters: prameters,
+            encoding: URLEncoding.default,
+            headers: header
+        )
             .validate()
     }
 }

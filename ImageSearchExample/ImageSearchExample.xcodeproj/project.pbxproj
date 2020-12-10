@@ -11,6 +11,7 @@
 		A6C130A5C845062D5469476E /* Pods_ImageSearchExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53C05C7D93E285EDCA8C1FE /* Pods_ImageSearchExample.framework */; };
 		FC16E76C252C8807006ECC32 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC16E76B252C8807006ECC32 /* ViewModel.swift */; };
 		FC16E770252C8A17006ECC32 /* ImageFavoritesStorageFakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC16E76F252C8A17006ECC32 /* ImageFavoritesStorageFakeTests.swift */; };
+		FC4AA18425825A89003320DA /* PresentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AA18325825A89003320DA /* PresentStyle.swift */; };
 		FC697EFC24A0FBC10050C154 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC697EFB24A0FBC10050C154 /* AppDelegate.swift */; };
 		FC697F0324A0FBC10050C154 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC697F0124A0FBC10050C154 /* Main.storyboard */; };
 		FC697F0524A0FBC20050C154 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC697F0424A0FBC20050C154 /* Assets.xcassets */; };
@@ -71,6 +72,7 @@
 		D33936CA272A8826855B8B49 /* Pods-ImageSearchExampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageSearchExampleUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImageSearchExampleUITests/Pods-ImageSearchExampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		FC16E76B252C8807006ECC32 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		FC16E76F252C8A17006ECC32 /* ImageFavoritesStorageFakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFavoritesStorageFakeTests.swift; sourceTree = "<group>"; };
+		FC4AA18325825A89003320DA /* PresentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentStyle.swift; sourceTree = "<group>"; };
 		FC697EF824A0FBC10050C154 /* ImageSearchExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageSearchExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC697EFB24A0FBC10050C154 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC697F0224A0FBC10050C154 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 			isa = PBXGroup;
 			children = (
 				FC805F4B24E6E83D00AFC1E2 /* Coordinator.swift */,
+				FC4AA18325825A89003320DA /* PresentStyle.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -745,6 +748,7 @@
 				FC697F5024A0FE670050C154 /* APIService.swift in Sources */,
 				FCC0C4052524D195000C72EE /* AppCoordinator.swift in Sources */,
 				FC697F4024A0FD6D0050C154 /* DetailImageViewModel.swift in Sources */,
+				FC4AA18425825A89003320DA /* PresentStyle.swift in Sources */,
 				FC90BFDE2535CC5800F14CC5 /* Route.swift in Sources */,
 				FC805F3824E6BA2000AFC1E2 /* StoryboardName.swift in Sources */,
 				FC16E76C252C8807006ECC32 /* ViewModel.swift in Sources */,
