@@ -28,6 +28,11 @@ enum PresentStyle {
         }
     }
     
+    var navigationController: UINavigationController? {
+        guard case .show(let navigationController) = self else { return nil }
+        return navigationController
+    }
+    
     func present(targetViewController: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) {
         switch self {
         case .root(let window):
