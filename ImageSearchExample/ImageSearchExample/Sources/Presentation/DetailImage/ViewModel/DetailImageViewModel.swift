@@ -12,7 +12,7 @@ import RxOptional
 
 final class DetailImageViewModel: ViewModel<DetailImageViewModel.Dependency> {
 
-    struct Dependency: DependencyType {
+    struct Dependency {
         let imageURLString: String
         let imageFavoritesStorage: ImageFavoritesStorageType
     }

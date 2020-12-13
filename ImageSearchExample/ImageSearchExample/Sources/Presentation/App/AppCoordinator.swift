@@ -19,7 +19,7 @@ final class AppCoordinator {
         let storyboard = StoryboardName.main.instantiateStoryboard()
         let navigationController = storyboard
             .instantiateViewController(withIdentifier: "SearchNavigationController") as! UINavigationController
-        let searchCoordinator = SearchCoordinator(presentStyle: .show(navigationController))
+        let searchCoordinator = SearchCoordinator(root: navigationController)
         let dependency = SearchViewModel.Dependency(searchUseCase: SearchUseCase())
         searchCoordinator.start(with: dependency)
         window.rootViewController = navigationController

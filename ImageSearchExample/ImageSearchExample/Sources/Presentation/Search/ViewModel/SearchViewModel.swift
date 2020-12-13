@@ -15,7 +15,7 @@ typealias ImagesSection = SectionModel<Void, ImageData>
 
 final class SearchViewModel: ViewModel<SearchViewModel.Dependency> {
     
-    struct Dependency: DependencyType {
+    struct Dependency {
         let searchUseCase: SearchUseCaseType
     }
     struct Input {

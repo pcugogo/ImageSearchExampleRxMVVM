@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import SCoordinator
 
-final class SearchCoordinator: Coordinator {
+final class SearchCoordinator: Coordinator<UINavigationController> {
     
     func start(with dependency: SearchViewModel.Dependency) {
-        var searchViewController = presenter.currentViewController as! SearchViewController
+        var searchViewController = root.viewControllers.first as! SearchViewController
         let viewModel = SearchViewModel(coordinator: self, dependency: dependency)
         searchViewController.bind(viewModel: viewModel)
     }
@@ -19,12 +20,21 @@ final class SearchCoordinator: Coordinator {
     func navigate(to route: Route) {
         switch route {
         case .detailImage(let imageURLString):
-            let coordinator = DetailImageCoordinator(presentStyle: presenter)
-            let dependency = DetailImageViewModel.Dependency(
-                imageURLString: imageURLString,
-                imageFavoritesStorage: ImageFavoritesStorage()
-            )
-            coordinator.start(with: dependency)
+            navigateToDetailImage(urlString: imageURLString)
         }
+    }
+}
+
+extension SearchCoordinator {
+    
+    func navigateToDetailImage(urlString: String) {
+        let dependency = DetailImageViewModel.Dependency(
+            imageURLString: urlString,
+            imageFavoritesStorage: ImageFavoritesStorage()
+        )
+        let viewModel = DetailImageViewModel(coordinator: self, dependency: dependency)
+        var detailImageViewController = DetailImageViewController.instantiateFromStoryboard()
+        detailImageViewController.bind(viewModel: viewModel)
+        root.pushViewController(detailImageViewController, animated: true)
     }
 }

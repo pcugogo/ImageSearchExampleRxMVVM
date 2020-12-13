@@ -8,8 +8,9 @@
 
 import RxSwift
 import RxCocoa
+import SCoordinator
 
-typealias ViewModel<Dependency: DependencyType> = BaseViewModel<Dependency> & ViewModelTransformable
+typealias ViewModel<Dependency> = BaseViewModel<Dependency> & ViewModelTransformable
 
 protocol ViewModelTransformable {
     associatedtype Input
@@ -18,9 +19,7 @@ protocol ViewModelTransformable {
     func transform(input: Input) -> Output
 }
 
-protocol DependencyType {}
-
-class BaseViewModel<Dependency: DependencyType> {
+class BaseViewModel<Dependency> {
     let coordinator: Observable<CoordinatorType>
     let dependency: Dependency
     
