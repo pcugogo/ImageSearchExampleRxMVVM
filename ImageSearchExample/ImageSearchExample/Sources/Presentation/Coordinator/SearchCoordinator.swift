@@ -18,7 +18,8 @@ final class SearchCoordinator: Coordinator<UINavigationController> {
     }
     
     func navigate(to route: Route) {
-        switch route {
+        guard let searchRoute = route as? SearchRoute else { return }
+        switch searchRoute {
         case .detailImage(let imageURLString):
             navigateToDetailImage(urlString: imageURLString)
         }

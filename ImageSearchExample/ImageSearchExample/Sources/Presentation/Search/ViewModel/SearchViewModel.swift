@@ -100,7 +100,7 @@ final class SearchViewModel: ViewModel<SearchViewModel.Dependency> {
         
         seletedItemImageURL.withLatestFrom(coordinator) { ($0, $1) }
             .subscribe(onNext: { (imageURLString, coordinator) in
-                coordinator.navigate(to: .detailImage(imageURLString: imageURLString))
+                coordinator.navigate(to: SearchRoute.detailImage(imageURLString: imageURLString))
             })
             .disposed(by: disposeBag)
         

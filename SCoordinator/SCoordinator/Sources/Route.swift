@@ -7,6 +7,4 @@
 
 import Foundation
 
-public enum Route {
-    case detailImage(imageURLString: String)
-}
+public protocol Route {}
