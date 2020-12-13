@@ -7,30 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FC738AFA2586498B004EF19B /* SCoordinator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC738AF02586498B004EF19B /* SCoordinator.framework */; };
-		FC738AFF2586498B004EF19B /* SCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC738AFE2586498B004EF19B /* SCoordinatorTests.swift */; };
 		FC738B012586498B004EF19B /* SCoordinator.h in Headers */ = {isa = PBXBuildFile; fileRef = FC738AF32586498B004EF19B /* SCoordinator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FC738B0D2586499D004EF19B /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC738B0C2586499D004EF19B /* Coordinator.swift */; };
 		FC738B13258649F2004EF19B /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC738B12258649F2004EF19B /* Route.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		FC738AFB2586498B004EF19B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC738AE72586498B004EF19B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FC738AEF2586498B004EF19B;
-			remoteInfo = SCoordinator;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		FC738AF02586498B004EF19B /* SCoordinator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCoordinator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC738AF32586498B004EF19B /* SCoordinator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCoordinator.h; sourceTree = "<group>"; };
 		FC738AF42586498B004EF19B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FC738AF92586498B004EF19B /* SCoordinatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SCoordinatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FC738AFE2586498B004EF19B /* SCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCoordinatorTests.swift; sourceTree = "<group>"; };
-		FC738B002586498B004EF19B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC738B0C2586499D004EF19B /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		FC738B12258649F2004EF19B /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -43,14 +28,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FC738AF62586498B004EF19B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FC738AFA2586498B004EF19B /* SCoordinator.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -58,7 +35,6 @@
 			isa = PBXGroup;
 			children = (
 				FC738AF22586498B004EF19B /* SCoordinator */,
-				FC738AFD2586498B004EF19B /* SCoordinatorTests */,
 				FC738AF12586498B004EF19B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,7 +43,6 @@
 			isa = PBXGroup;
 			children = (
 				FC738AF02586498B004EF19B /* SCoordinator.framework */,
-				FC738AF92586498B004EF19B /* SCoordinatorTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -80,15 +55,6 @@
 				FC738B11258649C5004EF19B /* SupportingFiles */,
 			);
 			path = SCoordinator;
-			sourceTree = "<group>";
-		};
-		FC738AFD2586498B004EF19B /* SCoordinatorTests */ = {
-			isa = PBXGroup;
-			children = (
-				FC738AFE2586498B004EF19B /* SCoordinatorTests.swift */,
-				FC738B002586498B004EF19B /* Info.plist */,
-			);
-			path = SCoordinatorTests;
 			sourceTree = "<group>";
 		};
 		FC738B10258649B6004EF19B /* Sources */ = {
@@ -140,24 +106,6 @@
 			productReference = FC738AF02586498B004EF19B /* SCoordinator.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		FC738AF82586498B004EF19B /* SCoordinatorTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FC738B072586498B004EF19B /* Build configuration list for PBXNativeTarget "SCoordinatorTests" */;
-			buildPhases = (
-				FC738AF52586498B004EF19B /* Sources */,
-				FC738AF62586498B004EF19B /* Frameworks */,
-				FC738AF72586498B004EF19B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FC738AFC2586498B004EF19B /* PBXTargetDependency */,
-			);
-			name = SCoordinatorTests;
-			productName = SCoordinatorTests;
-			productReference = FC738AF92586498B004EF19B /* SCoordinatorTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -170,9 +118,6 @@
 					FC738AEF2586498B004EF19B = {
 						CreatedOnToolsVersion = 12.2;
 						LastSwiftMigration = 1220;
-					};
-					FC738AF82586498B004EF19B = {
-						CreatedOnToolsVersion = 12.2;
 					};
 				};
 			};
@@ -190,20 +135,12 @@
 			projectRoot = "";
 			targets = (
 				FC738AEF2586498B004EF19B /* SCoordinator */,
-				FC738AF82586498B004EF19B /* SCoordinatorTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		FC738AEE2586498B004EF19B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FC738AF72586498B004EF19B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -222,23 +159,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FC738AF52586498B004EF19B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FC738AFF2586498B004EF19B /* SCoordinatorTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		FC738AFC2586498B004EF19B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FC738AEF2586498B004EF19B /* SCoordinator */;
-			targetProxy = FC738AFB2586498B004EF19B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		FC738B022586498B004EF19B /* Debug */ = {
@@ -418,44 +339,6 @@
 			};
 			name = Release;
 		};
-		FC738B082586498B004EF19B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3BPKLMWSQR;
-				INFOPLIST_FILE = SCoordinatorTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.SCoordinatorTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		FC738B092586498B004EF19B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3BPKLMWSQR;
-				INFOPLIST_FILE = SCoordinatorTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.SCoordinatorTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -473,15 +356,6 @@
 			buildConfigurations = (
 				FC738B052586498B004EF19B /* Debug */,
 				FC738B062586498B004EF19B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FC738B072586498B004EF19B /* Build configuration list for PBXNativeTarget "SCoordinatorTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FC738B082586498B004EF19B /* Debug */,
-				FC738B092586498B004EF19B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

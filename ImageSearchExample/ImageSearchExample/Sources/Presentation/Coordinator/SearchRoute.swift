@@ -11,4 +11,3 @@ import SCoordinator
 enum SearchRoute: Route {
     case detailImage(imageURLString: String)
 }
-

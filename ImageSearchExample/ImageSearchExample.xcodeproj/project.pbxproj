@@ -28,9 +28,9 @@
 		FC697F5224A0FE830050C154 /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC697F5124A0FE830050C154 /* SearchResponse.swift */; };
 		FC697F5424A0FE8E0050C154 /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC697F5324A0FE8E0050C154 /* ImageData.swift */; };
 		FC697F5624A0FE990050C154 /* Meta.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC697F5524A0FE990050C154 /* Meta.swift */; };
-		FC738B5B25864FFB004EF19B /* SCoordinator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC738B5425864E7C004EF19B /* SCoordinator.framework */; };
-		FC738B5C25864FFB004EF19B /* SCoordinator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC738B5425864E7C004EF19B /* SCoordinator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FC738B63258651F2004EF19B /* SearchRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC738B62258651F2004EF19B /* SearchRoute.swift */; };
+		FC738BD6258658D6004EF19B /* SCoordinator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC738BD3258658CA004EF19B /* SCoordinator.framework */; };
+		FC738BD7258658D6004EF19B /* SCoordinator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC738BD3258658CA004EF19B /* SCoordinator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FC805F2124E6B87600AFC1E2 /* SearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC805F2024E6B87600AFC1E2 /* SearchUseCase.swift */; };
 		FC805F2724E6B8E400AFC1E2 /* SearchUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC805F2624E6B8E400AFC1E2 /* SearchUseCaseTests.swift */; };
 		FC805F2A24E6B91C00AFC1E2 /* SearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC805F2924E6B91C00AFC1E2 /* SearchViewModelTests.swift */; };
@@ -57,19 +57,12 @@
 			remoteGlobalIDString = FC697EF724A0FBC10050C154;
 			remoteInfo = ImageSearchExample;
 		};
-		FC738B5325864E7C004EF19B /* PBXContainerItemProxy */ = {
+		FC738BD2258658CA004EF19B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FC738B4E25864E7C004EF19B /* SCoordinator.xcodeproj */;
+			containerPortal = FC738BCE258658CA004EF19B /* SCoordinator.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = FC738AF02586498B004EF19B;
 			remoteInfo = SCoordinator;
-		};
-		FC738B5525864E7C004EF19B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC738B4E25864E7C004EF19B /* SCoordinator.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FC738AF92586498B004EF19B;
-			remoteInfo = SCoordinatorTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -80,7 +73,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FC738B5C25864FFB004EF19B /* SCoordinator.framework in Embed Frameworks */,
+				FC738BD7258658D6004EF19B /* SCoordinator.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,8 +113,8 @@
 		FC697F5124A0FE830050C154 /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
 		FC697F5324A0FE8E0050C154 /* ImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageData.swift; sourceTree = "<group>"; };
 		FC697F5524A0FE990050C154 /* Meta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meta.swift; sourceTree = "<group>"; };
-		FC738B4E25864E7C004EF19B /* SCoordinator.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SCoordinator.xcodeproj; path = ../../SCoordinator/SCoordinator.xcodeproj; sourceTree = "<group>"; };
 		FC738B62258651F2004EF19B /* SearchRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRoute.swift; sourceTree = "<group>"; };
+		FC738BCE258658CA004EF19B /* SCoordinator.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SCoordinator.xcodeproj; path = SCoordinator/SCoordinator.xcodeproj; sourceTree = "<group>"; };
 		FC805F2024E6B87600AFC1E2 /* SearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUseCase.swift; sourceTree = "<group>"; };
 		FC805F2624E6B8E400AFC1E2 /* SearchUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUseCaseTests.swift; sourceTree = "<group>"; };
 		FC805F2924E6B91C00AFC1E2 /* SearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTests.swift; sourceTree = "<group>"; };
@@ -146,7 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6C130A5C845062D5469476E /* Pods_ImageSearchExample.framework in Frameworks */,
-				FC738B5B25864FFB004EF19B /* SCoordinator.framework in Frameworks */,
+				FC738BD6258658D6004EF19B /* SCoordinator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,7 +268,6 @@
 			isa = PBXGroup;
 			children = (
 				FC697EFB24A0FBC10050C154 /* AppDelegate.swift */,
-				FCC0C4042524D195000C72EE /* AppCoordinator.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -352,16 +344,15 @@
 		FC738B3D25864D96004EF19B /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				FC738B4E25864E7C004EF19B /* SCoordinator.xcodeproj */,
+				FC738BCE258658CA004EF19B /* SCoordinator.xcodeproj */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
 		};
-		FC738B4F25864E7C004EF19B /* Products */ = {
+		FC738BCF258658CA004EF19B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FC738B5425864E7C004EF19B /* SCoordinator.framework */,
-				FC738B5625864E7C004EF19B /* SCoordinatorTests.xctest */,
+				FC738BD3258658CA004EF19B /* SCoordinator.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -532,6 +523,7 @@
 		FCC0C4062524D1F1000C72EE /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				FCC0C4042524D195000C72EE /* AppCoordinator.swift */,
 				FCC0C4072524D206000C72EE /* SearchCoordinator.swift */,
 				FC738B62258651F2004EF19B /* SearchRoute.swift */,
 			);
@@ -638,8 +630,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = FC738B4F25864E7C004EF19B /* Products */;
-					ProjectRef = FC738B4E25864E7C004EF19B /* SCoordinator.xcodeproj */;
+					ProductGroup = FC738BCF258658CA004EF19B /* Products */;
+					ProjectRef = FC738BCE258658CA004EF19B /* SCoordinator.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -651,18 +643,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		FC738B5425864E7C004EF19B /* SCoordinator.framework */ = {
+		FC738BD3258658CA004EF19B /* SCoordinator.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = SCoordinator.framework;
-			remoteRef = FC738B5325864E7C004EF19B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FC738B5625864E7C004EF19B /* SCoordinatorTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SCoordinatorTests.xctest;
-			remoteRef = FC738B5525864E7C004EF19B /* PBXContainerItemProxy */;
+			remoteRef = FC738BD2258658CA004EF19B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
