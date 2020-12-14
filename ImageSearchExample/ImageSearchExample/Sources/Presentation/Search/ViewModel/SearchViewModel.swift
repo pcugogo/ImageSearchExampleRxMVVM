@@ -10,30 +10,37 @@ import RxSwift
 import RxCocoa
 import RxOptional
 import RxDataSources
+import SCoordinator
 
 typealias ImagesSection = SectionModel<Void, ImageData>
 
-final class SearchViewModel: ViewModel<SearchViewModel.Dependency> {
+final class SearchViewModel: ViewModelType {
     
     struct Dependency {
         let searchUseCase: SearchUseCaseType
     }
     struct Input {
-        let searchButtonAction: Driver<String>
-        let willDisplayCell: Driver<IndexPath>
-        let itemSeletedAction: Driver<IndexPath>
+        let searchButtonAction: PublishRelay<String> = .init()
+        let willDisplayCell: PublishRelay<IndexPath> = .init()
+        let itemSeletedAction: PublishRelay<IndexPath> = .init()
     }
     struct Output {
         let imagesSections: Driver<[ImagesSection]>
         let networkError: Signal<NetworkError>
     }
     
+    public let input: Input = .init()
+    public let output: Output
+    
     private var disposeBag: DisposeBag = DisposeBag()
     
-    func transform(input: Input) -> Output {
+    init(coordinator: CoordinatorType, dependency: Dependency) {
+        let coordinator = BehaviorRelay<CoordinatorType>(value: coordinator)
+            .asObservable()
+        
         let isLastPage: BehaviorRelay<Bool> = BehaviorRelay(value: false)
         let imagesCellItems: BehaviorRelay<[ImageData]> = .init(value: [])
-        let dependency: BehaviorRelay<Dependency> = .init(value: self.dependency)
+        let dependency: BehaviorRelay<Dependency> = .init(value: dependency)
         let networkError: PublishRelay<NetworkError> = .init()
         
         let searchResponse = input.searchButtonAction
@@ -104,6 +111,9 @@ final class SearchViewModel: ViewModel<SearchViewModel.Dependency> {
             })
             .disposed(by: disposeBag)
         
-        return Output(imagesSections: imagesSections, networkError: networkError.asSignal())
+        output = Output(
+            imagesSections: imagesSections,
+            networkError: networkError.asSignal()
+        )
     }
 }

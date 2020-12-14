@@ -16,23 +16,26 @@ import Nimble
 final class DetailImageModelTests: XCTestCase {
     var disposeBag = DisposeBag()
     var imageFavoritesStorage: ImageFavoritesStorageType!
-    var viewModel: (DetailImageViewModel.Input, DetailImageViewModel.Output)!
+    var viewModel: DetailImageViewModel!
     let dummyData = SearchImageDummy()
     
     override func setUp() {
         super.setUp()
+        
         self.imageFavoritesStorage = ImageFavoritesStorageFake()
         self.viewModel = configureViewModel()
     }
     
     override func tearDown() {
         super.tearDown()
+        
         print("tearDown")
         disposeBag = DisposeBag()
     }
     
     func test_ImageURLString() {
-        viewModel.1.imageURLString
+        
+        viewModel.output.imageURLString
             .asObservable()
             .subscribe(onNext: { imageURLString in
                 XCTAssertFalse(imageURLString.isEmpty, "imageURLString is empty")
@@ -40,23 +43,28 @@ final class DetailImageModelTests: XCTestCase {
             .disposed(by: disposeBag)
     }
     func test_FavoriteButtonAction() {
-        viewModel.1.isAddFavorites
+        
+        viewModel.input.favoriteButtonAction.accept(Void())
+        
+        viewModel.output.isAddFavorites
             .drive(onNext: { isAddFavorites in
-                XCTAssertTrue(isAddFavorites, "favoriteButton Action Error")
+                XCTAssertTrue(isAddFavorites, "Update Favorite Error // - output value: \(isAddFavorites)")
             })
             .disposed(by: disposeBag)
     }
 }
 
 extension DetailImageModelTests {
-    func configureViewModel() -> (DetailImageViewModel.Input, DetailImageViewModel.Output) {
-        let dependency = DetailImageCoordinator.Dependency(imageURLString: dummyData.imageURLString,
-                                               imageFavoritesStorage: imageFavoritesStorage)
-        let coordinator = DetailImageCoordinator(navigationController: UINavigationController())
-        let viewModel = DetailImageViewModel(coordinator: coordinator, dependency: dependency)
-        let favoriteButtonAction = BehaviorRelay(value: Void()).asDriver()
+    func configureViewModel() -> DetailImageViewModel {
         
-        let input = DetailImageViewModel.Input(favoriteButtonAction: favoriteButtonAction)
-        return (input, viewModel.transform(input: input))
+        let dependency = DetailImageViewModel.Dependency(
+            imageURLString: dummyData.imageURLString,
+            imageFavoritesStorage: imageFavoritesStorage
+        )
+        let viewModel = DetailImageViewModel(
+            coordinator: SearchCoordinator(root: .init()),
+            dependency: dependency
+        )
+        return viewModel
     }
 }

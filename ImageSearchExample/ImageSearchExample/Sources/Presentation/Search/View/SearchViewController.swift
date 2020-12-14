@@ -46,45 +46,44 @@ final class SearchViewController: UIViewController, ViewModelBindable {
 // MARK: - BindViewModel
 extension SearchViewController {
     // MARK: - Inputs
-    func bindViewModelInput() -> SearchViewModel.Input {
-        let searchButtonClicked = searchController.searchBar.rx.searchButtonClicked
-            .asDriver()
-            .withLatestFrom(searchController.searchBar.rx.text.orEmpty.asDriver())
+    func bindViewModelInputs() {
+        
+        searchController.searchBar.rx.searchButtonClicked
+            .withLatestFrom(searchController.searchBar.rx.text.orEmpty)
+            .map { String($0) }
             .filterEmpty()
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.searchController.dismiss(animated: true, completion: nil)
             })
+            .bind(to: viewModel.input.searchButtonAction)
+            .disposed(by: disposeBag)
         
-        let willDisplayCell = imagesCollectionView.rx.willDisplayCell
-            .asDriver()
+        imagesCollectionView.rx.willDisplayCell
             .map { $0.at }
+            .bind(to: viewModel.input.willDisplayCell)
+            .disposed(by: disposeBag)
         
-        let itemSeleted = imagesCollectionView.rx.itemSelected
-            .asDriver()
-        
-        let input = SearchViewModel.Input(
-            searchButtonAction: searchButtonClicked,
-            willDisplayCell: willDisplayCell,
-            itemSeletedAction: itemSeleted
-        )
-        
-        return input
+        imagesCollectionView.rx.itemSelected
+            .bind(to: viewModel.input.itemSeletedAction)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Outputs
-    func bindViewModelOutput(_ input: SearchViewModel.Input) {
-        let output = viewModel.transform(input: input)
+    func bindViewModelOutputs() {
         
-        output.imagesSections
-            .drive(imagesCollectionView.rx.items(dataSource: imagesDataSource))
+        viewModel.output.imagesSections
+            .asObservable()
+            .bind(to: imagesCollectionView.rx.items(dataSource: imagesDataSource))
             .disposed(by: disposeBag)
         
-        output.networkError
-            .emit(onNext: { [weak self] error in
+        viewModel.output.networkError
+            .asObservable()
+            .do(onNext: { [weak self] error in
                 guard let self = self else { return }
                 self.showAlert("네트워크 오류", error.message)
             })
+            .subscribe()
             .disposed(by: disposeBag)
     }
 }

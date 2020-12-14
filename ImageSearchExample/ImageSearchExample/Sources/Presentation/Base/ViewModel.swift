@@ -10,22 +10,15 @@ import RxSwift
 import RxCocoa
 import SCoordinator
 
-typealias ViewModel<Dependency> = BaseViewModel<Dependency> & ViewModelTransformable
-
-protocol ViewModelTransformable {
+protocol ViewModelType {
+    
+    associatedtype Dependency
     associatedtype Input
     associatedtype Output
-
-    func transform(input: Input) -> Output
-}
-
-class BaseViewModel<Dependency> {
-    let coordinator: Observable<CoordinatorType>
-    let dependency: Dependency
     
-    init(coordinator: CoordinatorType, dependency: Dependency) {
-        self.coordinator = BehaviorRelay<CoordinatorType>(value: coordinator)
-            .asObservable()
-        self.dependency = dependency
-    }
+    var input: Input { get }
+    var output: Output { get }
+    
+    init(coordinator: CoordinatorType, dependency: Dependency)
 }
+

@@ -9,18 +9,19 @@
 import UIKit
 
 protocol ViewModelBindable {
-    associatedtype ViewModelType: ViewModelTransformable
+    associatedtype ViewModelType
     
     var viewModel: ViewModelType! { get set }
     
-    func bindViewModelInput() -> ViewModelType.Input
-    func bindViewModelOutput(_ input: ViewModelType.Input)
+    func bindViewModelInputs()
+    func bindViewModelOutputs()
 }
 
 extension ViewModelBindable where Self: UIViewController {
     mutating func bind(viewModel: Self.ViewModelType) {
         self.viewModel = viewModel
         loadViewIfNeeded()
-        bindViewModelOutput(bindViewModelInput())
+        bindViewModelInputs()
+        bindViewModelOutputs()
     }
 }

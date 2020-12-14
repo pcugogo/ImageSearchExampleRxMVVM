@@ -9,27 +9,35 @@
 import RxSwift
 import RxCocoa
 import RxOptional
+import SCoordinator
 
-final class DetailImageViewModel: ViewModel<DetailImageViewModel.Dependency> {
+final class DetailImageViewModel: ViewModelType {
 
     struct Dependency {
         let imageURLString: String
         let imageFavoritesStorage: ImageFavoritesStorageType
     }
     struct Input {
-        let favoriteButtonAction: Driver<Void>
+        let favoriteButtonAction: PublishRelay<Void> = .init()
     }
     struct Output {
-        let imageURLString: Driver<String>
+        let imageURLString: Signal<String>
         let isAddFavorites: Driver<Bool>
-    }    
+    }
+    
+    public let input: Input = .init()
+    public let output: Output
     
     private var disposeBag = DisposeBag()
     
-    func transform(input: Input) -> Output {
-        let isAddFavorites: BehaviorRelay<Bool> = .init(value: dependency.imageFavoritesStorage.isContains(dependency.imageURLString))
-        let imageURLString: Driver<String> = Observable.just(dependency.imageURLString)
-            .asDriver(onErrorDriveWith: .empty())
+    init(coordinator: CoordinatorType, dependency: Dependency) {
+        
+        let isAddFavorites: BehaviorRelay<Bool> = .init(value: dependency.imageFavoritesStorage.isContains(dependency.imageURLString)
+        )
+        
+        let imageURLString: Signal<String> = Observable
+            .just(dependency.imageURLString)
+            .asSignal(onErrorJustReturn: "")
         let depndency: BehaviorRelay<Dependency> = .init(value: dependency)
         
         input.favoriteButtonAction.asObservable().withLatestFrom(depndency)
@@ -37,9 +45,9 @@ final class DetailImageViewModel: ViewModel<DetailImageViewModel.Dependency> {
             .bind(to: isAddFavorites)
             .disposed(by: disposeBag)
         
-        return Output(
+        output = Output(
             imageURLString: imageURLString,
-            isAddFavorites: isAddFavorites.asDriver(onErrorDriveWith: .empty())
+            isAddFavorites: isAddFavorites.asDriver()
         )
     }
 }
