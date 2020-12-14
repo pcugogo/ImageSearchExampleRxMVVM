@@ -7,4 +7,3 @@ ${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework
 ${BUILT_PRODUCTS_DIR}/RxOptional/RxOptional.framework
 ${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework
 ${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework
-${BUILT_PRODUCTS_DIR}/RxViewController/RxViewController.framework

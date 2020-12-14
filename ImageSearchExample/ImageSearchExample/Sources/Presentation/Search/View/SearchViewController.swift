@@ -41,6 +41,7 @@ final class SearchViewController: UIViewController, ViewModelBindable {
 
 // MARK: - setAttributes
 extension SearchViewController {
+    
     private func setAttributes() {
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController

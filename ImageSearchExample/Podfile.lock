@@ -1,10 +1,10 @@
 PODS:
-  - Alamofire (5.2.2)
+  - Alamofire (5.4.0)
   - Differentiator (4.0.1)
-  - Kingfisher (5.14.1):
-    - Kingfisher/Core (= 5.14.1)
-  - Kingfisher/Core (5.14.1)
-  - Nimble (8.1.1)
+  - Kingfisher (5.15.8):
+    - Kingfisher/Core (= 5.15.8)
+  - Kingfisher/Core (5.15.8)
+  - Nimble (9.0.0)
   - RxCocoa (5.1.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -18,24 +18,21 @@ PODS:
   - RxRelay (5.1.1):
     - RxSwift (~> 5)
   - RxSwift (5.1.1)
-  - RxViewController (1.0.0):
-    - RxCocoa (~> 5.0)
-    - RxSwift (~> 5.0)
-  - SwiftLint (0.39.2)
+  - SwiftLint (0.41.0)
 
 DEPENDENCIES:
   - Alamofire (~> 5.2)
   - Kingfisher (~> 5.0)
   - Nimble
-  - RxCocoa (~> 5)
+  - RxCocoa
   - RxDataSources
   - RxOptional
-  - RxSwift (~> 5)
-  - RxViewController
+  - RxSwift
   - SwiftLint
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
+    - Alamofire
     - Differentiator
     - Kingfisher
     - Nimble
@@ -44,24 +41,20 @@ SPEC REPOS:
     - RxOptional
     - RxRelay
     - RxSwift
-    - RxViewController
     - SwiftLint
-  trunk:
-    - Alamofire
 
 SPEC CHECKSUMS:
-  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
+  Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
-  Kingfisher: 8050bc6f7f68cbf3908bd04df7ccbac188f6d6d6
-  Nimble: 5f8a2fb6fa343a7242dfdd9d42f7267419d464b2
+  Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
+  Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxOptional: b1fcd60856807a564c0215c2184b8d33e7826dc2
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
-  RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
-  SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
+  SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
 
-PODFILE CHECKSUM: 787c4e3f6057ce6d55a1718bdaf9e20c5c4cac8a
+PODFILE CHECKSUM: 78a94adb6fc38083136415b912267a1d0b3fbbc0
 
 COCOAPODS: 1.9.3

@@ -8,9 +8,8 @@ target 'ImageSearchExample' do
   # Pods for ImageSearchExample
 
   # RxSwift
-  pod 'RxSwift', '~> 5'
-  pod 'RxCocoa', '~> 5'
-  pod 'RxViewController'
+  pod 'RxSwift'
+  pod 'RxCocoa'
   pod 'RxOptional'
   pod 'RxDataSources'
 
