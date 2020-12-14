@@ -20,12 +20,7 @@ final class SearchViewController: UIViewController, ViewModelBindable {
     var viewModel: SearchViewModel!
     private var disposeBag = DisposeBag()
     
-    lazy var searchController: UISearchController = {
-        let searchController = UISearchController()
-        searchController.obscuresBackgroundDuringPresentation = false
-        navigationItem.searchController = searchController
-        return searchController
-    }()
+    let searchController: UISearchController = .init(searchResultsController: nil)
     
     @IBOutlet weak var imagesCollectionView: UICollectionView!
     
@@ -40,6 +35,15 @@ final class SearchViewController: UIViewController, ViewModelBindable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setAttributes()
+    }
+}
+
+// MARK: - setAttributes
+extension SearchViewController {
+    private func setAttributes() {
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
     }
 }
 
