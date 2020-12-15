@@ -8,6 +8,9 @@
 
 import SCoordinator
 
+enum AppRoute: Route {
+    case search
+}
 enum SearchRoute: Route {
     case detailImage(imageURLString: String)
 }

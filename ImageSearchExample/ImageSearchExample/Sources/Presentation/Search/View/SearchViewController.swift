@@ -20,7 +20,7 @@ final class SearchViewController: UIViewController, ViewModelBindable {
     var viewModel: SearchViewModel!
     private var disposeBag = DisposeBag()
     
-    let searchController: UISearchController = .init(searchResultsController: nil)
+    let searchController: UISearchController = .init()
     
     @IBOutlet weak var imagesCollectionView: UICollectionView!
     

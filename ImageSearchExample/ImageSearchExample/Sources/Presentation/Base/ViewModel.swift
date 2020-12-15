@@ -10,6 +10,8 @@ import RxSwift
 import RxCocoa
 import SCoordinator
 
+typealias ViewModel = ViewModelType & BaseViewModel
+
 protocol ViewModelType {
     
     associatedtype Dependency
@@ -22,3 +24,6 @@ protocol ViewModelType {
     init(coordinator: CoordinatorType, dependency: Dependency)
 }
 
+class BaseViewModel: Coordinatable {
+    var coordinator: CoordinatorType!
+}

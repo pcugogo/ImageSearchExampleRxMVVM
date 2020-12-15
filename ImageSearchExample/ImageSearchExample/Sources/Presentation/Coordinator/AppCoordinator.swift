@@ -7,22 +7,31 @@
 //
 
 import UIKit
+import SCoordinator
 
-final class AppCoordinator {
-    let window: UIWindow
+final class AppCoordinator: Coordinator<UIWindow> {
     
-    init(window: UIWindow) {
-        self.window = window
+    func navigate(to route: Route) {
+        guard let appRoute = route as? AppRoute else { return }
+        switch appRoute {
+        case .search:
+            root?.rootViewController = navigateToSearch()
+        }
+        root?.makeKeyAndVisible()
     }
-    
-    func start() {
+}
+
+extension AppCoordinator {
+    private func navigateToSearch() -> UINavigationController {
         let storyboard = StoryboardName.main.instantiateStoryboard()
         let navigationController = storyboard
             .instantiateViewController(withIdentifier: "SearchNavigationController") as! UINavigationController
         let searchCoordinator = SearchCoordinator(root: navigationController)
         let dependency = SearchViewModel.Dependency(searchUseCase: SearchUseCase())
-        searchCoordinator.start(with: dependency)
-        window.rootViewController = navigationController
-        window.makeKeyAndVisible()
+        var searchViewController = navigationController.viewControllers.first as! SearchViewController
+        let viewModel = SearchViewModel(coordinator: searchCoordinator, dependency: dependency)
+        viewModel.retainCoordinator(searchCoordinator)
+        searchViewController.bind(viewModel: viewModel)
+        return navigationController
     }
 }

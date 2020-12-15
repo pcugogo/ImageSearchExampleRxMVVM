@@ -7,21 +7,26 @@
 
 import UIKit
 
-public typealias Coordinator<Root> = BaseCoordinator<Root> & Coordinatable & CoordinatorType
+public typealias Coordinator<Root: AnyObject> = BaseCoordinator<Root> & CoordinatorType
 
-public protocol CoordinatorType: class {
+public protocol CoordinatorType: AnyObject {
     func navigate(to route: Route)
 }
 
-public protocol Coordinatable: class {
-    associatedtype Dependency
-    func start(with dependency: Dependency)
-}
-
-open class BaseCoordinator<Root> {
-    public let root: Root
+open class BaseCoordinator<Root: AnyObject> {
+    public weak var root: Root?
     
     public init(root: Root) {
         self.root = root
+    }
+}
+
+public protocol Coordinatable: AnyObject {
+    var coordinator: CoordinatorType! { get set }
+}
+
+extension Coordinatable where Self: AnyObject {
+    public func retainCoordinator(_ coordinator: CoordinatorType) {
+        self.coordinator = coordinator
     }
 }

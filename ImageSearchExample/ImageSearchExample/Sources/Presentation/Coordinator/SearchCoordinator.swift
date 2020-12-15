@@ -11,11 +11,7 @@ import SCoordinator
 
 final class SearchCoordinator: Coordinator<UINavigationController> {
     
-    func start(with dependency: SearchViewModel.Dependency) {
-        var searchViewController = root.viewControllers.first as! SearchViewController
-        let viewModel = SearchViewModel(coordinator: self, dependency: dependency)
-        searchViewController.bind(viewModel: viewModel)
-    }
+    func start(with dependency: SearchViewModel.Dependency) {}
     
     func navigate(to route: Route) {
         guard let searchRoute = route as? SearchRoute else { return }
@@ -36,6 +32,6 @@ extension SearchCoordinator {
         let viewModel = DetailImageViewModel(coordinator: self, dependency: dependency)
         var detailImageViewController = DetailImageViewController.instantiateFromStoryboard()
         detailImageViewController.bind(viewModel: viewModel)
-        root.pushViewController(detailImageViewController, animated: true)
+        root?.pushViewController(detailImageViewController, animated: true)
     }
 }

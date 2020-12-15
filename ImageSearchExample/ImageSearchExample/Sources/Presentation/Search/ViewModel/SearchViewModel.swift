@@ -14,7 +14,7 @@ import SCoordinator
 
 typealias ImagesSection = SectionModel<Void, ImageData>
 
-final class SearchViewModel: ViewModelType {
+final class SearchViewModel: ViewModel {
     
     struct Dependency {
         let searchUseCase: SearchUseCaseType
@@ -35,8 +35,6 @@ final class SearchViewModel: ViewModelType {
     private var disposeBag: DisposeBag = DisposeBag()
     
     init(coordinator: CoordinatorType, dependency: Dependency) {
-        let coordinator = BehaviorRelay<CoordinatorType>(value: coordinator)
-            .asObservable()
         
         let isLastPage: BehaviorRelay<Bool> = BehaviorRelay(value: false)
         let imagesCellItems: BehaviorRelay<[ImageData]> = .init(value: [])
@@ -105,9 +103,9 @@ final class SearchViewModel: ViewModelType {
             .map { $1[0].items[$0.item].imageURL }
             .asObservable()
         
-        seletedItemImageURL.withLatestFrom(coordinator) { ($0, $1) }
-            .subscribe(onNext: { (imageURLString, coordinator) in
-                coordinator.navigate(to: SearchRoute.detailImage(imageURLString: imageURLString))
+        seletedItemImageURL
+            .subscribe(onNext: { [weak coordinator] imageURLString in
+                coordinator?.navigate(to: SearchRoute.detailImage(imageURLString: imageURLString))
             })
             .disposed(by: disposeBag)
         
