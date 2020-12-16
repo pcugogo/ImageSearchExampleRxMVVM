@@ -22,14 +22,15 @@ final class AppCoordinator: Coordinator<UIWindow> {
 }
 
 extension AppCoordinator {
+    
     private func navigateToSearch() -> UINavigationController {
+        
         let storyboard = StoryboardName.main.instantiateStoryboard()
         let navigationController = storyboard
             .instantiateViewController(withIdentifier: "SearchNavigationController") as! UINavigationController
         let searchCoordinator = SearchCoordinator(root: navigationController)
-        let dependency = SearchViewModel.Dependency(searchUseCase: SearchUseCase())
         var searchViewController = navigationController.viewControllers.first as! SearchViewController
-        let viewModel = SearchViewModel(coordinator: searchCoordinator, dependency: dependency)
+        let viewModel = SearchViewModel(coordinator: searchCoordinator, searchUseCase: SearchUseCase())
         viewModel.retainCoordinator(searchCoordinator)
         searchViewController.bind(viewModel: viewModel)
         return navigationController

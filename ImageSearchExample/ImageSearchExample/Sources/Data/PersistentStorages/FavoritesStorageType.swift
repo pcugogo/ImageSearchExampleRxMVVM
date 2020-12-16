@@ -8,13 +8,9 @@
 
 import Foundation
 
-protocol ImageFavoritesStorageType {
-    typealias IsContains = Bool
+protocol FavoritesStorageType {
     
     var favorites: [String] { get }
     func add(_ favorite: String)
     func remove(_ favorite: String)
-    func isContains(_ favorite: String) -> Bool
-    @discardableResult
-    func update(_ favorite: String) -> IsContains
 }

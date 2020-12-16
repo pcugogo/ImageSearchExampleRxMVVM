@@ -13,10 +13,6 @@ import SCoordinator
 
 final class DetailImageViewModel: ViewModelType {
 
-    struct Dependency {
-        let imageURLString: String
-        let imageFavoritesStorage: ImageFavoritesStorageType
-    }
     struct Input {
         let favoriteButtonAction: PublishRelay<Void> = .init()
     }
@@ -30,20 +26,21 @@ final class DetailImageViewModel: ViewModelType {
     
     private var disposeBag = DisposeBag()
     
-    init(coordinator: CoordinatorType, dependency: Dependency) {
-        
-        let isAddFavorites: BehaviorRelay<Bool> = .init(value: dependency.imageFavoritesStorage.isContains(dependency.imageURLString)
-        )
-        
-        let imageURLString: Signal<String> = Observable
-            .just(dependency.imageURLString)
-            .asSignal(onErrorJustReturn: "")
-        let depndency: BehaviorRelay<Dependency> = .init(value: dependency)
-        
-        input.favoriteButtonAction.asObservable().withLatestFrom(depndency)
-            .map { $0.imageFavoritesStorage.update($0.imageURLString) }
+    init(
+        coordinator: CoordinatorType,
+        imageURLString: String,
+        fatchFavoritesUseCase: FetchFavoritesUseCaseType = FetchFavoritesUseCase()
+    ) {
+        let isAddFavorites: BehaviorRelay<Bool> = .init(value: fatchFavoritesUseCase.isContains(imageURLString))
+
+        input.favoriteButtonAction
+            .map { fatchFavoritesUseCase.update(imageURLString) }
             .bind(to: isAddFavorites)
             .disposed(by: disposeBag)
+        
+        let imageURLString: Signal<String> = Observable
+            .just(imageURLString)
+            .asSignal(onErrorJustReturn: "")
         
         output = Output(
             imageURLString: imageURLString,

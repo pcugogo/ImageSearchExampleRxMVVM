@@ -13,13 +13,14 @@ import RxCocoa
 
 protocol SearchUseCaseType {
     var isLastPage: Bool { get }
-    func searchImage(keyword: String)  -> Observable<SearchResponse>
-    func loadMoreImage() -> Observable<SearchResponse>
+    
+    func search(keyword: String)  -> Observable<SearchResponse>
+    func loadMoreImages() -> Observable<SearchResponse>
 }
 
 final class SearchUseCase: SearchUseCaseType {
     
-    private let apiService: APIServiceType
+    private let imageSearchRepository: SearchRepositoryType
     private var currentPage = 1 //1 ~ 50
     private var keyword: String = ""
     
@@ -27,24 +28,31 @@ final class SearchUseCase: SearchUseCaseType {
         return currentPage >= 50
     }
     
-    init(apiService: APIServiceType = APIService()) {
-        self.apiService = apiService
+    init(imageSearchRepository: SearchRepositoryType = SearchRepository()) {
+        self.imageSearchRepository = imageSearchRepository
     }
     
-    func searchImage(keyword: String) -> Observable<SearchResponse> {
+    deinit {
+        print("SearchUseCase deinit")
+    }
+    func search(keyword: String) -> Observable<SearchResponse> {
         self.keyword = keyword
         currentPage = 1
-        let api = API.getImages(query: keyword, page: currentPage, numberOfImagesToLoad: 80)
-        return apiService.request(api: api)
-            .asObservable()
+        return imageSearchRepository.search(
+            keyword: keyword,
+            page: currentPage,
+            numberOfImagesToLoad: 80
+        )
     }
     
-    func loadMoreImage() -> Observable<SearchResponse> {
+    func loadMoreImages() -> Observable<SearchResponse> {
         if !isLastPage {
             currentPage += 1
         }
-        let api = API.getImages(query: keyword, page: currentPage, numberOfImagesToLoad: 80)
-        return apiService.request(api: api)
-            .asObservable()
+        return imageSearchRepository.search(
+            keyword: keyword,
+            page: currentPage,
+            numberOfImagesToLoad: 80
+        )
     }
 }
