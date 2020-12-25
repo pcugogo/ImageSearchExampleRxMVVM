@@ -11,7 +11,7 @@ import SCoordinator
 
 final class SearchCoordinator: Coordinator<UINavigationController> {
     
-    func navigate(to route: Route) {
+    override func navigate(to route: Route) {
         guard let searchRoute = route as? SearchRoute else { return }
         switch searchRoute {
         case .detailImage(let imageURLString):
@@ -30,6 +30,6 @@ extension SearchCoordinator {
         )
         var detailImageViewController = DetailImageViewController.instantiateFromStoryboard()
         detailImageViewController.bind(viewModel: viewModel)
-        root?.pushViewController(detailImageViewController, animated: true)
+        rootView.pushViewController(detailImageViewController, animated: true)
     }
 }

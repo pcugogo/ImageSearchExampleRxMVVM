@@ -11,13 +11,13 @@ import SCoordinator
 
 final class AppCoordinator: Coordinator<UIWindow> {
     
-    func navigate(to route: Route) {
+    override func navigate(to route: Route) {
         guard let appRoute = route as? AppRoute else { return }
         switch appRoute {
         case .search:
-            root?.rootViewController = navigateToSearch()
+            rootView.rootViewController = navigateToSearch()
         }
-        root?.makeKeyAndVisible()
+        rootView.makeKeyAndVisible()
     }
 }
 
@@ -28,10 +28,10 @@ extension AppCoordinator {
         let storyboard = StoryboardName.main.instantiateStoryboard()
         let navigationController = storyboard
             .instantiateViewController(withIdentifier: "SearchNavigationController") as! UINavigationController
-        let searchCoordinator = SearchCoordinator(root: navigationController)
+        let searchCoordinator = SearchCoordinator(rootView: navigationController)
         var searchViewController = navigationController.viewControllers.first as! SearchViewController
         let viewModel = SearchViewModel(coordinator: searchCoordinator, searchUseCase: SearchUseCase())
-        viewModel.retainCoordinator(searchCoordinator)
+        viewModel.setCoordinator(coordinator: searchCoordinator)
         searchViewController.bind(viewModel: viewModel)
         return navigationController
     }

@@ -7,16 +7,18 @@
 //
 
 import UIKit
+import SCoordinator
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    var appCoordinator: AppCoordinator!
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        AppCoordinator(root: window!).navigate(to: AppRoute.search)
+        appCoordinator = AppCoordinator(rootView: window!)
+        appCoordinator.navigate(to: AppRoute.search)
         return true
     }
 

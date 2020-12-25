@@ -21,6 +21,7 @@ target 'ImageSearchExample' do
 
   # Other
   pod 'SwiftLint'
+  pod 'SCoordinator'
 
   target 'ImageSearchExampleTests' do
     inherit! :search_paths

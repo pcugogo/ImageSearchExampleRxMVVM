@@ -29,8 +29,6 @@
 		FC697F5424A0FE8E0050C154 /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC697F5324A0FE8E0050C154 /* ImageData.swift */; };
 		FC697F5624A0FE990050C154 /* Meta.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC697F5524A0FE990050C154 /* Meta.swift */; };
 		FC738B63258651F2004EF19B /* ImageSearchRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC738B62258651F2004EF19B /* ImageSearchRoute.swift */; };
-		FC738BD6258658D6004EF19B /* SCoordinator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC738BD3258658CA004EF19B /* SCoordinator.framework */; };
-		FC738BD7258658D6004EF19B /* SCoordinator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC738BD3258658CA004EF19B /* SCoordinator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FC805F2124E6B87600AFC1E2 /* SearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC805F2024E6B87600AFC1E2 /* SearchUseCase.swift */; };
 		FC805F2724E6B8E400AFC1E2 /* SearchUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC805F2624E6B8E400AFC1E2 /* SearchUseCaseTests.swift */; };
 		FC805F2A24E6B91C00AFC1E2 /* SearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC805F2924E6B91C00AFC1E2 /* SearchViewModelTests.swift */; };
@@ -62,13 +60,6 @@
 			remoteGlobalIDString = FC697EF724A0FBC10050C154;
 			remoteInfo = ImageSearchExample;
 		};
-		FC738BD2258658CA004EF19B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC738BCE258658CA004EF19B /* SCoordinator.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FC738AF02586498B004EF19B;
-			remoteInfo = SCoordinator;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -78,7 +69,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FC738BD7258658D6004EF19B /* SCoordinator.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -119,7 +109,6 @@
 		FC697F5324A0FE8E0050C154 /* ImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageData.swift; sourceTree = "<group>"; };
 		FC697F5524A0FE990050C154 /* Meta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meta.swift; sourceTree = "<group>"; };
 		FC738B62258651F2004EF19B /* ImageSearchRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchRoute.swift; sourceTree = "<group>"; };
-		FC738BCE258658CA004EF19B /* SCoordinator.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SCoordinator.xcodeproj; path = SCoordinator/SCoordinator.xcodeproj; sourceTree = "<group>"; };
 		FC805F2024E6B87600AFC1E2 /* SearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUseCase.swift; sourceTree = "<group>"; };
 		FC805F2624E6B8E400AFC1E2 /* SearchUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUseCaseTests.swift; sourceTree = "<group>"; };
 		FC805F2924E6B91C00AFC1E2 /* SearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTests.swift; sourceTree = "<group>"; };
@@ -149,7 +138,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6C130A5C845062D5469476E /* Pods_ImageSearchExample.framework in Frameworks */,
-				FC738BD6258658D6004EF19B /* SCoordinator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,7 +197,6 @@
 				FC697F2C24A0FC650050C154 /* .swiftlint.yml */,
 				FC697EFA24A0FBC10050C154 /* ImageSearchExample */,
 				FC697F1124A0FBC20050C154 /* ImageSearchExampleTests */,
-				FC738B3D25864D96004EF19B /* Modules */,
 				FC697EF924A0FBC10050C154 /* Products */,
 				0E2BCE348B3FE18E9A976942 /* Pods */,
 				3016E42C9E1C7BC20EF925C6 /* Frameworks */,
@@ -289,7 +276,7 @@
 				FC697F3124A0FCEE0050C154 /* App */,
 				FC697F3324A0FD190050C154 /* Search */,
 				FC697F3424A0FD1C0050C154 /* DetailImage */,
-				FCC0C4062524D1F1000C72EE /* Coordinator */,
+				FCC0C4062524D1F1000C72EE /* Coordinators */,
 				FC697F4424A0FDF40050C154 /* Utils */,
 			);
 			path = Presentation;
@@ -351,22 +338,6 @@
 				FCD30E0325741DFF004734D8 /* NetworkError.swift */,
 			);
 			path = Network;
-			sourceTree = "<group>";
-		};
-		FC738B3D25864D96004EF19B /* Modules */ = {
-			isa = PBXGroup;
-			children = (
-				FC738BCE258658CA004EF19B /* SCoordinator.xcodeproj */,
-			);
-			path = Modules;
-			sourceTree = "<group>";
-		};
-		FC738BCF258658CA004EF19B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				FC738BD3258658CA004EF19B /* SCoordinator.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		FC805F1F24E6B86200AFC1E2 /* UseCase */ = {
@@ -533,14 +504,14 @@
 			path = DetailImage;
 			sourceTree = "<group>";
 		};
-		FCC0C4062524D1F1000C72EE /* Coordinator */ = {
+		FCC0C4062524D1F1000C72EE /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
 				FCC0C4042524D195000C72EE /* AppCoordinator.swift */,
 				FCC0C4072524D206000C72EE /* SearchCoordinator.swift */,
 				FC738B62258651F2004EF19B /* ImageSearchRoute.swift */,
 			);
-			path = Coordinator;
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		FCD30DE925741C0A004734D8 /* Infrastructure */ = {
@@ -651,12 +622,6 @@
 			mainGroup = FC697EEF24A0FBC10050C154;
 			productRefGroup = FC697EF924A0FBC10050C154 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = FC738BCF258658CA004EF19B /* Products */;
-					ProjectRef = FC738BCE258658CA004EF19B /* SCoordinator.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				FC697EF724A0FBC10050C154 /* ImageSearchExample */,
@@ -664,16 +629,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		FC738BD3258658CA004EF19B /* SCoordinator.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SCoordinator.framework;
-			remoteRef = FC738BD2258658CA004EF19B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		FC697EF624A0FBC10050C154 /* Resources */ = {
