@@ -12,7 +12,15 @@ import Moya
 
 struct APIService: APIServiceType {
     
-    private let provider = MoyaProvider<API>()
+    private let provider: MoyaProvider<API>
+    
+    init() {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 3.0
+        let session = Alamofire.Session(configuration: configuration)
+            
+        provider = MoyaProvider<API>(session: session)
+    }
     
     func request<T: Codable>(api: API) -> Single<NetworkResult<T>> {
         return provider.rx.request(api)
@@ -22,12 +30,18 @@ struct APIService: APIServiceType {
             }
             .map { .success($0) }
             .catchError {
-                
                 guard let moyaError = $0 as? MoyaError else { return .just(.failure(.unknown)) }
                 
                 switch moyaError {
-                case .statusCode(let response):
+                case let .statusCode(response):
                     return .just(.failure(handling(for: response.statusCode)))
+                case let .underlying(error, _):
+                    if let afError = error as? AFError,
+                       let urlError = afError.underlyingError as? URLError {
+                        return .just(.failure(handling(for: urlError)))
+                    } else {
+                        return .just(.failure(.unknown))
+                    }
                 default:
                     return .just(.failure(.unknown))
                 }
@@ -36,7 +50,6 @@ struct APIService: APIServiceType {
 }
 
 extension APIService {
-    
     func handling(for urlError: URLError) -> NetworkError {
         return NetworkError(rawValue: urlError.code.rawValue) ?? .unknown
     }
