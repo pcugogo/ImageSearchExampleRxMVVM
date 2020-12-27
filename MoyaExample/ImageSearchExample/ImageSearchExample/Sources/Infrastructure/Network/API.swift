@@ -28,6 +28,15 @@ extension API: TargetType {
         return URL(string: Constants.baseURLString)!
     }
     
+    // MARK: path
+    
+    var path: String {
+        switch self {
+        case .getImages:
+            return "/v2/search/image"
+        }
+    }
+    
     // MARK: method
     
     var method: Moya.Method {
@@ -43,12 +52,6 @@ extension API: TargetType {
         return Data()
     }
     
-    // MARK: headers
-    
-    var headers: [String : String]? {
-        ["Authorization":Constants.apiKey]
-    }
-    
     // MARK: task
     
     var task: Task {
@@ -61,12 +64,9 @@ extension API: TargetType {
         }
     }
     
-    // MARK: path
+    // MARK: headers
     
-    var path: String {
-        switch self {
-        case .getImages:
-            return "/v2/search/image"
-        }
+    var headers: [String : String]? {
+        ["Authorization":Constants.apiKey]
     }
 }

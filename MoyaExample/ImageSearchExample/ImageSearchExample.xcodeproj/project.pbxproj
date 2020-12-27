@@ -327,8 +327,8 @@
 			isa = PBXGroup;
 			children = (
 				FC697F4D24A0FE530050C154 /* API.swift */,
-				FCD30DEE25741C59004734D8 /* APIServiceType.swift */,
 				FC697F4F24A0FE670050C154 /* APIService.swift */,
+				FCD30DEE25741C59004734D8 /* APIServiceType.swift */,
 				FCD30E0325741DFF004734D8 /* NetworkError.swift */,
 				FCE9BF382597B13900ED56A5 /* NetworkResult.swift */,
 			);
