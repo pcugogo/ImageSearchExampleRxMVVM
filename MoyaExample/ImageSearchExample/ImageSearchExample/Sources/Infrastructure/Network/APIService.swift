@@ -30,6 +30,12 @@ struct APIService: APIServiceType {
             }
             .map { .success($0) }
             .catchError {
+                
+                if let decondingError = $0 as? DecodingError {
+                    print("Decoding Error : - \(String(describing: T.self)), \(decondingError)")
+                    return .just(.failure(.unknown))
+                }
+                
                 guard let moyaError = $0 as? MoyaError else { return .just(.failure(.unknown)) }
                 
                 switch moyaError {
