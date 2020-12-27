@@ -29,12 +29,12 @@ final class DetailImageViewModel: ViewModelType {
     init(
         coordinator: CoordinatorType,
         imageURLString: String,
-        fatchFavoritesUseCase: FetchFavoritesUseCaseType = FetchFavoritesUseCase()
+        fetchFavoritesUseCase: FetchFavoritesUseCaseType = FetchFavoritesUseCase()
     ) {
-        let isAddFavorites: BehaviorRelay<Bool> = .init(value: fatchFavoritesUseCase.isContains(imageURLString))
+        let isAddFavorites: BehaviorRelay<Bool> = .init(value: fetchFavoritesUseCase.isContains(imageURLString))
 
         input.favoriteButtonAction
-            .map { fatchFavoritesUseCase.update(imageURLString) }
+            .map { fetchFavoritesUseCase.update(imageURLString) }
             .bind(to: isAddFavorites)
             .disposed(by: disposeBag)
         

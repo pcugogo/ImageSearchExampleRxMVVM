@@ -17,11 +17,13 @@ import Nimble
 final class SearchUseCaseTests: XCTestCase {
     var disposeBag = DisposeBag()
     let apiServiceSpy: SearchAPIServiceSpyType = SearchAPIServiceSpy()
+    var searchRepository: SearchRepositoryType!
     var searchUseCase: SearchUseCaseType!
     
     override func setUp() {
         super.setUp()
-        self.searchUseCase = SearchUseCase(apiService: apiServiceSpy)
+        searchRepository = SearchRepository(apiService: apiServiceSpy)
+        self.searchUseCase = SearchUseCase(imageSearchRepository: searchRepository)
     }
     
     override func tearDown() {
@@ -30,12 +32,7 @@ final class SearchUseCaseTests: XCTestCase {
     }
 
     func testSearchImage() {
-        searchUseCase.searchImage(keyword: "test")
-            .catchError {
-                let networkError = $0 as? NetworkError ?? NetworkError.unknown
-                XCTFail(networkError.message)
-                return .empty()
-            }
+        searchUseCase.search(keyword: "test")
             .subscribe(onNext: { [weak self] _ in
                 XCTAssertTrue(self?.apiServiceSpy.page == 1)
             })
@@ -43,12 +40,7 @@ final class SearchUseCaseTests: XCTestCase {
     }
     
     func testLoadMore() {
-        searchUseCase.loadMoreImage()
-            .catchError {
-                let networkError = $0 as? NetworkError ?? NetworkError.unknown
-                XCTFail(networkError.message)
-                return .empty()
-            }
+        searchUseCase.loadMoreImages()
             .subscribe(onNext: { [weak self] _ in
                 XCTAssertTrue(self?.apiServiceSpy.page == 2)
             })

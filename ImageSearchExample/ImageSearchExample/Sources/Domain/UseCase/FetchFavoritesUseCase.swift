@@ -12,27 +12,27 @@ protocol FetchFavoritesUseCaseType {
     typealias IsContains = Bool
     
     func isContains(_ favorite: String) -> IsContains
+    @discardableResult
     func update(_ favorite: String) -> IsContains
 }
 
 struct FetchFavoritesUseCase: FetchFavoritesUseCaseType {
     
-    private let imageFavoritesRepository: FavoritesRepositoryType
+    private let favoritesRepository: FavoritesRepositoryType
     
-    init(imageFavoritesRepository: FavoritesRepositoryType = FavoritesRepository()) {
-        self.imageFavoritesRepository = imageFavoritesRepository
+    init(favoritesRepository: FavoritesRepositoryType = FavoritesRepository()) {
+        self.favoritesRepository = favoritesRepository
     }
     
     func isContains(_ favorite: String) -> IsContains {
-        return imageFavoritesRepository.favorites.contains(favorite)
+        return favoritesRepository.favorites.contains(favorite)
     }
     
-    @discardableResult
     func update(_ favorite: String) -> IsContains {
         if isContains(favorite) {
-            imageFavoritesRepository.remove(favorite)
+            favoritesRepository.remove(favorite)
         } else {
-            imageFavoritesRepository.add(favorite)
+            favoritesRepository.add(favorite)
         }
         return isContains(favorite)
     }

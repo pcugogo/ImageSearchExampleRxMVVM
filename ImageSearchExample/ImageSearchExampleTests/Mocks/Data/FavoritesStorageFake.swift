@@ -1,5 +1,5 @@
 //
-//  ImageFavoritesStorageFake.swift
+//  FavoritesStorageFake.swift
 //  ImageSearchExampleTests
 //
 //  Created by ChanWook Park on 09/07/2020.
@@ -10,7 +10,7 @@ import Foundation
 
 @testable import ImageSearchExample
 
-final class ImageFavoritesStorageFake: ImageFavoritesStorageType {
+final class FavoritesStorageFake: FavoritesStorageType {
     private var userDefaultsFavorites: [String] = .init()
 
     var favorites: [String] {
@@ -24,17 +24,5 @@ final class ImageFavoritesStorageFake: ImageFavoritesStorageType {
     func remove(_ favorite: String) {
         let newFavorites = userDefaultsFavorites.filter { $0 != favorite }
         userDefaultsFavorites = newFavorites
-    }
-    func isContains(_ favorite: String) -> Bool {
-        return favorites.contains(favorite)
-    }
-    
-    func update(_ favorite: String) -> IsContains {
-        if isContains(favorite) {
-            remove(favorite)
-        } else {
-            add(favorite)
-        }
-        return isContains(favorite)
     }
 }

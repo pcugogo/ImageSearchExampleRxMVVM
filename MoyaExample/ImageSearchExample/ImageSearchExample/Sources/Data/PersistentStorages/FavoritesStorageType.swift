@@ -11,6 +11,7 @@ import Foundation
 protocol FavoritesStorageType {
     
     var favorites: [String] { get }
+    
     func add(_ favorite: String)
     func remove(_ favorite: String)
 }

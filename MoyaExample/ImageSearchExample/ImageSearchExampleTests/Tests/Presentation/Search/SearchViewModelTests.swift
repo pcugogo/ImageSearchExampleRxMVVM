@@ -18,12 +18,16 @@ final class SearchViewModelTests: XCTestCase {
     
     var disposeBag = DisposeBag()
     let apiServiceSpy = SearchAPIServiceSpy()
+    var searchRepository: SearchRepositoryType!
     var searchUseCase: SearchUseCaseType!
     var viewModel: SearchViewModel!
     
     override func setUp() {
         super.setUp()
-        self.searchUseCase = SearchUseCase(apiService: apiServiceSpy)
+        
+        self.searchRepository = SearchRepository(apiService: apiServiceSpy)
+        self.searchUseCase = SearchUseCase(imageSearchRepository: searchRepository)
+        
         self.viewModel = configureViewModel()
     }
     
@@ -78,9 +82,10 @@ final class SearchViewModelTests: XCTestCase {
 
 extension SearchViewModelTests {
     func configureViewModel() -> SearchViewModel {
-        let dependency = SearchViewModel.Dependency(searchUseCase: searchUseCase)
-        let viewModel = SearchViewModel(coordinator: SearchCoordinator(root: UINavigationController()),
-                                        dependency: dependency)
+        let viewModel = SearchViewModel(
+            coordinator: SearchCoordinator(rootView: UINavigationController()),
+            searchUseCase: searchUseCase
+        )
         return viewModel
     }
 }

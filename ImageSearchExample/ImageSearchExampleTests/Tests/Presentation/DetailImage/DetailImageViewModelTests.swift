@@ -15,14 +15,16 @@ import Nimble
 
 final class DetailImageModelTests: XCTestCase {
     var disposeBag = DisposeBag()
-    var imageFavoritesStorage: ImageFavoritesStorageType!
+    var favoritesRepository: FavoritesRepository!
+    var fatchFavoritesUseCase: FetchFavoritesUseCaseType!
     var viewModel: DetailImageViewModel!
     let dummyData = SearchImageDummy()
     
     override func setUp() {
         super.setUp()
         
-        self.imageFavoritesStorage = ImageFavoritesStorageFake()
+        self.favoritesRepository = FavoritesRepository(favoritesStorage: FavoritesStorageFake())
+        self.fatchFavoritesUseCase = FetchFavoritesUseCase(favoritesRepository: favoritesRepository)
         self.viewModel = configureViewModel()
     }
     
@@ -56,14 +58,10 @@ final class DetailImageModelTests: XCTestCase {
 
 extension DetailImageModelTests {
     func configureViewModel() -> DetailImageViewModel {
-        
-        let dependency = DetailImageViewModel.Dependency(
-            imageURLString: dummyData.imageURLString,
-            imageFavoritesStorage: imageFavoritesStorage
-        )
         let viewModel = DetailImageViewModel(
-            coordinator: SearchCoordinator(root: .init()),
-            dependency: dependency
+            coordinator: SearchCoordinator(rootView: .init()),
+            imageURLString: dummyData.imageURLString,
+            fetchFavoritesUseCase: self.fatchFavoritesUseCase
         )
         return viewModel
     }
