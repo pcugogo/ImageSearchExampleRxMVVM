@@ -86,7 +86,7 @@ extension SearchViewController {
             .asObservable()
             .do(onNext: { [weak self] error in
                 guard let self = self else { return }
-                self.showAlert("네트워크 오류", error.message)
+                self.showAlert(title: "네트워크 오류", message: error.message)
             })
             .subscribe()
             .disposed(by: disposeBag)

@@ -6,12 +6,21 @@
 //  Copyright © 2020 ChanWookPark. All rights reserved.
 //
 
+
 import UIKit
 
 extension UIViewController {
-    func showAlert(_ title: String, _ message: String) {
-        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alertVC, animated: true, completion: nil)
+    func showAlert(title: String, message: String, animated: Bool = true, completion:  (() -> Void)? = nil) {
+        let alertViewController = UIAlertController(
+            title: title,
+            message: message, preferredStyle: .alert
+        )
+        alertViewController.addAction(
+            UIAlertAction(
+                title: "OK",
+                style: .default
+            )
+        )
+        present(alertViewController, animated: true, completion: completion)
     }
 }
