@@ -6,10 +6,7 @@
 //  Copyright © 2020 ChanWookPark. All rights reserved.
 //
 
-import Foundation
-import Alamofire
 import RxSwift
-import RxCocoa
 
 protocol SearchUseCaseType {
     var isLastPage: Bool { get }

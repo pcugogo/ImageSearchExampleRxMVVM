@@ -6,10 +6,7 @@
 //  Copyright © 2020 ChanWookPark. All rights reserved.
 //
 
-import Foundation
-import Alamofire
 import RxSwift
-import RxCocoa
 
 protocol SearchUseCaseType {
     var isLastPage: Bool { get }
@@ -20,7 +17,7 @@ protocol SearchUseCaseType {
 
 final class SearchUseCase: SearchUseCaseType {
     
-    private let imageSearchRepository: SearchRepositoryType
+    private let searchRepository: SearchRepositoryType
     private var currentPage = 1 //1 ~ 50
     private var keyword: String = ""
     
@@ -28,8 +25,8 @@ final class SearchUseCase: SearchUseCaseType {
         return currentPage >= 50
     }
     
-    init(imageSearchRepository: SearchRepositoryType = SearchRepository()) {
-        self.imageSearchRepository = imageSearchRepository
+    init(searchRepository: SearchRepositoryType = SearchRepository()) {
+        self.searchRepository = searchRepository
     }
     
     deinit {
@@ -38,7 +35,7 @@ final class SearchUseCase: SearchUseCaseType {
     func search(keyword: String) -> Observable<NetworkResult<SearchResponse>> {
         self.keyword = keyword
         currentPage = 1
-        return imageSearchRepository.search(
+        return searchRepository.search(
             keyword: keyword,
             page: currentPage,
             numberOfImagesToLoad: 80
@@ -49,7 +46,7 @@ final class SearchUseCase: SearchUseCaseType {
         if !isLastPage {
             currentPage += 1
         }
-        return imageSearchRepository.search(
+        return searchRepository.search(
             keyword: keyword,
             page: currentPage,
             numberOfImagesToLoad: 80
