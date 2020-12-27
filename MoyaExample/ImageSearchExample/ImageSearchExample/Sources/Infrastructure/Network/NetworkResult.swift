@@ -11,7 +11,9 @@ import Foundation
 enum NetworkResult<T: Codable> {
     case success(T)
     case failure(NetworkError)
-    
+}
+
+extension NetworkResult {
     func response() -> T? {
         guard case .success(let response) = self else {
             return nil
