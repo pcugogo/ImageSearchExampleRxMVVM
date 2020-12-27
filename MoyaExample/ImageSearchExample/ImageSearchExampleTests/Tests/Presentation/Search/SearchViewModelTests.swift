@@ -26,7 +26,7 @@ final class SearchViewModelTests: XCTestCase {
         super.setUp()
         
         self.searchRepository = SearchRepository(apiService: apiServiceSpy)
-        self.searchUseCase = SearchUseCase(imageSearchRepository: searchRepository)
+        self.searchUseCase = SearchUseCase(searchRepository: searchRepository)
         
         self.viewModel = configureViewModel()
     }

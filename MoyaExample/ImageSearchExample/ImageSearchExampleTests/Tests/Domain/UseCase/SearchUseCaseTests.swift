@@ -23,7 +23,7 @@ final class SearchUseCaseTests: XCTestCase {
     override func setUp() {
         super.setUp()
         searchRepository = SearchRepository(apiService: apiServiceSpy)
-        self.searchUseCase = SearchUseCase(imageSearchRepository: searchRepository)
+        self.searchUseCase = SearchUseCase(searchRepository: searchRepository)
     }
     
     override func tearDown() {
