@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import RxDataSources
 
 struct ImageData: Codable {
     let thumbnailURL: String
