@@ -29,9 +29,6 @@ final class SearchUseCase: SearchUseCaseType {
         self.imageSearchRepository = imageSearchRepository
     }
     
-    deinit {
-        print("SearchUseCase deinit")
-    }
     func search(keyword: String) -> Observable<SearchResponse> {
         self.keyword = keyword
         currentPage = 1
