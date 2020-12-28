@@ -12,8 +12,7 @@ import RxSwift
 struct APIService: APIServiceType {
     func request<T: Codable>(api: API) -> Single<T> {
         return Single.create { single in
-            api
-                .dataRequest()
+            api.dataRequest()
                 .responseJSON { response in
                     switch response.result {
                     case .success:
