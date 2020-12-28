@@ -18,7 +18,7 @@ protocol SearchUseCaseType {
 final class SearchUseCase: SearchUseCaseType {
     
     private let imageSearchRepository: SearchRepositoryType
-    private var currentPage = 1 //1 ~ 50
+    private var currentPage = 1 // 1 ~ 50
     private var keyword: String = ""
     
     var isLastPage: Bool {
