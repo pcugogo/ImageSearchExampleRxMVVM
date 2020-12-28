@@ -14,7 +14,7 @@ import SCoordinator
 
 typealias ImagesSection = SectionModel<Void, ImageData>
 
-final class SearchViewModel: ViewModel {
+final class SearchViewModel: ViewModelType {
     
     struct Input {
         let searchButtonAction: PublishRelay<String> = .init()
@@ -57,11 +57,12 @@ final class SearchViewModel: ViewModel {
             .map { $0.data.count - 1 == $0.indexPath.item }
             .filter { $0 }
         
-        let shouldMoreFetch = isLastCell.withLatestFrom(isLastPage, resultSelector: { ($0, $1) })
-            .map { $0.0 && !$0.1 }
+        let shouldMoreFetch = isLastCell
+            .withLatestFrom(isLastPage, resultSelector: { (isLastCell: $0, isLastPage: $1) })
+            .map { $0.isLastCell && !$0.isLastPage }
+            .filter { $0 }
         
         let loadMoreResponse = shouldMoreFetch
-            .filter { $0 }
             .flatMapLatest { _ -> Observable<SearchResponse> in
                 return searchUseCase.loadMoreImages()
                     .catchError {
@@ -73,8 +74,8 @@ final class SearchViewModel: ViewModel {
         
         loadMoreResponse
             .map { $0.images }
-            .withLatestFrom(imagesCellItems) { ($0, $1) }
-            .map { $0.1 + $0.0 }
+            .withLatestFrom(imagesCellItems) { (new: $0, previous: $1) }
+            .map { $0.previous + $0.new }
             .bind(to: imagesCellItems)
             .disposed(by: disposeBag)
         
@@ -88,9 +89,9 @@ final class SearchViewModel: ViewModel {
         
         let seletedItemImageURL = input.itemSeletedAction.withLatestFrom(
             imagesSections,
-            resultSelector: { ($0, $1) }
+            resultSelector: { (indexPath: $0, sections: $1) }
         )
-        .map { $1[0].items[$0.item].imageURL }
+        .map { $0.sections[0].items[$0.indexPath.item].imageURL }
         
         seletedItemImageURL
             .subscribe(onNext: { [weak coordinator] imageURLString in

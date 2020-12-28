@@ -10,6 +10,7 @@ import Foundation
 import XCTest
 import RxSwift
 import RxCocoa
+import SCoordinator
 import Nimble
 
 @testable import ImageSearchExample
@@ -82,8 +83,12 @@ final class SearchViewModelTests: XCTestCase {
 
 extension SearchViewModelTests {
     func configureViewModel() -> SearchViewModel {
+        let coordinator = SearchCoordinator(
+            rootView: UINavigationController(),
+            parentCoordinator: RootCoordinator(rootView: UIViewController())
+        )
         let viewModel = SearchViewModel(
-            coordinator: SearchCoordinator(rootView: UINavigationController()),
+            coordinator: coordinator,
             searchUseCase: searchUseCase
         )
         return viewModel

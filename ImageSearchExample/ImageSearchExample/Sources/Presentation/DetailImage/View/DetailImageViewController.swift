@@ -10,10 +10,9 @@ import UIKit
 import Kingfisher
 import RxSwift
 
-final class DetailImageViewController: UIViewController, ViewModelBindable {
+final class DetailImageViewController: BaseViewController, ViewModelBindable {
     
     var viewModel: DetailImageViewModel!
-    private var disposeBag = DisposeBag()
     
     @IBOutlet weak var detailImageView: UIImageView!
     @IBOutlet weak var favoriteButton: UIButton!

@@ -13,13 +13,11 @@ import RxCocoa
 import RxOptional
 import RxDataSources
 
-final class SearchViewController: UIViewController, ViewModelBindable {
+final class SearchViewController: BaseViewController, ViewModelBindable {
     
     typealias ImagesDataSource = RxCollectionViewSectionedReloadDataSource<ImagesSection>
     
     var viewModel: SearchViewModel!
-    private var disposeBag = DisposeBag()
-    
     let searchController: UISearchController = .init()
     
     @IBOutlet weak var imagesCollectionView: UICollectionView!

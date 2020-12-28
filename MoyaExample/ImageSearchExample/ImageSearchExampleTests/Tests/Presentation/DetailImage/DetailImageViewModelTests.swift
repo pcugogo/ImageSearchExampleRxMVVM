@@ -9,6 +9,7 @@
 import XCTest
 import RxSwift
 import RxCocoa
+import SCoordinator
 import Nimble
 
 @testable import ImageSearchExample
@@ -58,8 +59,12 @@ final class DetailImageModelTests: XCTestCase {
 
 extension DetailImageModelTests {
     func configureViewModel() -> DetailImageViewModel {
+        let coordinator = SearchCoordinator(
+            rootView: .init(),
+            parentCoordinator: RootCoordinator(rootView: UIViewController())
+        )
         let viewModel = DetailImageViewModel(
-            coordinator: SearchCoordinator(rootView: .init()),
+            coordinator: coordinator,
             imageURLString: dummyData.imageURLString,
             fetchFavoritesUseCase: self.fatchFavoritesUseCase
         )

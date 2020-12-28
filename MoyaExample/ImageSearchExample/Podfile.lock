@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.4.0)
+  - Alamofire (5.4.1)
   - Differentiator (4.0.1)
   - Kingfisher (5.15.8):
     - Kingfisher/Core (= 5.15.8)
@@ -25,8 +25,8 @@ PODS:
   - RxRelay (5.1.1):
     - RxSwift (~> 5)
   - RxSwift (5.1.1)
-  - SCoordinator (0.1.6)
-  - SwiftLint (0.41.0)
+  - SCoordinator (0.1.8)
+  - SwiftLint (0.42.0)
 
 DEPENDENCIES:
   - Alamofire (~> 5.2)
@@ -57,7 +57,7 @@ SPEC REPOS:
     - SwiftLint
 
 SPEC CHECKSUMS:
-  Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
+  Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
@@ -67,8 +67,8 @@ SPEC CHECKSUMS:
   RxOptional: b1fcd60856807a564c0215c2184b8d33e7826dc2
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
-  SCoordinator: 9db2c436cdc13220b1d906eb7c66718bc10c8246
-  SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
+  SCoordinator: aef7723a0de24958ee1f935c7067f7fd54762569
+  SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
 
 PODFILE CHECKSUM: 745ce63078dbd6da5edd67b556ef7138dd51ab44
 

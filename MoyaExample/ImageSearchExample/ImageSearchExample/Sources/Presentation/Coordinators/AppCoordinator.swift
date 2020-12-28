@@ -9,7 +9,7 @@
 import UIKit
 import SCoordinator
 
-final class AppCoordinator: Coordinator<UIWindow> {
+final class AppCoordinator: RootCoordinator<UIWindow> {
     
     override func navigate(to route: Route) {
         guard let appRoute = route as? AppRoute else { return }
@@ -28,10 +28,9 @@ extension AppCoordinator {
         let storyboard = StoryboardName.main.instantiateStoryboard()
         let navigationController = storyboard
             .instantiateViewController(withIdentifier: "SearchNavigationController") as! UINavigationController
-        let searchCoordinator = SearchCoordinator(rootView: navigationController)
+        let searchCoordinator = SearchCoordinator(rootView: navigationController, parentCoordinator: self)
         var searchViewController = navigationController.viewControllers.first as! SearchViewController
         let viewModel = SearchViewModel(coordinator: searchCoordinator, searchUseCase: SearchUseCase())
-        viewModel.setCoordinator(coordinator: searchCoordinator)
         searchViewController.bind(viewModel: viewModel)
         return navigationController
     }

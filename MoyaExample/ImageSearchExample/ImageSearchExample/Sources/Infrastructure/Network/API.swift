@@ -19,7 +19,7 @@ extension API: TargetType {
     
     private enum Constants {
         static let baseURLString = "https://dapi.kakao.com"
-        static let apiKey = ""
+        static let apiKey = "KakaoAK 5c16796fcdb41f40a0fadaaef63ab059"
     }
     
     // MARK: baseURL
