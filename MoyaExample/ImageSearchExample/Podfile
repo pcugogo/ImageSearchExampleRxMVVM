@@ -14,7 +14,6 @@ target 'ImageSearchExample' do
   pod 'RxDataSources'
 
   # Network
-  pod 'Alamofire', '~> 5.2'
   pod 'Moya'
   pod 'Moya/RxSwift'
 
