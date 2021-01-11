@@ -1,5 +1,5 @@
 //
-//  ImageFavoritesStorage.swift
+//  FavoritesStorage.swift
 //  ImageSearchExample
 //
 //  Created by ChanWook Park on 07/06/2020.
