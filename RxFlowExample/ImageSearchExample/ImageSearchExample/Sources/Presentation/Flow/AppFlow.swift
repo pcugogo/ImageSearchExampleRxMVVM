@@ -24,9 +24,9 @@ final class AppFlow: Flow {
     func navigate(to step: Step) -> FlowContributors {
         let flow = ImageSearchFlow()
         
-        Flows.use(flow, when: .created) { root in
-            self.window.rootViewController = root
-            self.window.makeKeyAndVisible()
+        Flows.use(flow, when: .created) { [weak self] root in
+            self?.window.rootViewController = root
+            self?.window.makeKeyAndVisible()
         }
         
         let contribute: FlowContributor = .contribute(

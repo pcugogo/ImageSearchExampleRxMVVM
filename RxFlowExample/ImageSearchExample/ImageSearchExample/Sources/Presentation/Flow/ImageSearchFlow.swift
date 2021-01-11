@@ -39,7 +39,7 @@ extension ImageSearchFlow {
         let dependency = SearchViewModel.Dependency(searchUseCase: SearchUseCase())
         let viewModel = SearchViewModel(dependency: dependency)
         searchViewController.bind(viewModel: viewModel)
-        rootViewController.pushViewController(searchViewController, animated: true)
+        rootViewController.viewControllers = [searchViewController]
         let contribute: FlowContributor = .contribute(
             withNextPresentable: searchViewController,
             withNextStepper: viewModel

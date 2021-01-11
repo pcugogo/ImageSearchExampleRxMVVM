@@ -27,4 +27,3 @@ class BaseViewModel<Dependency: DependencyType> {
         self.dependency = dependency
     }
 }
-
