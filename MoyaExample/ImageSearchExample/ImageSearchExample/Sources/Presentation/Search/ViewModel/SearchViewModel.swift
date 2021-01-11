@@ -88,8 +88,8 @@ final class SearchViewModel: ViewModelType {
         .map { $0.sections[0].items[$0.indexPath.item].imageURL }
         
         seletedItemImageURL
-            .subscribe(onNext: { [weak coordinator] imageURLString in
-                coordinator?.navigate(to: SearchRoute.detailImage(imageURLString: imageURLString))
+            .subscribe(onNext: { imageURLString in
+                coordinator.navigate(to: SearchRoute.detailImage(imageURLString: imageURLString))
             })
             .disposed(by: disposeBag)
         
