@@ -15,7 +15,7 @@ final class DetailImageViewModel: ViewModel<DetailImageViewModel.Dependency>, St
 
     struct Dependency: DependencyType {
         let imageURLString: String
-        let imageFavoritesStorage: ImageFavoritesStorageType
+        let fetchFavoritesUseCase: FetchFavoritesUseCaseType
     }
     struct Input {
         let favoriteButtonAction: Driver<Void>
@@ -29,13 +29,13 @@ final class DetailImageViewModel: ViewModel<DetailImageViewModel.Dependency>, St
     private var disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
-        let isAddFavorites: BehaviorRelay<Bool> = .init(value: dependency.imageFavoritesStorage.isContains(dependency.imageURLString))
+        let isAddFavorites: BehaviorRelay<Bool> = .init(value: dependency.fetchFavoritesUseCase.isContains(dependency.imageURLString))
         let imageURLString: Driver<String> = Observable.just(dependency.imageURLString)
             .asDriver(onErrorDriveWith: .empty())
         let depndency: BehaviorRelay<Dependency> = .init(value: dependency)
         
         input.favoriteButtonAction.asObservable().withLatestFrom(depndency)
-            .map { $0.imageFavoritesStorage.update($0.imageURLString) }
+            .map { $0.fetchFavoritesUseCase.update($0.imageURLString) }
             .bind(to: isAddFavorites)
             .disposed(by: disposeBag)
         

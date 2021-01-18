@@ -72,9 +72,8 @@ final class SearchViewModelTests: XCTestCase {
 
 extension SearchViewModelTests {
     func configureViewModel() -> (SearchViewModel.Input, SearchViewModel.Output) {
-        let dependency = SearchCoordinator.Dependency(searchUseCase: searchUseCase)
-        let viewModel = SearchViewModel(coordinator: SearchCoordinator(navigationController: UINavigationController()),
-                                        dependency: dependency)
+        let dependency = SearchViewModel.Dependency(searchUseCase: searchUseCase)
+        let viewModel = SearchViewModel(dependency: dependency)
         let searchImageDummy = SearchImageDummy()
         let searchButtonAction = BehaviorRelay(value: "Test").asDriver()
         let willDisplayCell = BehaviorRelay(value: IndexPath(item: searchImageDummy.totalCount - 1, section: 0))
@@ -82,9 +81,11 @@ extension SearchViewModelTests {
         let itemSeletedAction: Driver<IndexPath> = PublishSubject<IndexPath>.init()
             .asDriver(onErrorDriveWith: .empty())
             
-        let input = SearchViewModel.Input(searchButtonAction: searchButtonAction,
-                                          willDisplayCell: willDisplayCell,
-                                          itemSeletedAction: itemSeletedAction)
+        let input = SearchViewModel.Input(
+            searchButtonAction: searchButtonAction,
+            willDisplayCell: willDisplayCell,
+            itemSeletedAction: itemSeletedAction
+        )
         return (input, viewModel.transform(input: input))
     }
 }

@@ -15,13 +15,16 @@ import Nimble
 
 final class DetailImageModelTests: XCTestCase {
     var disposeBag = DisposeBag()
-    var imageFavoritesStorage: ImageFavoritesStorageType!
+    var favoritesRepository: FavoritesRepository!
+    var fatchFavoritesUseCase: FetchFavoritesUseCaseType!
     var viewModel: (DetailImageViewModel.Input, DetailImageViewModel.Output)!
     let dummyData = SearchImageDummy()
     
     override func setUp() {
         super.setUp()
-        self.imageFavoritesStorage = ImageFavoritesStorageFake()
+        
+        self.favoritesRepository = FavoritesRepository(favoritesStorage: FavoritesStorageFake())
+        self.fatchFavoritesUseCase = FetchFavoritesUseCase(favoritesRepository: favoritesRepository)
         self.viewModel = configureViewModel()
     }
     
@@ -50,10 +53,11 @@ final class DetailImageModelTests: XCTestCase {
 
 extension DetailImageModelTests {
     func configureViewModel() -> (DetailImageViewModel.Input, DetailImageViewModel.Output) {
-        let dependency = DetailImageCoordinator.Dependency(imageURLString: dummyData.imageURLString,
-                                               imageFavoritesStorage: imageFavoritesStorage)
-        let coordinator = DetailImageCoordinator(navigationController: UINavigationController())
-        let viewModel = DetailImageViewModel(coordinator: coordinator, dependency: dependency)
+        let dependency = DetailImageViewModel.Dependency(
+            imageURLString: dummyData.imageURLString,
+            fetchFavoritesUseCase: fatchFavoritesUseCase
+        )
+        let viewModel = DetailImageViewModel(dependency: dependency)
         let favoriteButtonAction = BehaviorRelay(value: Void()).asDriver()
         
         let input = DetailImageViewModel.Input(favoriteButtonAction: favoriteButtonAction)

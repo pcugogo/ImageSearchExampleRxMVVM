@@ -50,7 +50,7 @@ extension ImageSearchFlow {
     private func navigateToDetail(_ imageURLString: String) -> FlowContributors {
         let dependency = DetailImageViewModel.Dependency(
             imageURLString: imageURLString,
-            imageFavoritesStorage: ImageFavoritesStorage()
+            fetchFavoritesUseCase: FetchFavoritesUseCase()
         )
         let viewModel = DetailImageViewModel(dependency: dependency)
         var detailImageViewController = DetailImageViewController.instantiateFromStoryboard()
