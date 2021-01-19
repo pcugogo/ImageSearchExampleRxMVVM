@@ -8,7 +8,7 @@
 
 - MVVM
 - Coordinator
-- Clean Architecture
+- Clean Architecture (❗️현재 학습 중이므로 일부 개념만 구현되었으며 클린아키텍쳐의 원칙에서 벗어나는 부분이 있을 수 있습니다.)
 
 ## Reactive
 
