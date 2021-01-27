@@ -76,17 +76,13 @@ extension SearchViewController {
     func bindViewModelOutputs() {
         
         viewModel.output.imagesSections
-            .asObservable()
-            .bind(to: imagesCollectionView.rx.items(dataSource: imagesDataSource))
+            .drive(imagesCollectionView.rx.items(dataSource: imagesDataSource))
             .disposed(by: disposeBag)
         
         viewModel.output.networkError
-            .asObservable()
-            .do(onNext: { [weak self] error in
-                guard let self = self else { return }
-                self.showAlert(title: "네트워크 오류", message: error.message)
+            .emit(onNext: { [weak self] error in
+                self?.showAlert(title: "네트워크 오류", message: error.message)
             })
-            .subscribe()
             .disposed(by: disposeBag)
     }
 }
