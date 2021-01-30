@@ -17,7 +17,7 @@ struct APIService: APIServiceType {
                     switch response.result {
                     case .success:
                         guard let data = response.data else {
-                            single(.error(NetworkError.unknown))
+                            single(.failure(NetworkError.unknown))
                             return
                         }
                         do {
@@ -29,13 +29,13 @@ struct APIService: APIServiceType {
                     case .failure(let error):
                         if let underlyingError = error.underlyingError,
                            let urlError = underlyingError as? URLError {
-                            single(.error(handling(for: urlError)))
+                            single(.failure(handling(for: urlError)))
                         }
                         guard let httpResponse = response.response else {
-                            single(.error(NetworkError.unknown))
+                            single(.failure(NetworkError.unknown))
                             return
                         }
-                        single(.error(handling(for: httpResponse.statusCode)))
+                        single(.failure(handling(for: httpResponse.statusCode)))
                     }
                 }
             return Disposables.create()
