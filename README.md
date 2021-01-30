@@ -19,6 +19,8 @@
 
 - XCTest
 - Nimble
+- RxTest
+- Given When Then Pattern
 - TestDoubles
 
 ## Other
