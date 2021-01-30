@@ -13,7 +13,7 @@ struct ImageData: Codable {
     let imageURL: String
     let width: Int
     let height: Int
-    let displaySitename: String
+    let displaySiteName: String
     let docURL: String
     let datetime: String
 
@@ -22,7 +22,7 @@ struct ImageData: Codable {
         case imageURL = "image_url"
         case width
         case height
-        case displaySitename = "display_sitename"
+        case displaySiteName = "display_sitename"
         case docURL = "doc_url"
         case datetime
     }

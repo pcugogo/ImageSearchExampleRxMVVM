@@ -10,7 +10,6 @@ import RxSwift
 
 protocol SearchUseCaseType {
     var isLastPage: Bool { get }
-    
     func search(keyword: String)  -> Observable<NetworkResult<SearchResponse>>
     func loadMoreImages() -> Observable<NetworkResult<SearchResponse>>
 }

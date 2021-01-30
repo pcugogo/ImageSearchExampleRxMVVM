@@ -12,6 +12,8 @@ target 'ImageSearchExample' do
   pod 'RxCocoa'
   pod 'RxOptional'
   pod 'RxDataSources'
+  pod 'RxTest'
+  pod 'RxBlocking'
 
   # Network
   pod 'Alamofire', '~> 5.2'

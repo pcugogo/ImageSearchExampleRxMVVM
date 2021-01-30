@@ -27,14 +27,14 @@ PODS:
   - SwiftLint (0.39.2)
 
 DEPENDENCIES:
-  - Alamofire (~> 5.2)
-  - Kingfisher (~> 5.0)
+  - Alamofire
+  - Kingfisher
   - Nimble
-  - RxCocoa (~> 5)
+  - RxCocoa
   - RxDataSources
   - RxFlow
   - RxOptional
-  - RxSwift (~> 5)
+  - RxSwift
   - RxViewController
   - SwiftLint
 
@@ -68,6 +68,6 @@ SPEC CHECKSUMS:
   RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: 157341c49a76fb4d3796b02db54f779ed18332e7
+PODFILE CHECKSUM: b5a3afb67fa8f7624623b4bcecd78fb191a8315c
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1

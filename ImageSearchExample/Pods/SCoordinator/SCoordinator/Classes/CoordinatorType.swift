@@ -9,5 +9,5 @@ import Foundation
 
 public protocol CoordinatorType: AnyObject {
     func navigate(to route: Route)
-    func end(type: EndType)
+    func end()
 }

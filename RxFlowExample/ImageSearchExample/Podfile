@@ -8,18 +8,19 @@ target 'ImageSearchExample' do
   # Pods for ImageSearchExample
 
   # RxSwift
-  pod 'RxSwift', '~> 5'
-  pod 'RxCocoa', '~> 5'
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  pod 'RxCocoa'
   pod 'RxViewController'
   pod 'RxOptional'
   pod 'RxDataSources'
   pod 'RxFlow'
-
+  
   # Network
-  pod 'Alamofire', '~> 5.2'
+  pod 'Alamofire'
 
   # Image
-  pod 'Kingfisher', '~> 5.0'
+  pod 'Kingfisher'
 
   # Other
   pod 'SwiftLint'
