@@ -6,11 +6,12 @@
 //  Copyright © 2020 ChanWookPark. All rights reserved.
 //
 
-import Foundation
 import XCTest
+import Nimble
+import RxTest
+import RxBlocking
 import RxSwift
 import RxCocoa
-import Nimble
 
 @testable import ImageSearchExample
 
@@ -33,6 +34,7 @@ final class FetchFavoritesUseCaseTests: XCTestCase {
     }
     
     func testUpdateFavorites() {
+        
         let testFavorite = "TestFavorite"
         fetchFavoritesUseCase.update(testFavorite)
         XCTAssertTrue(fetchFavoritesUseCase.isContains(testFavorite), "Duplicate Check Error")

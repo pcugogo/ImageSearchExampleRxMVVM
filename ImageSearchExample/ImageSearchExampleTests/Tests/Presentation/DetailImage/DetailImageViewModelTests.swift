@@ -7,10 +7,12 @@
 //
 
 import XCTest
+import Nimble
+import RxTest
+import RxBlocking
 import RxSwift
 import RxCocoa
 import SCoordinator
-import Nimble
 
 @testable import ImageSearchExample
 
@@ -20,6 +22,7 @@ final class DetailImageModelTests: XCTestCase {
     var fatchFavoritesUseCase: FetchFavoritesUseCaseType!
     var viewModel: DetailImageViewModel!
     let dummyData = SearchImageDummy()
+    let scheduler = TestScheduler(initialClock: 0)
     
     override func setUp() {
         super.setUp()
@@ -37,23 +40,44 @@ final class DetailImageModelTests: XCTestCase {
     }
     
     func test_ImageURLString() {
+        // Given
+        let imageURLString = scheduler.createObserver(String.self)
         
         viewModel.output.imageURLString
-            .asObservable()
-            .subscribe(onNext: { imageURLString in
-                XCTAssertFalse(imageURLString.isEmpty, "imageURLString is empty")
-            })
+            .emit(to: imageURLString)
             .disposed(by: disposeBag)
-    }
-    func test_FavoriteButtonAction() {
+         
+        // When
+        scheduler.start()
         
-        viewModel.input.favoriteButtonAction.accept(Void())
+        // Then
+        let recordedEvents = Recorded.events(
+            .next(0, dummyData.imageURLString),
+            .completed(0)
+        )
+        XCTAssertEqual(imageURLString.events, recordedEvents)
+    }
+    
+    func test_FavoriteButtonAction() {
+        // Given
+        let isAddFavorites = scheduler.createObserver(Bool.self)
         
         viewModel.output.isAddFavorites
-            .drive(onNext: { isAddFavorites in
-                XCTAssertTrue(isAddFavorites, "Update Favorite Error // - output value: \(isAddFavorites)")
-            })
+            .drive(isAddFavorites)
             .disposed(by: disposeBag)
+         
+        // When
+        scheduler.createColdObservable([.next(1, ())])
+            .bind(to: viewModel.input.favoriteButtonAction)
+            .disposed(by: disposeBag)
+        scheduler.start()
+        
+        // Then
+        let recordedEvents = Recorded.events(
+            .next(0, false),
+            .next(1, true)
+        )
+        XCTAssertEqual(isAddFavorites.events, recordedEvents)
     }
 }
 

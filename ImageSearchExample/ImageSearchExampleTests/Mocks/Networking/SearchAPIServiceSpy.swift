@@ -10,16 +10,19 @@ import RxSwift
 @testable import ImageSearchExample
 
 protocol SearchAPIServiceSpyType: APIServiceType {
-    var page: Int? { get }
+    var page: PublishSubject<Int> { get }
 }
 
 final class SearchAPIServiceSpy: SearchAPIServiceSpyType {
-    private(set) var page: Int?
+    private(set) var page: PublishSubject<Int> = .init()
+    var disposeBag = DisposeBag()
     
     func request<T: Codable>(api: API) -> Single<T> {
         switch api {
         case .getImages(_, let page, _):
-            self.page = page
+            Observable.just(page)
+                .bind(to: self.page)
+                .disposed(by: disposeBag)
         }
         let apiServiceFake = APIServiceFake(dummyData: SearchImageDummy())
         return apiServiceFake.request(api: api)

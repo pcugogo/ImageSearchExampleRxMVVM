@@ -6,12 +6,13 @@
 //  Copyright © 2020 ChanWookPark. All rights reserved.
 //
 
-import Foundation
 import XCTest
+import Nimble
+import RxTest
+import RxBlocking
 import RxSwift
 import RxCocoa
 import SCoordinator
-import Nimble
 
 @testable import ImageSearchExample
 
@@ -22,6 +23,7 @@ final class SearchViewModelTests: XCTestCase {
     var searchRepository: SearchRepositoryType!
     var searchUseCase: SearchUseCaseType!
     var viewModel: SearchViewModel!
+    let scheduler = TestScheduler(initialClock: 0)
     
     override func setUp() {
         super.setUp()
@@ -38,46 +40,54 @@ final class SearchViewModelTests: XCTestCase {
     }
     
     func test_SearchViewModel_searchAction() {
+        // Given
+        let imagesSectionsIsEmpty = scheduler.createObserver(Bool.self)
         
         viewModel.output.imagesSections
-            .skip(1)
-            .do(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                guard let page = self.apiServiceSpy.page else {
-                    XCTFail("SearchUseCase_currentPage counting error")
-                    return
-                }
-                expect(page).to(equal(1))
-            })
-            .drive(onNext: { imageSections in
-                let searchImageDummy = SearchImageDummy()
-                expect(imageSections[0].items.count).to(equal(searchImageDummy.totalCount))
-                expect(imageSections[0].items[0].displaySitename).to(equal("DummyTest0"))
-            })
+            .map { $0[0].items.isEmpty }
+            .drive(imagesSectionsIsEmpty)
             .disposed(by: disposeBag)
+         
+        // When
+        scheduler.createColdObservable([.next(1, ("test"))])
+            .bind(to: viewModel.input.searchButtonAction)
+            .disposed(by: disposeBag)
+        scheduler.start()
         
-        viewModel.input.searchButtonAction.accept("test")
+        // Then
+        let recordedEvents = Recorded.events(
+            .next(0, true),
+            .next(1, false)
+        )
+        XCTAssertEqual(imagesSectionsIsEmpty.events, recordedEvents)
     }
     
     func test_SearchViewModel_moreFetch() {
+        // Given
         let searchImageDummy = SearchImageDummy()
-        viewModel.output.imagesSections
-            .skip(2)
-            .do(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                guard let page = self.apiServiceSpy.page else {
-                    XCTFail("SearchUseCase_currentPage counting error")
-                    return
-                }
-                expect(page).to(equal(2))
-            })
-            .drive(onNext: { imageSections in
-                expect(imageSections[0].items.count).to(equal(searchImageDummy.totalCount * 2))
-                expect(imageSections[0].items[0].displaySitename).to(equal("DummyTest0"))
-            })
-            .disposed(by: disposeBag)
+        let imagesSectionsIsEmpty = scheduler.createObserver(Bool.self)
         
-        viewModel.input.willDisplayCell.accept(IndexPath(item: searchImageDummy.totalCount - 1, section: 0))
+        viewModel.output.imagesSections
+            .map { $0[0].items.isEmpty }
+            .drive(imagesSectionsIsEmpty)
+            .disposed(by: disposeBag)
+         
+        // When
+        scheduler.createColdObservable([.next(1, ("test"))])
+            .bind(to: viewModel.input.searchButtonAction)
+            .disposed(by: disposeBag)
+        scheduler.createColdObservable([.next(2, (IndexPath(item: searchImageDummy.totalCount - 1, section: 0)))])
+            .bind(to: viewModel.input.willDisplayCell)
+            .disposed(by: disposeBag)
+        scheduler.start()
+        
+        // Then
+        let recordedEvents = Recorded.events(
+            .next(0, true),
+            .next(1, false),
+            .next(2, false)
+        )
+        XCTAssertEqual(imagesSectionsIsEmpty.events, recordedEvents)
     }
 }
 
