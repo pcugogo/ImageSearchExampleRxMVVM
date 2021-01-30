@@ -28,7 +28,8 @@ extension AppCoordinator {
         let storyboard = StoryboardName.main.instantiateStoryboard()
         let navigationController = storyboard
             .instantiateViewController(withIdentifier: "SearchNavigationController") as! UINavigationController
-        let searchCoordinator = SearchCoordinator(rootView: navigationController, parentCoordinator: self)
+        let searchCoordinator = SearchCoordinator(rootView: navigationController)
+        searchCoordinator.start(with: self)
         var searchViewController = navigationController.viewControllers.first as! SearchViewController
         let viewModel = SearchViewModel(coordinator: searchCoordinator, searchUseCase: SearchUseCase())
         searchViewController.bind(viewModel: viewModel)
