@@ -15,7 +15,8 @@ target 'ImageSearchExample' do
   pod 'RxOptional'
   pod 'RxDataSources'
   pod 'RxFlow'
-  
+  pod 'RxTest'
+
   # Network
   pod 'Alamofire'
 
