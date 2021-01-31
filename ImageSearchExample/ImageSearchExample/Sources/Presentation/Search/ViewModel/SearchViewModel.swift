@@ -32,7 +32,6 @@ final class SearchViewModel: ViewModelType {
     private var disposeBag: DisposeBag = DisposeBag()
     
     init(coordinator: CoordinatorType, searchUseCase: SearchUseCaseType) {
-        
         let isLastPage: BehaviorRelay<Bool> = BehaviorRelay(value: false)
         let imagesCellItems: BehaviorRelay<[ImageData]> = .init(value: [])
         let networkError: PublishRelay<NetworkError> = .init()
@@ -40,7 +39,7 @@ final class SearchViewModel: ViewModelType {
         let searchResponse = input.searchButtonAction
             .flatMapLatest { (keyword) -> Observable<SearchResponse> in
                 return searchUseCase.search(keyword: keyword)
-                    .catchError {
+                    .catch {
                         networkError.accept($0 as? NetworkError ?? NetworkError.unknown)
                         return .empty()
                     }
@@ -65,7 +64,7 @@ final class SearchViewModel: ViewModelType {
         let loadMoreResponse = shouldMoreFetch
             .flatMapLatest { _ -> Observable<SearchResponse> in
                 return searchUseCase.loadMoreImages()
-                    .catchError {
+                    .catch {
                         networkError.accept($0 as? NetworkError ?? NetworkError.unknown)
                         return .empty()
                     }
