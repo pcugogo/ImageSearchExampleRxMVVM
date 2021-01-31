@@ -58,7 +58,7 @@ final class DetailImageModelTests: XCTestCase {
         XCTAssertEqual(imageURLString.events, recordedEvents)
     }
     
-    func test_FavoriteButtonAction() {
+    func testFavoriteButtonAction() {
         // Given
         let isAddFavorites = scheduler.createObserver(Bool.self)
         
@@ -83,10 +83,7 @@ final class DetailImageModelTests: XCTestCase {
 
 extension DetailImageModelTests {
     func configureViewModel() -> DetailImageViewModel {
-        let coordinator = SearchCoordinator(
-            rootView: .init(),
-            parentCoordinator: RootCoordinator(rootView: UIViewController())
-        )
+        let coordinator = SearchCoordinator(rootView: .init())
         let viewModel = DetailImageViewModel(
             coordinator: coordinator,
             imageURLString: dummyData.imageURLString,

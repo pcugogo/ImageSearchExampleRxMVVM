@@ -9,7 +9,6 @@
 import XCTest
 import Nimble
 import RxTest
-import RxBlocking
 import RxSwift
 import RxCocoa
 import SCoordinator
@@ -39,7 +38,7 @@ final class SearchViewModelTests: XCTestCase {
         print("tearDown")
     }
     
-    func test_SearchViewModel_searchAction() {
+    func testSearchViewModelsearchAction() {
         // Given
         let imagesSectionsIsEmpty = scheduler.createObserver(Bool.self)
         
@@ -62,7 +61,7 @@ final class SearchViewModelTests: XCTestCase {
         XCTAssertEqual(imagesSectionsIsEmpty.events, recordedEvents)
     }
     
-    func test_SearchViewModel_moreFetch() {
+    func testSearchViewModelmoreFetch() {
         // Given
         let searchImageDummy = SearchImageDummy()
         let imagesSectionsIsEmpty = scheduler.createObserver(Bool.self)
@@ -93,10 +92,7 @@ final class SearchViewModelTests: XCTestCase {
 
 extension SearchViewModelTests {
     func configureViewModel() -> SearchViewModel {
-        let coordinator = SearchCoordinator(
-            rootView: UINavigationController(),
-            parentCoordinator: RootCoordinator(rootView: UIViewController())
-        )
+        let coordinator = SearchCoordinator(rootView: .init())
         let viewModel = SearchViewModel(
             coordinator: coordinator,
             searchUseCase: searchUseCase
