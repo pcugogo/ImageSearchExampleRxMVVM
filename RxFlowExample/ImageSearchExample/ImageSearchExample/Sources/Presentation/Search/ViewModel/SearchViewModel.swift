@@ -20,9 +20,9 @@ final class SearchViewModel: ViewModel<SearchViewModel.Dependency>, Stepper {
         let searchUseCase: SearchUseCaseType
     }
     struct Input {
-        let searchButtonAction: Driver<String>
-        let willDisplayCell: Driver<IndexPath>
-        let itemSeletedAction: Driver<IndexPath>
+        let searchAction: Signal<String>
+        let willDisplayCell: Signal<IndexPath>
+        let itemSeletedAction: Signal<IndexPath>
     }
     struct Output {
         let imagesSections: Driver<[ImagesSection]>
@@ -33,16 +33,16 @@ final class SearchViewModel: ViewModel<SearchViewModel.Dependency>, Stepper {
     private var disposeBag: DisposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
+        
         let isLastPage: BehaviorRelay<Bool> = BehaviorRelay(value: false)
         let imagesCellItems: BehaviorRelay<[ImageData]> = .init(value: [])
-        let dependency: BehaviorRelay<Dependency> = .init(value: self.dependency)
         let networkError: PublishRelay<NetworkError> = .init()
         
-        let searchResponse = input.searchButtonAction
+        let searchResponse = input.searchAction
             .asObservable()
             .withLatestFrom(dependency, resultSelector: { ($0, $1.searchUseCase) })
             .flatMapLatest { (keyword, searchUseCase) -> Observable<SearchResponse> in
-                return searchUseCase.searchImage(keyword: keyword)
+                return searchUseCase.search(keyword: keyword)
                     .catchError {
                         networkError.accept($0 as? NetworkError ?? NetworkError.unknown)
                         return .empty()
@@ -61,15 +61,15 @@ final class SearchViewModel: ViewModel<SearchViewModel.Dependency>, Stepper {
             .map { $0.data.count - 1 == $0.indexPath.item }
             .filter { $0 }
         
-        let shouldMoreFetch = isLastCell.withLatestFrom(isLastPage, resultSelector: { ($0, $1) })
-            .map { $0.0 && !$0.1 }
+        let shouldMoreFetch = isLastCell
+            .withLatestFrom(isLastPage, resultSelector: { (isLastCell: $0, isLastPage: $1) })
+            .map { $0.isLastCell && !$0.isLastPage }
+            .filter { $0 }
         
         let loadMoreResponse = shouldMoreFetch
-            .withLatestFrom(dependency, resultSelector: { ($0, $1.searchUseCase) })
-            .filter { $0.0 }
-            .map { $0.1 }
-            .flatMapLatest { searchUseCase -> Observable<SearchResponse> in
-                return searchUseCase.loadMoreImage()
+            .withLatestFrom(dependency)
+            .flatMapLatest { dependency -> Observable<SearchResponse> in
+                return dependency.searchUseCase.loadMoreImages()
                     .catchError {
                         networkError.accept($0 as? NetworkError ?? NetworkError.unknown)
                         return .empty()
@@ -79,8 +79,8 @@ final class SearchViewModel: ViewModel<SearchViewModel.Dependency>, Stepper {
         
         loadMoreResponse
             .map { $0.images }
-            .withLatestFrom(imagesCellItems) { ($0, $1) }
-            .map { $0.1 + $0.0 }
+            .withLatestFrom(imagesCellItems) { (new: $0, previous: $1) }
+            .map { $0.previous + $0.new }
             .bind(to: imagesCellItems)
             .disposed(by: disposeBag)
         
@@ -91,14 +91,14 @@ final class SearchViewModel: ViewModel<SearchViewModel.Dependency>, Stepper {
             .disposed(by: disposeBag)
         
         let imagesSections = imagesCellItems.map { [ImagesSection(model: Void(), items: $0)] }
-            .asDriver(onErrorDriveWith: .empty())
-        
-        let seletedItemImageURL = input.itemSeletedAction.withLatestFrom(
-            imagesSections,
-            resultSelector: { ($0, $1) }
-        )
-            .map { $1[0].items[$0.item].imageURL }
+            
+        let seletedItemImageURL = input.itemSeletedAction
             .asObservable()
+            .withLatestFrom(
+                imagesSections,
+                resultSelector: { (indexPath: $0, sections: $1) }
+            )
+            .map { $0.sections[0].items[$0.indexPath.item].imageURL }
         
         seletedItemImageURL
             .subscribe(onNext: { [weak self] imageURLString in
@@ -107,6 +107,9 @@ final class SearchViewModel: ViewModel<SearchViewModel.Dependency>, Stepper {
             })
             .disposed(by: disposeBag)
         
-        return Output(imagesSections: imagesSections, networkError: networkError.asSignal())
+        return Output(
+            imagesSections: imagesSections.asDriver(onErrorDriveWith: .empty()),
+            networkError: networkError.asSignal()
+        )
     }
 }

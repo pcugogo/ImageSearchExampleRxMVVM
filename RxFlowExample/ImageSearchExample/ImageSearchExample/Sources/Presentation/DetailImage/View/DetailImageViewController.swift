@@ -29,7 +29,7 @@ extension DetailImageViewController {
     func bindViewModelInput() -> DetailImageViewModel.Input {
         let favoriteButtonAction = favoriteButton.rx.tap
             .throttle(.milliseconds(300), latest: false, scheduler: MainScheduler.instance)
-            .asDriver(onErrorDriveWith: .empty())
+            .asSignal(onErrorJustReturn: ())
         
         let input = DetailImageViewModel.Input(favoriteButtonAction: favoriteButtonAction)
         

@@ -588,6 +588,15 @@ open class ImageCache {
     }
 
     // MARK: Cleaning
+    /// Clears the memory & disk storage of this cache. This is an async operation.
+    ///
+    /// - Parameter handler: A closure which is invoked when the cache clearing operation finishes.
+    ///                      This `handler` will be called from the main queue.
+    public func clearCache(completion handler: (() -> Void)? = nil) {
+        clearMemoryCache()
+        clearDiskCache(completion: handler)
+    }
+    
     /// Clears the memory storage of this cache.
     @objc public func clearMemoryCache() {
         try? memoryStorage.removeAll()
@@ -597,7 +606,7 @@ open class ImageCache {
     ///
     /// - Parameter handler: A closure which is invoked when the cache clearing operation finishes.
     ///                      This `handler` will be called from the main queue.
-    open func clearDiskCache(completion handler: (()->())? = nil) {
+    open func clearDiskCache(completion handler: (() -> Void)? = nil) {
         ioQueue.async {
             do {
                 try self.diskStorage.removeAll()
@@ -607,8 +616,14 @@ open class ImageCache {
             }
         }
     }
+    
+    /// Clears the expired images from memory & disk storage. This is an async operation.
+    open func cleanExpiredCache(completion handler: (() -> Void)? = nil) {
+        cleanExpiredMemoryCache()
+        cleanExpiredDiskCache(completion: handler)
+    }
 
-    /// Clears the expired images from disk storage. This is an async operation.
+    /// Clears the expired images from disk storage.
     open func cleanExpiredMemoryCache() {
         memoryStorage.removeExpired()
     }
@@ -808,32 +823,5 @@ extension String {
         } else {
             return appending("@\(identifier)")
         }
-    }
-}
-
-extension ImageCache {
-
-    /// Creates an `ImageCache` with a given `name`, cache directory `path`
-    /// and a closure to modify the cache directory.
-    ///
-    /// - Parameters:
-    ///   - name: The name of cache object. It is used to setup disk cache directories and IO queue.
-    ///           You should not use the same `name` for different caches, otherwise, the disk storage would
-    ///           be conflicting to each other.
-    ///   - path: Location of cache URL on disk. It will be internally pass to the initializer of `DiskStorage` as the
-    ///           disk cache directory.
-    ///   - diskCachePathClosure: Closure that takes in an optional initial path string and generates
-    ///                           the final disk cache path. You could use it to fully customize your cache path.
-    /// - Throws: An error that happens during image cache creating, such as unable to create a directory at the given
-    ///           path.
-    @available(*, deprecated, message: "Use `init(name:cacheDirectoryURL:diskCachePathClosure:)` instead",
-    renamed: "init(name:cacheDirectoryURL:diskCachePathClosure:)")
-    public convenience init(
-        name: String,
-        path: String?,
-        diskCachePathClosure: DiskCachePathClosure? = nil) throws
-    {
-        let directoryURL = path.flatMap { URL(string: $0) }
-        try self.init(name: name, cacheDirectoryURL: directoryURL, diskCachePathClosure: diskCachePathClosure)
     }
 }

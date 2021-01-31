@@ -30,9 +30,11 @@ final class SearchViewController: UIViewController, ViewModelBindable {
     @IBOutlet weak var imagesCollectionView: UICollectionView!
     
     private let imagesDataSource = ImagesDataSource(configureCell: { _, collectionView, indexPath, data in
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ImageCollectionViewCell.self),
-                                                            for: indexPath) as? ImageCollectionViewCell else {
-                                                                fatalError()
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: String(describing: ImageCollectionViewCell.self),
+            for: indexPath
+        ) as? ImageCollectionViewCell else {
+            fatalError()
         }
         cell.setImage(urlString: data.imageURL)
         return cell
@@ -48,7 +50,7 @@ extension SearchViewController {
     // MARK: - Inputs
     func bindViewModelInput() -> SearchViewModel.Input {
         let searchButtonClicked = searchController.searchBar.rx.searchButtonClicked
-            .asDriver()
+            .asSignal()
             .withLatestFrom(searchController.searchBar.rx.text.orEmpty.asDriver())
             .filterEmpty()
             .do(onNext: { [weak self] _ in
@@ -57,14 +59,14 @@ extension SearchViewController {
             })
         
         let willDisplayCell = imagesCollectionView.rx.willDisplayCell
-            .asDriver()
+            .asSignal()
             .map { $0.at }
         
         let itemSeleted = imagesCollectionView.rx.itemSelected
-            .asDriver()
+            .asSignal()
         
         let input = SearchViewModel.Input(
-            searchButtonAction: searchButtonClicked,
+            searchAction: searchButtonClicked,
             willDisplayCell: willDisplayCell,
             itemSeletedAction: itemSeleted
         )

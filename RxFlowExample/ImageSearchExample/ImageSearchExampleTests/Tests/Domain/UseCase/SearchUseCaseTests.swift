@@ -6,18 +6,21 @@
 //  Copyright © 2020 ChanWookPark. All rights reserved.
 //
 
-import Foundation
 import XCTest
+import Nimble
+import RxTest
 import RxSwift
 import RxCocoa
-import Nimble
 
 @testable import ImageSearchExample
 
 final class SearchUseCaseTests: XCTestCase {
+    // MARK: - Propertys
     var disposeBag = DisposeBag()
     let apiServiceSpy: SearchAPIServiceSpyType = SearchAPIServiceSpy()
+    var searchRepository: SearchRepositoryType!
     var searchUseCase: SearchUseCaseType!
+    let scheduler = TestScheduler(initialClock: 0)
     
     override func setUp() {
         super.setUp()
@@ -30,28 +33,52 @@ final class SearchUseCaseTests: XCTestCase {
     }
 
     func testSearchImage() {
-        searchUseCase.searchImage(keyword: "test")
-            .catchError {
-                let networkError = $0 as? NetworkError ?? NetworkError.unknown
-                XCTFail(networkError.message)
-                return .empty()
-            }
-            .subscribe(onNext: { [weak self] _ in
-                XCTAssertTrue(self?.apiServiceSpy.page == 1)
+        // Given
+        let currentPage = scheduler.createObserver(Int.self)
+        
+        apiServiceSpy.page
+            .bind(to: currentPage)
+            .disposed(by: disposeBag)
+         
+        // When
+        scheduler.createColdObservable([.next(1, ("test"))])
+            .subscribe(onNext: { [weak self] (keyword) in
+                _ = self?.searchUseCase.search(keyword: keyword)
             })
             .disposed(by: disposeBag)
+        
+        scheduler.start()
+        
+        // Then
+        let recordedEvents = Recorded.events(
+            .next(1, 1),
+            .completed(1)
+        )
+        XCTAssertEqual(currentPage.events, recordedEvents)
     }
     
     func testLoadMore() {
-        searchUseCase.loadMoreImage()
-            .catchError {
-                let networkError = $0 as? NetworkError ?? NetworkError.unknown
-                XCTFail(networkError.message)
-                return .empty()
-            }
+        // Given
+        let currentPage = scheduler.createObserver(Int.self)
+        
+        apiServiceSpy.page
+            .bind(to: currentPage)
+            .disposed(by: disposeBag)
+         
+        // When
+        scheduler.createColdObservable([.next(1, ())])
             .subscribe(onNext: { [weak self] _ in
-                XCTAssertTrue(self?.apiServiceSpy.page == 2)
+                _ = self?.searchUseCase.loadMoreImages()
             })
             .disposed(by: disposeBag)
+        
+        scheduler.start()
+        
+        // Then
+        let recordedEvents = Recorded.events(
+            .next(1, 2),
+            .completed(1)
+        )
+        XCTAssertEqual(currentPage.events, recordedEvents)
     }
 }

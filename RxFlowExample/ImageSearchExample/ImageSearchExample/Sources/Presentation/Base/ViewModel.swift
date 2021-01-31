@@ -21,9 +21,9 @@ protocol ViewModelTransformable {
 protocol DependencyType {}
 
 class BaseViewModel<Dependency: DependencyType> {
-    let dependency: Dependency
+    let dependency: BehaviorRelay<Dependency>
     
     init(dependency: Dependency) {
-        self.dependency = dependency
+        self.dependency = .init(value: dependency)
     }
 }
