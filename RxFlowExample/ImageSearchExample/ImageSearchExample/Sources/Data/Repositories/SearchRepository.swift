@@ -24,6 +24,6 @@ extension SearchRepository: SearchRepositoryType {
         numberOfImagesToLoad: Int
     ) -> Observable<SearchResponse> {
         let api = API.getImages(query: keyword, page: page, numberOfImagesToLoad: numberOfImagesToLoad)
-        return apiService.request(api: api).asObservable()
+        return apiService.request(SearchResponse.self, api: api).asObservable()
     }
 }

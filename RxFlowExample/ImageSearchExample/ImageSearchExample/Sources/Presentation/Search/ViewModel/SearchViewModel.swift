@@ -43,7 +43,7 @@ final class SearchViewModel: ViewModel<SearchViewModel.Dependency>, Stepper {
             .withLatestFrom(dependency, resultSelector: { ($0, $1.searchUseCase) })
             .flatMapLatest { (keyword, searchUseCase) -> Observable<SearchResponse> in
                 return searchUseCase.search(keyword: keyword)
-                    .catchError {
+                    .catch {
                         networkError.accept($0 as? NetworkError ?? NetworkError.unknown)
                         return .empty()
                 }
@@ -70,7 +70,7 @@ final class SearchViewModel: ViewModel<SearchViewModel.Dependency>, Stepper {
             .withLatestFrom(dependency)
             .flatMapLatest { dependency -> Observable<SearchResponse> in
                 return dependency.searchUseCase.loadMoreImages()
-                    .catchError {
+                    .catch {
                         networkError.accept($0 as? NetworkError ?? NetworkError.unknown)
                         return .empty()
                 }

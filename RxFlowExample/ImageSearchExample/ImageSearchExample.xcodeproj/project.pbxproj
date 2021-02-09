@@ -52,6 +52,8 @@
 		FCE2BF5825B5D617005AEFCF /* SearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE2BF5725B5D617005AEFCF /* SearchRepository.swift */; };
 		FCE2BF5E25B5D621005AEFCF /* FavoritesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE2BF5D25B5D621005AEFCF /* FavoritesRepository.swift */; };
 		FCE2BF7B25B5D8A8005AEFCF /* FetchFavoritesUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE2BF7A25B5D8A8005AEFCF /* FetchFavoritesUseCaseTests.swift */; };
+		FCF0731925D2962600F45198 /* AFError+handling.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF0731825D2962600F45198 /* AFError+handling.swift */; };
+		FCF0731D25D296A000F45198 /* Data+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF0731C25D296A000F45198 /* Data+Decode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +120,8 @@
 		FCE2BF5725B5D617005AEFCF /* SearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepository.swift; sourceTree = "<group>"; };
 		FCE2BF5D25B5D621005AEFCF /* FavoritesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesRepository.swift; sourceTree = "<group>"; };
 		FCE2BF7A25B5D8A8005AEFCF /* FetchFavoritesUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFavoritesUseCaseTests.swift; sourceTree = "<group>"; };
+		FCF0731825D2962600F45198 /* AFError+handling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AFError+handling.swift"; sourceTree = "<group>"; };
+		FCF0731C25D296A000F45198 /* Data+Decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Decode.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -384,6 +388,8 @@
 			children = (
 				FC846E50258105170076BBA7 /* UIViewController+instantiateFromStoryboard.swift */,
 				FC697F4724A0FE220050C154 /* UIViewController+showAlert.swift */,
+				FCF0731825D2962600F45198 /* AFError+handling.swift */,
+				FCF0731C25D296A000F45198 /* Data+Decode.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -741,11 +747,13 @@
 				FC697F5024A0FE670050C154 /* APIService.swift in Sources */,
 				FC846E9825810DD40076BBA7 /* AppStepper.swift in Sources */,
 				FC697F4024A0FD6D0050C154 /* DetailImageViewModel.swift in Sources */,
+				FCF0731D25D296A000F45198 /* Data+Decode.swift in Sources */,
 				FC90BFDE2535CC5800F14CC5 /* Route.swift in Sources */,
 				FC805F3824E6BA2000AFC1E2 /* StoryboardName.swift in Sources */,
 				FC16E76C252C8807006ECC32 /* ViewModel.swift in Sources */,
 				FC697F3824A0FD3F0050C154 /* SearchViewModel.swift in Sources */,
 				FC697F3C24A0FD530050C154 /* ImageCollectionViewCell.swift in Sources */,
+				FCF0731925D2962600F45198 /* AFError+handling.swift in Sources */,
 				FC805F3424E6B9D100AFC1E2 /* ViewBindable.swift in Sources */,
 				FC697F3624A0FD330050C154 /* SearchViewController.swift in Sources */,
 				FC697F3E24A0FD610050C154 /* DetailImageViewController.swift in Sources */,

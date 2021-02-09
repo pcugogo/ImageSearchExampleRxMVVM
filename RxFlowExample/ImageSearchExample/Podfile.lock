@@ -1,29 +1,29 @@
 PODS:
   - Alamofire (5.4.1)
-  - Differentiator (4.0.1)
-  - Kingfisher (6.0.1)
+  - Differentiator (5.0.0)
+  - Kingfisher (6.1.0)
   - Nimble (9.0.0)
-  - RxCocoa (5.1.1):
-    - RxRelay (~> 5)
-    - RxSwift (~> 5)
-  - RxDataSources (4.0.1):
-    - Differentiator (~> 4.0)
-    - RxCocoa (~> 5.0)
-    - RxSwift (~> 5.0)
-  - RxFlow (2.11.0):
-    - RxCocoa (>= 5.1.1)
-    - RxSwift (>= 5.1.1)
-  - RxOptional (4.1.0):
-    - RxCocoa (~> 5)
-    - RxSwift (~> 5)
-  - RxRelay (5.1.1):
-    - RxSwift (~> 5)
-  - RxSwift (5.1.1)
-  - RxTest (5.1.1):
-    - RxSwift (~> 5)
-  - RxViewController (1.0.0):
-    - RxCocoa (~> 5.0)
-    - RxSwift (~> 5.0)
+  - RxCocoa (6.0.0):
+    - RxRelay (= 6.0.0)
+    - RxSwift (= 6.0.0)
+  - RxDataSources (5.0.0):
+    - Differentiator (~> 5.0)
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxFlow (2.12.0):
+    - RxCocoa (>= 6.0.0)
+    - RxSwift (>= 6.0.0)
+  - RxOptional (5.0.1):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxRelay (6.0.0):
+    - RxSwift (= 6.0.0)
+  - RxSwift (6.0.0)
+  - RxTest (6.0.0):
+    - RxSwift (= 6.0.0)
+  - RxViewController (2.0.0):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
   - SwiftLint (0.42.0)
 
 DEPENDENCIES:
@@ -57,17 +57,17 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
-  Differentiator: 886080237d9f87f322641dedbc5be257061b0602
-  Kingfisher: adde87a4f74f6a3845395769354efff593581740
+  Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  Kingfisher: f5d8d60a0ef3edd642fd781bae60918599901aff
   Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
-  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
-  RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
-  RxFlow: c5242626a73a03d0a0163f0ab795538c467b791f
-  RxOptional: b1fcd60856807a564c0215c2184b8d33e7826dc2
-  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
-  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
-  RxTest: 711632d5644dffbeb62c936a521b5b008a1e1faa
-  RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
+  RxCocoa: 3f79328fafa3645b34600f37c31e64c73ae3a80e
+  RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
+  RxFlow: b407eb6b5d956041a9e0930469346e104911a470
+  RxOptional: e0b39f0863c25c4bfeea83cb35102a5244d048b3
+  RxRelay: 8d593be109c06ea850df027351beba614b012ffb
+  RxSwift: c14e798c59b9f6e9a2df8fd235602e85cc044295
+  RxTest: ddef4052e63cb116f5b73510488c3113c37c62e5
+  RxViewController: 56486fa0afd629a1d6b5ba077f3b8cd9dc31b5d2
   SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
 
 PODFILE CHECKSUM: 265364d6ce000256b369e485d0de69d993f45263

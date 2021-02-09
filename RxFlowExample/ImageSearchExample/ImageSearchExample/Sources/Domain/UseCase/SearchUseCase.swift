@@ -19,7 +19,7 @@ protocol SearchUseCaseType {
 
 final class SearchUseCase: SearchUseCaseType {
     
-    private let apiService: APIServiceType
+    private let imageSearchRepository: SearchRepositoryType
     private var currentPage = 1 // 1 ~ 50
     private var keyword: String = ""
     
@@ -27,24 +27,28 @@ final class SearchUseCase: SearchUseCaseType {
         return currentPage >= 50
     }
     
-    init(apiService: APIServiceType = APIService()) {
-        self.apiService = apiService
+    init(imageSearchRepository: SearchRepositoryType = SearchRepository()) {
+        self.imageSearchRepository = imageSearchRepository
     }
     
     func search(keyword: String) -> Observable<SearchResponse> {
         self.keyword = keyword
         currentPage = 1
-        let api = API.getImages(query: keyword, page: currentPage, numberOfImagesToLoad: 80)
-        return apiService.request(api: api)
-            .asObservable()
+        return imageSearchRepository.search(
+            keyword: keyword,
+            page: currentPage,
+            numberOfImagesToLoad: 80
+        )
     }
     
     func loadMoreImages() -> Observable<SearchResponse> {
         if !isLastPage {
             currentPage += 1
         }
-        let api = API.getImages(query: keyword, page: currentPage, numberOfImagesToLoad: 80)
-        return apiService.request(api: api)
-            .asObservable()
+        return imageSearchRepository.search(
+            keyword: keyword,
+            page: currentPage,
+            numberOfImagesToLoad: 80
+        )
     }
 }

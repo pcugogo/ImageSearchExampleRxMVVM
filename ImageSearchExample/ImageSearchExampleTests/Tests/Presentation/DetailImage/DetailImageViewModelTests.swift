@@ -9,7 +9,6 @@
 import XCTest
 import Nimble
 import RxTest
-import RxBlocking
 import RxSwift
 import RxCocoa
 import SCoordinator

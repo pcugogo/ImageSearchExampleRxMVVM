@@ -45,30 +45,7 @@ final class SearchViewModelTests: XCTestCase {
         self.output = viewModel.transform(input: input)
     }
     
-    func testSearchViewModelSearchAction() {
-        // Given
-        let imagesSectionsIsEmpty = scheduler.createObserver(Bool.self)
-        
-        output.imagesSections
-            .map { $0[0].items.isEmpty }
-            .drive(imagesSectionsIsEmpty)
-            .disposed(by: disposeBag)
-         
-        // When
-        scheduler.createColdObservable([.next(1, ("test"))])
-            .bind(to: searchAction)
-            .disposed(by: disposeBag)
-        scheduler.start()
-        
-        // Then
-        let recordedEvents = Recorded.events(
-            .next(0, true),
-            .next(1, false)
-        )
-        XCTAssertEqual(imagesSectionsIsEmpty.events, recordedEvents)
-    }
-    
-    func testSearchViewModelMoreFetch() {
+    func testFetchSearchData() {
         // Given
         let searchImageDummy = SearchImageDummy()
         let imagesSectionsIsEmpty = scheduler.createObserver(Bool.self)
