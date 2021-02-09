@@ -30,38 +30,7 @@ struct APIService: APIServiceType {
             }
             .map { .success($0) }
             .catchError {
-                
-                if let decondingError = $0 as? DecodingError {
-                    print("Decoding Error : - \(String(describing: T.self)), \(decondingError)")
-                    return .just(.failure(.unknown))
-                }
-                
-                guard let moyaError = $0 as? MoyaError else { return .just(.failure(.unknown)) }
-                
-                switch moyaError {
-                case let .statusCode(response):
-                    return .just(.failure(handling(for: response.statusCode)))
-                case let .underlying(error, _):
-                    if let afError = error as? AFError,
-                       let urlError = afError.underlyingError as? URLError {
-                        return .just(.failure(handling(for: urlError)))
-                    } else {
-                        return .just(.failure(.unknown))
-                    }
-                default:
-                    return .just(.failure(.unknown))
-                }
+                return .just(.failure($0.asNetworkError()))
             }
-    }
-}
-
-extension APIService {
-    func handling(for urlError: URLError) -> NetworkError {
-        return NetworkError(rawValue: urlError.code.rawValue) ?? .unknown
-    }
-    
-    func handling(for httpStatusCode: Int) -> NetworkError {
-        print(httpStatusCode)
-        return NetworkError(rawValue: httpStatusCode) ?? .unknown
     }
 }
