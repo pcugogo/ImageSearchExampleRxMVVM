@@ -10,7 +10,8 @@ import Alamofire
 import RxSwift
 
 struct APIService: APIServiceType {
-    func request<T: Codable>(api: API) -> Single<T> {
+    
+    func request<T: Decodable>(_ modelType: T.Type, api: API) -> Single<T> {
         return Single.create { single in
             api.dataRequest()
                 .responseJSON { response in
@@ -20,37 +21,12 @@ struct APIService: APIServiceType {
                             single(.failure(NetworkError.unknown))
                             return
                         }
-                        do {
-                            let decodedResponse = try JSONDecoder().decode(T.self, from: data)
-                            single(.success(decodedResponse))
-                        } catch {
-                            print("\(T.self), \(error)")
-                        }
+                        single(data.decode(modelType))
                     case .failure(let error):
-                        if let underlyingError = error.underlyingError,
-                           let urlError = underlyingError as? URLError {
-                            single(.failure(handling(for: urlError)))
-                        }
-                        guard let httpResponse = response.response else {
-                            single(.failure(NetworkError.unknown))
-                            return
-                        }
-                        single(.failure(handling(for: httpResponse.statusCode)))
+                        single(.failure(error.handling()))
                     }
                 }
             return Disposables.create()
         }
-    }
-}
-
-extension APIService {
-    
-    func handling(for urlError: URLError) -> NetworkError {
-        return NetworkError(rawValue: urlError.code.rawValue) ?? .unknown
-    }
-    
-    func handling(for httpStatusCode: Int) -> NetworkError {
-        print(httpStatusCode)
-        return NetworkError(rawValue: httpStatusCode) ?? .unknown
     }
 }
