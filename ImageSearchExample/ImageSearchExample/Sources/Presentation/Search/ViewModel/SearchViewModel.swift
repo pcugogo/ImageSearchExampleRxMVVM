@@ -29,10 +29,10 @@ final class SearchViewModel: ViewModelType {
     public let input: Input = .init()
     public let output: Output
     
-    private var disposeBag: DisposeBag = DisposeBag()
+    private var disposeBag: DisposeBag = .init()
     
     init(coordinator: CoordinatorType, searchUseCase: SearchUseCaseType) {
-        let isLastPage: BehaviorRelay<Bool> = BehaviorRelay(value: false)
+        let isLastPage: BehaviorRelay<Bool> = .init(value: false)
         let imagesCellItems: BehaviorRelay<[ImageData]> = .init(value: [])
         let networkError: PublishRelay<NetworkError> = .init()
         
@@ -93,8 +93,8 @@ final class SearchViewModel: ViewModelType {
         .map { $0.sections[0].items[$0.indexPath.item].imageURL }
         
         seletedItemImageURL
-            .subscribe(onNext: { [weak coordinator] imageURLString in
-                coordinator?.navigate(to: SearchRoute.detailImage(imageURLString: imageURLString))
+            .subscribe(onNext: { imageURLString in
+                coordinator.navigate(to: SearchRoute.detailImage(imageURLString: imageURLString))
             })
             .disposed(by: disposeBag)
         
