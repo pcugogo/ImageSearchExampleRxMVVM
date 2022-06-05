@@ -7,7 +7,6 @@
 //
 
 import XCTest
-import Nimble
 import RxTest
 import RxSwift
 import RxCocoa
