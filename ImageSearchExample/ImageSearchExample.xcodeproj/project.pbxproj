@@ -52,7 +52,6 @@
 		FCED62AF258A2D4200CCC9D0 /* SearchRepositoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCED62AE258A2D4200CCC9D0 /* SearchRepositoryType.swift */; };
 		FCED62B4258A2D6F00CCC9D0 /* FetchFavoritesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCED62B3258A2D6F00CCC9D0 /* FetchFavoritesUseCase.swift */; };
 		FCF0731325D2954400F45198 /* AFError+handling.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF0731225D2954400F45198 /* AFError+handling.swift */; };
-		FCF0731625D2956500F45198 /* Data+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF0731525D2956500F45198 /* Data+Decode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,7 +134,6 @@
 		FCED62AE258A2D4200CCC9D0 /* SearchRepositoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoryType.swift; sourceTree = "<group>"; };
 		FCED62B3258A2D6F00CCC9D0 /* FetchFavoritesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFavoritesUseCase.swift; sourceTree = "<group>"; };
 		FCF0731225D2954400F45198 /* AFError+handling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AFError+handling.swift"; sourceTree = "<group>"; };
-		FCF0731525D2956500F45198 /* Data+Decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Decode.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -405,7 +403,6 @@
 				FC846E50258105170076BBA7 /* UIViewController+instantiateFromStoryboard.swift */,
 				FC697F4724A0FE220050C154 /* UIViewController+showAlert.swift */,
 				FCF0731225D2954400F45198 /* AFError+handling.swift */,
-				FCF0731525D2956500F45198 /* Data+Decode.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -764,7 +761,6 @@
 				FCF0731325D2954400F45198 /* AFError+handling.swift in Sources */,
 				FC697F3C24A0FD530050C154 /* ImageCollectionViewCell.swift in Sources */,
 				FC805F3424E6B9D100AFC1E2 /* ViewBindable.swift in Sources */,
-				FCF0731625D2956500F45198 /* Data+Decode.swift in Sources */,
 				FC697F3624A0FD330050C154 /* SearchViewController.swift in Sources */,
 				FC697F3E24A0FD610050C154 /* DetailImageViewController.swift in Sources */,
 				FC697F5624A0FE990050C154 /* Meta.swift in Sources */,

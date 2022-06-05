@@ -17,7 +17,7 @@ final class SearchAPIServiceSpy: SearchAPIServiceSpyType {
     private(set) var page: PublishSubject<Int> = .init()
     var disposeBag = DisposeBag()
     
-    func request<T: Codable>(api: API) -> Single<T> {
+    func request<T: Decodable>(api: API) -> Single<T> {
         switch api {
         case .getImages(_, let page, _):
             Observable.just(page)

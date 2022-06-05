@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SearchResponse: Codable {
+struct SearchResponse: Decodable {
     let images: [ImageData]
     let meta: Meta
     

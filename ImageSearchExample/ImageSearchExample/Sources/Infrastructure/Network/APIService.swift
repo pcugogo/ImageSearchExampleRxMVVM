@@ -10,8 +10,7 @@ import Alamofire
 import RxSwift
 
 struct APIService: APIServiceType {
-    
-    func request<T: Decodable>(_ modelType: T.Type, api: API) -> Single<T> {
+    func request<T: Decodable>(api: API) -> Single<T> {
         return Single.create { single in
             api.dataRequest()
                 .responseJSON { response in
@@ -21,7 +20,13 @@ struct APIService: APIServiceType {
                             single(.failure(NetworkError.unknown))
                             return
                         }
-                        single(data.decode(modelType))
+                        do {
+                            let decodedResponse = try JSONDecoder().decode(T.self, from: data)
+                            single(.success(decodedResponse))
+                        } catch {
+                            print("\(T.self): - \(error)")
+                            single(.failure(NetworkError.unknown))
+                        }
                     case .failure(let error):
                         single(.failure(error.handling()))
                     }

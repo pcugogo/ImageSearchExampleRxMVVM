@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Meta: Codable {
+struct Meta: Decodable {
     let totalCount: Int
     let pageableCount: Int
     var isEnd: Bool

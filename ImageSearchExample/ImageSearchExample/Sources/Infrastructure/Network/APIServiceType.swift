@@ -9,5 +9,5 @@
 import RxSwift
 
 protocol APIServiceType {
-    func request<T: Decodable>(_ modelType: T.Type, api: API) -> Single<T>
+    func request<T: Decodable>(api: API) -> Single<T>
 }

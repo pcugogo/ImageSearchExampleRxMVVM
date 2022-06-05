@@ -18,7 +18,7 @@ struct APIServiceFake: APIServiceType {
         self.dummyData = dummyData
     }
     
-    func request<T: Codable>(api: API) -> Single<T> {
+    func request<T: Decodable>(api: API) -> Single<T> {
         return Single.create { single in
             guard let data = self.dummyData.jsonString.data(using: .utf8) else {
                 XCTFail("DummyData jsonString Type casting Failed")
