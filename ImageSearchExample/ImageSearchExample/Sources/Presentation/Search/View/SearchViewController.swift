@@ -59,16 +59,16 @@ extension SearchViewController {
                 guard let self = self else { return }
                 self.searchController.dismiss(animated: true, completion: nil)
             })
-            .bind(to: viewModel.input.searchButtonAction)
+            .bind(to: viewModel.input.searchWithKeyword)
             .disposed(by: disposeBag)
         
         imagesCollectionView.rx.willDisplayCell
             .map { $0.at }
-            .bind(to: viewModel.input.willDisplayCell)
+            .bind(to: viewModel.input.willDisplayCellIndexPath)
             .disposed(by: disposeBag)
         
         imagesCollectionView.rx.itemSelected
-            .bind(to: viewModel.input.itemSeletedAction)
+            .bind(to: viewModel.input.selectedItemIndexPath)
             .disposed(by: disposeBag)
     }
     

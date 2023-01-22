@@ -17,9 +17,9 @@ typealias ImagesSection = SectionModel<Void, ImageData>
 final class SearchViewModel: ViewModelType {
     
     struct Input {
-        let searchButtonAction: PublishRelay<String> = .init()
-        let willDisplayCell: PublishRelay<IndexPath> = .init()
-        let itemSeletedAction: PublishRelay<IndexPath> = .init()
+        let searchWithKeyword: PublishRelay<String> = .init()
+        let willDisplayCellIndexPath: PublishRelay<IndexPath> = .init()
+        let selectedItemIndexPath: PublishRelay<IndexPath> = .init()
     }
     struct Output {
         let imagesSections: Driver<[ImagesSection]>
@@ -32,59 +32,60 @@ final class SearchViewModel: ViewModelType {
     private var disposeBag: DisposeBag = .init()
     
     init(coordinator: CoordinatorType, searchUseCase: SearchUseCaseType) {
-        let imagesCellItemsRelay: BehaviorRelay<[ImageData]> = .init(value: [])
-        let networkErrorRelay: PublishRelay<NetworkError> = .init()
+        let imageDatasRelay: BehaviorRelay<[ImageData]> = .init(value: [])
+        let errorRelay: PublishRelay<NetworkError> = .init()
         let pageRelay: BehaviorRelay<Int> = .init(value: 1)
         let metaRelay: BehaviorRelay<Meta?> = .init(value: nil)
-        let keywordRelay: BehaviorRelay<String?> = .init(value: nil)
         
-        input.searchButtonAction
+        input.searchWithKeyword
             .flatMapLatest { (keyword) -> Observable<(searchResponse: SearchResponse, keyword: String)> in
                 return searchUseCase.search(keyword: keyword, page: 1)
                     .catch {
-                        networkErrorRelay.accept($0 as? NetworkError ?? NetworkError.unknown)
+                        errorRelay.accept($0 as? NetworkError ?? NetworkError.unknown)
                         return .empty()
                     }
                     .map { (searchResponse: $0, keyword: keyword) }
             }
+            .do(onNext: {
+                pageRelay.accept(1)
+            })
+            .map { $0.searchResponse.images }
             .subscribe(onNext: {
                 pageRelay.accept(1)
-                keywordRelay.accept($0.keyword)
-                imagesCellItemsRelay.accept($0.searchResponse.images)
+                imageDatasRelay.accept($0.searchResponse.images)
             })
             .disposed(by: disposeBag)
         
         let isLastPage = Observable.combineLatest(pageRelay, metaRelay)
-            .map { page, meta -> Bool in
-                return page >= 50 && meta?.isEnd == true
-            }
+            .map { $0 >= 50 && $1?.isEnd == true }
         
-        input.willDisplayCell
-            .withLatestFrom(imagesCellItemsRelay) { (indexPath: $0, data: $1) }
+        let isThresholdReached = input.willDisplayCellIndexPath
+            .withLatestFrom(imageDatasRelay) { (indexPath: $0, data: $1) }
             .filter { $0.data.count - 1 == $0.indexPath.item }
+        
+        let shouldLoadMore = isThresholdReached
             .withLatestFrom(isLastPage)
-            .compactMap { isLastPage -> (keyword: String, page: Int)? in
-                guard !isLastPage else { return nil }
-                guard let keyword = keywordRelay.value else { return nil }
-                return (keyword: keyword, page: pageRelay.value)
-            }
-            .flatMapLatest { (keyword, page) -> Observable<SearchResponse> in
-                return searchUseCase.search(keyword: keyword, page: page)
+            .compactMap { $0 ? nil : Void() }
+        
+        shouldLoadMore
+            .withLatestFrom(input.searchWithKeyword)
+            .flatMapLatest { keyword -> Observable<SearchResponse> in
+                return searchUseCase.search(keyword: keyword, page: pageRelay.value)
                     .catch {
-                        networkErrorRelay.accept($0 as? NetworkError ?? NetworkError.unknown)
+                        errorRelay.accept($0 as? NetworkError ?? NetworkError.unknown)
                         return .empty()
                     }
             }
             .subscribe(onNext: {
                 pageRelay.accept(pageRelay.value + 1)
-                imagesCellItemsRelay.accept(imagesCellItemsRelay.value + $0.images)
+                imageDatasRelay.accept(imageDatasRelay.value + $0.images)
             })
             .disposed(by: disposeBag)
         
-        let imagesSections = imagesCellItemsRelay.map { [ImagesSection(model: Void(), items: $0)] }
+        let imagesSections = imageDatasRelay.map { [ImagesSection(model: Void(), items: $0)] }
             .asDriver(onErrorDriveWith: .empty())
         
-        input.itemSeletedAction
+        input.selectedItemIndexPath
             .withLatestFrom(imagesSections, resultSelector: { (indexPath: $0, sections: $1) })
             .map { $0.sections[0].items[$0.indexPath.item].imageURL }
             .subscribe(onNext: { imageURLString in
@@ -94,7 +95,7 @@ final class SearchViewModel: ViewModelType {
         
         output = Output(
             imagesSections: imagesSections,
-            networkError: networkErrorRelay.asSignal()
+            networkError: errorRelay.asSignal()
         )
     }
 }
