@@ -20,8 +20,8 @@ final class SearchViewModel: ViewModelType {
         let networkError: PassthroughSubject<NetworkError, Never>
     }
     
-    public let input: Input = .init()
-    public let output: Output
+    let input: Input = .init()
+    let output: Output
     
     private var cancellables: CancellableSet = []
     

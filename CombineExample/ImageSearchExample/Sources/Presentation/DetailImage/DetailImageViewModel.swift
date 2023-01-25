@@ -21,8 +21,8 @@ final class DetailImageViewModel: ViewModelType {
         let isAddFavorites: Driver<Bool>
     }
     
-    public let input: Input = .init()
-    public let output: Output
+    let input: Input = .init()
+    let output: Output
     
     private var disposeBag = DisposeBag()
     
