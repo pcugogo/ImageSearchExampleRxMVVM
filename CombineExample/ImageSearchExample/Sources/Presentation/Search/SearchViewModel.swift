@@ -23,7 +23,7 @@ final class SearchViewModel: ViewModelType {
     public let input: Input = .init()
     public let output: Output
     
-    private var cancellables: Set<AnyCancellable> = []
+    private var cancellables: CancellableSet = []
     
     init(coordinator: CoordinatorType, searchUseCase: SearchUseCaseType) {
         let imageDatasRelay = CurrentValueSubject<[ImageData], Never>([])

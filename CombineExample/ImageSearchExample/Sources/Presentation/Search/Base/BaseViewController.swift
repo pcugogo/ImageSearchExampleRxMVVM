@@ -11,7 +11,7 @@ import Combine
 import RxSwift
 
 class BaseViewController: UIViewController {
-    var cancellables: Set<AnyCancellable> = []
+    var cancellables: CancellableSet = []
     var disposeBag = DisposeBag()
     
     override func viewDidLoad() {

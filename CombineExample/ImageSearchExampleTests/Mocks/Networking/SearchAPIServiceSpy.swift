@@ -15,7 +15,7 @@ protocol SearchAPIServiceSpyType: APIServiceType {
 
 final class SearchAPIServiceSpy: SearchAPIServiceSpyType {
     private(set) var page = PassthroughSubject<Int>()
-    var cancellables: Set<AnyCancellable> = []
+    var cancellables: CancellableSet = []
     
     func request<T: Decodable>(api: API) -> Single<T> {
         switch api {
