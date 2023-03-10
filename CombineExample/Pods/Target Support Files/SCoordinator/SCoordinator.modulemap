@@ -1,6 +1,0 @@
-framework module SCoordinator {
-  umbrella header "SCoordinator-umbrella.h"
-
-  export *
-  module * { export * }
-}
