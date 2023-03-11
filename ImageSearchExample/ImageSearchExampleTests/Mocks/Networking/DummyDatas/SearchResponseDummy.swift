@@ -14,8 +14,11 @@ protocol DummyDataType {
     var jsonString: String { get }
 }
 
-struct SearchImageDummy: DummyDataType {
-    let jsonString = """
+struct SearchResponseDummy: DummyDataType {
+    let per = 2
+    let imageURLString = "http://t1.daumcdn.net/news/201706/21/kedtv/20170621155930292vyyx.jpg"
+    let jsonString =
+    """
     {
       "meta": {
         "total_count": 2,
@@ -45,11 +48,5 @@ struct SearchImageDummy: DummyDataType {
         }
       ]
     }
-"""
-    let imageURLString = "http://t1.daumcdn.net/news/201706/21/kedtv/20170621155930292vyyx.jpg"
-    var totalCount: Int {
-        let data = jsonString.data(using: .utf8)!
-        guard let imageSearchResponse = try? JSONDecoder().decode(SearchResponse.self, from: data) else { return 0 }
-        return imageSearchResponse.meta.totalCount
-    }
+    """
 }

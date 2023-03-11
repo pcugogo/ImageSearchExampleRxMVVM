@@ -7,62 +7,63 @@
 //
 
 import XCTest
-import RxTest
 import RxSwift
 import RxCocoa
-import SCoordinator
 
 @testable import ImageSearchExample
 
 final class SearchViewModelTests: XCTestCase {
-    
     var disposeBag = DisposeBag()
-    let apiServiceSpy = SearchAPIServiceSpy()
+    let apiServiceStub = APIServiceStub()
     var searchRepository: SearchRepositoryType!
     var searchUseCase: SearchUseCaseType!
     var viewModel: SearchViewModel!
-    let scheduler = TestScheduler(initialClock: 0)
+    let searchResponseDummy = SearchResponseDummy()
     
     override func setUp() {
         super.setUp()
         
-        self.searchRepository = SearchRepository(apiService: apiServiceSpy)
+        self.searchRepository = SearchRepository(apiService: apiServiceStub)
         self.searchUseCase = SearchUseCase(imageSearchRepository: searchRepository)
         
         self.viewModel = configureViewModel()
     }
     
-    override func tearDown() {
-        super.tearDown()
-        print("tearDown")
+    func testSearch() {
+        let expectation = XCTestExpectation(description: #function)
+        
+        viewModel.output.imageDatas
+            .asObservable()
+            .skip(1)
+            .subscribe(onNext: { [weak self] imageDatas in
+                guard let self = self else { return }
+                XCTAssertEqual(imageDatas.count, self.searchResponseDummy.per)
+                expectation.fulfill()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.input.searchWithKeyword.accept("test")
+        
+        wait(for: [expectation], timeout: 1)
     }
     
-    func testFetchSearchData() {
-        // Given
-        let searchImageDummy = SearchImageDummy()
-        let imagesSectionsIsEmpty = scheduler.createObserver(Bool.self)
+    func testLoadMore() {
+        let expectation = XCTestExpectation(description: #function)
         
-        viewModel.output.imagesSections
-            .map { $0[0].items.isEmpty }
-            .drive(imagesSectionsIsEmpty)
+        viewModel.input.searchWithKeyword.accept("test")
+        viewModel.output.imageDatas
+            .asObservable()
+            .skip(1)
+            .subscribe(onNext: { [weak self] imageDatas in
+                guard let self = self else { return }
+                XCTAssertEqual(imageDatas.count, self.searchResponseDummy.per * 2)
+                expectation.fulfill()
+            })
             .disposed(by: disposeBag)
-         
-        // When
-        scheduler.createColdObservable([.next(1, ("test"))])
-            .bind(to: viewModel.input.searchButtonAction)
-            .disposed(by: disposeBag)
-        scheduler.createColdObservable([.next(2, (IndexPath(item: searchImageDummy.totalCount - 1, section: 0)))])
-            .bind(to: viewModel.input.willDisplayCell)
-            .disposed(by: disposeBag)
-        scheduler.start()
         
-        // Then
-        let recordedEvents = Recorded.events(
-            .next(0, true),
-            .next(1, false),
-            .next(2, false)
-        )
-        XCTAssertEqual(imagesSectionsIsEmpty.events, recordedEvents)
+        viewModel.input.willDisplayCellIndexPath.accept(IndexPath(item: 1, section: 0))
+        
+        wait(for: [expectation], timeout: 1)
     }
 }
 

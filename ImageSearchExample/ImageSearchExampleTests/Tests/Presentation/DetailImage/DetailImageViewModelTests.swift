@@ -19,7 +19,7 @@ final class DetailImageModelTests: XCTestCase {
     var favoritesRepository: FavoritesRepository!
     var fatchFavoritesUseCase: FetchFavoritesUseCaseType!
     var viewModel: DetailImageViewModel!
-    let dummyData = SearchImageDummy()
+    let dummyData = SearchResponseDummy()
     let scheduler = TestScheduler(initialClock: 0)
     
     override func setUp() {
