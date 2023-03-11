@@ -40,6 +40,7 @@ final class SearchViewModel: ViewModelType {
         
         let searchWithKeyword = input.searchWithKeyword.asObservable()
             .do(onNext: { _ in pageRelay.accept(0) })
+            .map { (keyword: $0, page: 1) }
         
         let isLastPage = Observable.combineLatest(pageRelay, metaRelay)
             .map { $0 >= 50 && $1?.isEnd == true }
@@ -52,10 +53,11 @@ final class SearchViewModel: ViewModelType {
             .withLatestFrom(isLastPage)
             .filter { $0 == false }
             .withLatestFrom(currentKeyword)
+            .withLatestFrom(pageRelay, resultSelector: { (keyword: $0, page: $1) })
         
         Observable.merge(searchWithKeyword, loadMore)
-            .flatMapLatest { (keyword) -> Observable<(response: SearchResponse, keyword: String)> in
-                return searchUseCase.search(keyword: keyword, page: 1)
+            .flatMapLatest { keyword, page -> Observable<(response: SearchResponse, keyword: String)> in
+                return searchUseCase.search(keyword: keyword, page: page)
                     .catch {
                         errorRelay.accept($0 as? NetworkError ?? NetworkError.unknown)
                         return .empty()
