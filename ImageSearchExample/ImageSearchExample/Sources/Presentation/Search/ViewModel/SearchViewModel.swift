@@ -34,12 +34,11 @@ final class SearchViewModel: ViewModelType {
     init(coordinator: CoordinatorType, searchUseCase: SearchUseCaseType) {
         let imageDatasRelay: BehaviorRelay<[ImageData]> = .init(value: [])
         let errorRelay: PublishRelay<NetworkError> = .init()
-        let pageRelay: BehaviorRelay<Int> = .init(value: 0)
+        let pageRelay: BehaviorRelay<Int> = .init(value: 1)
         let metaRelay: BehaviorRelay<Meta?> = .init(value: nil)
         let currentKeyword = BehaviorRelay<String>(value: "")
         
         let searchWithKeyword = input.searchWithKeyword.asObservable()
-            .do(onNext: { _ in pageRelay.accept(0) })
             .map { (keyword: $0, page: 1) }
         
         let isLastPage = Observable.combineLatest(pageRelay, metaRelay)
@@ -53,26 +52,25 @@ final class SearchViewModel: ViewModelType {
             .withLatestFrom(isLastPage)
             .filter { $0 == false }
             .withLatestFrom(currentKeyword)
-            .withLatestFrom(pageRelay, resultSelector: { (keyword: $0, page: $1) })
+            .withLatestFrom(pageRelay, resultSelector: { (keyword: $0, page: $1 + 1) })
         
         Observable.merge(searchWithKeyword, loadMore)
-            .flatMapLatest { keyword, page -> Observable<(response: SearchResponse, keyword: String)> in
+            .flatMapLatest { keyword, page -> Observable<(response: SearchResponse, keyword: String, page: Int)> in
                 return searchUseCase.search(keyword: keyword, page: page)
                     .catch {
                         errorRelay.accept($0 as? NetworkError ?? NetworkError.unknown)
                         return .empty()
                     }
-                    .map { (response: $0, keyword: keyword) }
+                    .map { (response: $0, keyword: keyword, page: page) }
             }
-            .withLatestFrom(pageRelay, resultSelector: { ($0.response, $0.keyword, $1) })
             .subscribe(onNext: { response, keyword, page in
-                let isFirstSearch = page == 0
-                
-                if isFirstSearch {
+                let isFirstSearch = page == 1
+
+                if page == 1 {
                     currentKeyword.accept(keyword)
                 }
                 
-                pageRelay.accept(isFirstSearch ? 1 : page + 1)
+                pageRelay.accept(page)
                 
                 let newImageDatas = isFirstSearch ? response.imageDatas : (imageDatasRelay.value + response.imageDatas)
                 imageDatasRelay.accept(newImageDatas)
