@@ -38,6 +38,9 @@ final class SearchViewModel: ViewModelType {
         let metaRelay: BehaviorRelay<Meta?> = .init(value: nil)
         let currentKeyword = BehaviorRelay<String>(value: "")
         
+        let searchWithKeyword = input.searchWithKeyword.asObservable()
+            .do(onNext: { _ in pageRelay.accept(0) })
+        
         let isLastPage = Observable.combineLatest(pageRelay, metaRelay)
             .map { $0 >= 50 && $1?.isEnd == true }
         
@@ -50,7 +53,7 @@ final class SearchViewModel: ViewModelType {
             .filter { $0 == false }
             .withLatestFrom(currentKeyword)
         
-        Observable.merge(input.searchWithKeyword.asObservable(), loadMore)
+        Observable.merge(searchWithKeyword, loadMore)
             .flatMapLatest { (keyword) -> Observable<(response: SearchResponse, keyword: String)> in
                 return searchUseCase.search(keyword: keyword, page: 1)
                     .catch {
