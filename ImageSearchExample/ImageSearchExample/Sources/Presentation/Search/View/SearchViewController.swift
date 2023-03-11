@@ -74,8 +74,8 @@ extension SearchViewController {
     
     // MARK: - Outputs
     func bindViewModelOutputs() {
-        
-        viewModel.output.imagesSections
+        viewModel.output.imageDatas
+            .map { [ImagesSection(model: Void(), items: $0)] }
             .drive(imagesCollectionView.rx.items(dataSource: imagesDataSource))
             .disposed(by: disposeBag)
         

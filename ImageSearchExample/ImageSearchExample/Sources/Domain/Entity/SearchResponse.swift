@@ -9,11 +9,11 @@
 import Foundation
 
 struct SearchResponse: Decodable {
-    let images: [ImageData]
+    let imageDatas: [ImageData]
     let meta: Meta
     
     private enum CodingKeys: String, CodingKey {
-        case images = "documents"
+        case imageDatas = "documents"
         case meta
     }
 }
