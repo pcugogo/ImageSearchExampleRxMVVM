@@ -23,9 +23,11 @@ final class SearchViewController: BaseViewController, ViewModelBindable {
     @IBOutlet weak var imagesCollectionView: UICollectionView!
     
     private let imagesDataSource = ImagesDataSource(configureCell: { _, collectionView, indexPath, data in
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ImageCollectionViewCell.self),
-                                                            for: indexPath) as? ImageCollectionViewCell else {
-                                                                fatalError()
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: String(describing: ImageCollectionViewCell.self),
+            for: indexPath
+        ) as? ImageCollectionViewCell else {
+            return UICollectionViewCell()
         }
         cell.setImage(urlString: data.imageURL)
         return cell
