@@ -42,7 +42,7 @@ final class SearchViewModel: ViewModelType {
             .map { (keyword: $0, page: 1) }
         
         let isLastPage = Observable.combineLatest(pageRelay, metaRelay)
-            .map { $0 >= 50 && $1?.isEnd == true }
+            .map { $0 >= 50 || $1?.isEnd == true }
         
         let reachedThreshold = input.willDisplayCellIndexPath
             .withLatestFrom(imageDatasRelay) { (indexPath: $0, data: $1) }
