@@ -55,13 +55,18 @@ extension SearchViewController {
         
         searchController.searchBar.rx.searchButtonClicked
             .withLatestFrom(searchController.searchBar.rx.text.orEmpty)
-            .map { String($0) }
-            .filterEmpty()
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.searchController.dismiss(animated: true, completion: nil)
             })
-            .bind(to: viewModel.input.searchWithKeyword)
+            .subscribe(onNext: { [weak self] in
+                guard $0.isEmpty == false else {
+                    self?.showAlert(title: "", message: "검색어를 입력해 주세요.")
+                    return
+                }
+                
+                self?.viewModel.input.searchWithKeyword.accept($0)
+            })
             .disposed(by: disposeBag)
         
         imagesCollectionView.rx.willDisplayCell
