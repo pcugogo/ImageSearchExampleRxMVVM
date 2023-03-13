@@ -36,7 +36,7 @@ final class SearchViewModel: ViewModelType {
         let errorRelay: PublishRelay<NetworkError> = .init()
         let pageRelay: BehaviorRelay<Int> = .init(value: 1)
         let metaRelay: BehaviorRelay<Meta?> = .init(value: nil)
-        let currentKeyword = BehaviorRelay<String>(value: "")
+        let currentKeywordRelay = BehaviorRelay<String>(value: "")
         
         let searchWithKeyword = input.searchWithKeyword.asObservable()
             .map { (keyword: $0, page: 1) }
@@ -51,7 +51,7 @@ final class SearchViewModel: ViewModelType {
         let loadMore = reachedThreshold
             .withLatestFrom(isLastPage)
             .filter { $0 == false }
-            .withLatestFrom(currentKeyword)
+            .withLatestFrom(currentKeywordRelay)
             .withLatestFrom(pageRelay, resultSelector: { (keyword: $0, page: $1 + 1) })
         
         Observable.merge(searchWithKeyword, loadMore)
@@ -67,7 +67,7 @@ final class SearchViewModel: ViewModelType {
                 let isFirstSearch = page == 1
 
                 if page == 1 {
-                    currentKeyword.accept(keyword)
+                    currentKeywordRelay.accept(keyword)
                 }
                 
                 pageRelay.accept(page)
