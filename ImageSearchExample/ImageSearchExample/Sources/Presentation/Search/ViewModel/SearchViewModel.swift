@@ -12,8 +12,6 @@ import RxOptional
 import RxDataSources
 import SCoordinator
 
-typealias ImagesSection = SectionModel<Void, ImageData>
-
 final class SearchViewModel: ViewModelType {
     
     struct Input {

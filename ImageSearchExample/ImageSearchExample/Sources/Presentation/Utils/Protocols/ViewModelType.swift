@@ -6,9 +6,7 @@
 //  Copyright © 2020 ChanWookPark. All rights reserved.
 //
 
-import RxSwift
-import RxCocoa
-import SCoordinator
+import Foundation
 
 protocol ViewModelType {
     associatedtype Input
