@@ -10,28 +10,13 @@ import UIKit
 import Kingfisher
 import RxSwift
 import RxCocoa
-import RxOptional
-import RxDataSources
 
 final class SearchViewController: BaseViewController, ViewModelBindable {
-    
-    typealias ImagesDataSource = RxCollectionViewSectionedReloadDataSource<ImagesSection>
     
     var viewModel: SearchViewModel!
     let searchController: UISearchController = .init()
     
     @IBOutlet weak var imagesCollectionView: UICollectionView!
-    
-    private let imagesDataSource = ImagesDataSource(configureCell: { _, collectionView, indexPath, data in
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: String(describing: ImageCollectionViewCell.self),
-            for: indexPath
-        ) as? ImageCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        cell.setImage(urlString: data.imageURL)
-        return cell
-    })
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,8 +67,14 @@ extension SearchViewController {
     // MARK: - Outputs
     func bindViewModelOutputs() {
         viewModel.output.imageDatas
-            .map { [ImagesSection(model: Void(), items: $0)] }
-            .drive(imagesCollectionView.rx.items(dataSource: imagesDataSource))
+            .drive(imagesCollectionView.rx.items) { collectionView, index, element in
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: String(describing: ImageCollectionViewCell.self),
+                    for: IndexPath(row: index, section: 0)
+                ) as! ImageCollectionViewCell
+                cell.setImage(urlString: element.imageURL)
+                return cell
+            }
             .disposed(by: disposeBag)
         
         viewModel.output.networkError

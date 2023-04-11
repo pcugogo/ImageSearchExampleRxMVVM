@@ -10,12 +10,16 @@ import Alamofire
 
 extension AFError {
     func handling() -> NetworkError {
+        var networkError: NetworkError?
         
-        if let underlyingError = self.underlyingError,
-           let urlError = underlyingError as? URLError {
-            return NetworkError(rawValue: urlError.code.rawValue) ?? .unknown
+        if let underlyingError = underlyingError, let urlError = underlyingError as? URLError {
+            networkError = NetworkError(rawValue: urlError.code.rawValue)
         }
-        guard let statusCode = self.responseCode else { return .unknown }
-        return NetworkError(rawValue: statusCode) ?? .unknown
+        
+        if let statusCode = responseCode {
+            networkError = NetworkError(rawValue: statusCode)
+        }
+        
+        return networkError ?? .unknown
     }
 }
